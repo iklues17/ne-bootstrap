@@ -1,0 +1,19 @@
+bin_dir: /usr/local/bin
+chart:
+  repoUrl: http://192.168.70.13:28080/ne-1.3.0
+  repoName: ne
+k8s:
+  namespace: ne-boot
+ingress_vhost: boot.nexr.kr
+pxc_port: 33306
+s3:
+  endpoint: 10.0.3.5:80
+  bucket: ne-hdfs
+  accesskey: 5M4SROOODT1DCSAOM8IA
+  secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
+ne:
+  version: 1.3.0-SNAPSHOT
+  schemaVersion: 1.3.0
+  siteName: nexr-qa
+  licenseKey: aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoySseDbIBO7AX8ktWbw5rzVsqIPCbk35Hl7ycvTo1CKetKrNStZo/RXmZE7H2vYRj38MYKHTkd2LwX5SIEkyUU+pFoKiBkLNXK+IvbGASIPTHlORA05qgnjXwmlT48qM86M=
+

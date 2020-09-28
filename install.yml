@@ -1,0 +1,6 @@
+---
+- hosts: k8s-bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-preinstall" }
+    - { role: "ne-install" }
