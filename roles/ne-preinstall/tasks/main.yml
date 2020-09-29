@@ -25,14 +25,14 @@
 
 - name: Add NexR Enterprise chart repo
   community.kubernetes.helm_repository:
-    name: "{{ chart.repo_name }}"
+    name: "{{ chart_repo_name }}"
     state: present
-    repo_url: "{{ chart.repo_url }}"
+    repo_url: "{{ chart_repo_url }}"
 
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:
     name: pxc-operator
-    chart_ref: "{{ chart.repo_name }}/pxc-operator"
+    chart_ref: "{{ chart_repo_name }}/pxc-operator"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -41,7 +41,7 @@
 - name: Deploy pmm-server chart
   community.kubernetes.helm:
     name: pmm-server
-    chart_ref: "{{ chart.repo_name }}/pmm-server"
+    chart_ref: "{{ chart_repo_name }}/pmm-server"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
@@ -59,7 +59,7 @@
 - name: Deploy pxc-database chart
   community.kubernetes.helm:
     name: pxc-database
-    chart_ref: "{{ chart.repo_name }}/pxc-database"
+    chart_ref: "{{ chart_repo_name }}/pxc-database"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -75,7 +75,7 @@
 - name: Deploy nexus chart
   community.kubernetes.helm:
     name: nexus
-    chart_ref: "{{ chart.repo_name }}/nexus"
+    chart_ref: "{{ chart_repo_name }}/nexus"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -84,7 +84,7 @@
 - name: Deploy ne-init chart
   community.kubernetes.helm:
     name: ne-init
-    chart_ref: "{{ chart.repo_name }}/ne-init"
+    chart_ref: "{{ chart_repo_name }}/ne-init"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -103,7 +103,7 @@
 - name: Deploy ne-depend chart
   community.kubernetes.helm:
     name: ne-depend
-    chart_ref: "{{ chart.repo_name }}/ne-depend"
+    chart_ref: "{{ chart_repo_name }}/ne-depend"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
@@ -116,7 +116,7 @@
 - name: Deploy pinpoint chart
   community.kubernetes.helm:
     name: pinpoint
-    chart_ref: "{{ chart.repo_name }}/pinpoint"
+    chart_ref: "{{ chart_repo_name }}/pinpoint"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -130,7 +130,7 @@
 - name: Deploy ccs chart
   community.kubernetes.helm:
     name: ccs
-    chart_ref: "{{ chart.repo_name }}/ccs"
+    chart_ref: "{{ chart_repo_name }}/ccs"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -143,7 +143,7 @@
 - name: Deploy cui chart
   community.kubernetes.helm:
     name: cui
-    chart_ref: "{{ chart.repo_name }}/cui"
+    chart_ref: "{{ chart_repo_name }}/cui"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -152,7 +152,7 @@
 - name: Deploy cgw chart
   community.kubernetes.helm:
     name: cgw
-    chart_ref: "{{ chart.repo_name }}/cgw"
+    chart_ref: "{{ chart_repo_name }}/cgw"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
@@ -167,7 +167,7 @@
 - name: Deploy openldap chart
   community.kubernetes.helm:
     name: openldap
-    chart_ref: "{{ chart.repo_name }}/openldap"
+    chart_ref: "{{ chart_repo_name }}/openldap"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
@@ -181,7 +181,7 @@
 - name: Deploy ranger-admin chart
   community.kubernetes.helm:
     name: ranger-admin
-    chart_ref: "{{ chart.repo_name }}/ranger-admin"
+    chart_ref: "{{ chart_repo_name }}/ranger-admin"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
@@ -196,7 +196,7 @@
 - name: Deploy ranger-usersync chart
   community.kubernetes.helm:
     name: ranger-usersync
-    chart_ref: "{{ chart.repo_name }}/ranger-usersync"
+    chart_ref: "{{ chart_repo_name }}/ranger-usersync"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
@@ -208,7 +208,7 @@
 - name: Deploy a3s chart
   community.kubernetes.helm:
     name: a3s
-    chart_ref: "{{ chart.repo_name }}/a3s"
+    chart_ref: "{{ chart_repo_name }}/a3s"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
