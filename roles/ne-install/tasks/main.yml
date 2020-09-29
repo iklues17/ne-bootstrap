@@ -34,7 +34,7 @@
 
 - name: Regist NexR Enterprise license
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/licenses/constantine"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/licenses/constantine"
     method: POST
     body_format: json
     follow_redirects: all
@@ -47,7 +47,7 @@
 
 - name: Login NexR Enterprise
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/a3s:8189/proxy/auth/login"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/a3s:8189/proxy/auth/login"
     method: POST
     body_format: json
     follow_redirects: all
@@ -81,7 +81,7 @@
 
 - name: Change Kubeapps rest api info
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/orchestrators/1"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/orchestrators/1"
     method: PUT
     body_format: json
     follow_redirects: all
@@ -102,7 +102,7 @@
 
 - name: Deploy - Elasticsearch
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/25/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/25/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -120,7 +120,7 @@
 
 - name: Deploy - Hive-metastore
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/26/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/26/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -138,7 +138,7 @@
 
 - name: Deploy - Spark-historyserver
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/29/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/29/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -156,7 +156,7 @@
 
 - name: Deploy - Spark-thriftserver
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/30/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/30/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -174,7 +174,7 @@
 
 - name: Deploy - Conductor
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/33/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/33/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -192,7 +192,7 @@
 
 - name: Deploy - Selenium
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/41/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/41/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -210,7 +210,7 @@
 
 - name: Deploy - Zookeeper
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/35/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -228,7 +228,7 @@
 
 - name: Deploy - Kafka
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/24/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/24/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -246,7 +246,7 @@
 
 - name: Deploy - NE Post
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/43/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/43/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -264,7 +264,7 @@
 
 - name: Deploy - EDS
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/12/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/12/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -282,7 +282,7 @@
 
 - name: Deploy - CMS
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/5/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/5/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -300,7 +300,7 @@
 
 - name: Deploy - DES
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/6/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/6/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -318,7 +318,7 @@
 
 - name: Deploy - DSS
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/10/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/10/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -336,7 +336,7 @@
 
 - name: Deploy - DVS
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/11/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/11/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
@@ -354,7 +354,7 @@
 
 - name: Deploy - Logstash
   uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/ne-boot/services/ccs:8180/proxy/applications/44/deploy"
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/44/deploy"
     method: POST
     follow_redirects: all
     validate_certs: no
