@@ -79,20 +79,6 @@
     cacheable: yes
     kubeapps_token: "{{ kubeapps_token.stdout }}"
 
-- name: Regist NexR Enterprise chart repo to kubeapps
-  uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ kubeapps_namespace }}/services/kubeapps:80/proxy/api/v1/namespaces/kubeapps/apprepositories"
-    method: POST
-    body_format: json
-    follow_redirects: all
-    validate_certs: no
-    headers:
-      Authorization: "Bearer {{ kubeapps_token }}"
-    body:
-      appRepository:
-        name: "{{ chart_repo_name }}"
-        repoURL: "{{ chart_repo_url }}"
-
 - name: Change Kubeapps rest api info
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/orchestrators/1"

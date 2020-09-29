@@ -41,7 +41,6 @@ $ ansible-playbook -i inventory/sample/inventory.ini remove.yml
   * a3s
 
 #### ne-install
-- Regist chart repo to kubeapps
 - Regist NexR Enterprise license
 - Install managed services and ne services on REST API
   * Elasticsearch
