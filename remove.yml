@@ -4,85 +4,85 @@
   - name: Remove cui chart
     community.kubernetes.helm:
       name: cui
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove a3s chart
     community.kubernetes.helm:
       name: a3s
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove ranger-usersync chart
     community.kubernetes.helm:
       name: ranger-usersync
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove ranger-admin chart
     community.kubernetes.helm:
       name: ranger-admin
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove openldap chart
     community.kubernetes.helm:
       name: openldap
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove cgw chart
     community.kubernetes.helm:
       name: cgw
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove ccs chart
     community.kubernetes.helm:
       name: ccs
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove pinpoint chart
     community.kubernetes.helm:
       name: pinpoint
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove ne-depend chart
     community.kubernetes.helm:
       name: ne-depend
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove ne-init chart
     community.kubernetes.helm:
       name: ne-init
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove nexus chart
     community.kubernetes.helm:
       name: nexus
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove pxc-database chart
     community.kubernetes.helm:
       name: pxc-database
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
       wait: yes
 
   - name: Remove pmm-server chart
     community.kubernetes.helm:
       name: pmm-server
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 
   - name: Remove pxc-operator chart
     community.kubernetes.helm:
       name: pxc-operator
-      release_namespace: "{{ k8s.namespace }}"
+      release_namespace: "{{ k8s_namespace }}"
       state: absent
 

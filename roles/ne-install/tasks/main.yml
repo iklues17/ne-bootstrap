@@ -11,7 +11,7 @@
     k8s_api_server: "{{ apiserver_url.stdout }}"
 
 - name: Create variable - k8s secret name
-  shell: "{{ bin_dir }}/kubectl get secrets -n {{ k8s.namespace }} | grep ^default | cut -f1 -d ' '"
+  shell: "{{ bin_dir }}/kubectl get secrets -n {{ k8s_namespace }} | grep ^default | cut -f1 -d ' '"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: secret_name
@@ -22,7 +22,7 @@
     k8s_secret_name: "{{ secret_name.stdout }}"
 
 - name: Create variable - k8s api proxy token
-  shell: "{{ bin_dir }}/kubectl describe secret {{ k8s_secret_name }} -n {{ k8s.namespace }} | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
+  shell: "{{ bin_dir }}/kubectl describe secret {{ k8s_secret_name }} -n {{ k8s_namespace }} | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: api_token
@@ -42,8 +42,8 @@
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
     body:
-      licenseKey: "{{ ne.licenseKey }}"
-      siteName: "{{ ne.siteName }}"
+      licenseKey: "{{ ne.licensekey }}"
+      siteName: "{{ ne.sitename }}"
 
 - name: Login NexR Enterprise
   uri:
@@ -91,8 +91,8 @@
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
     body:
-      endpoint: "http://kubeapps.kubeapps.svc.cluster.local:80"
-      namespace: "{{ k8s.namespace }}"
+      endpoint: "http://kubeapps.kubeapps.svc.{{ k8s_cluster_name }}:80"
+      namespace: "{{ k8s_namespace }}"
       title: "Kubernetes"
       token: "{{ kubeapps_token }}"
   register: orchestrator_response

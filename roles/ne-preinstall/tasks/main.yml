@@ -6,7 +6,7 @@
       kind: Namespace
       api_version: v1
       metadata:
-        name: "{{ k8s.namespace }}"
+        name: "{{ k8s_namespace }}"
         labels:
           app: nexr-enterprise
           istio-injection: disabled
@@ -14,36 +14,36 @@
 - name: Add namespace default RBAC - role
   community.kubernetes.k8s:
     state: present
-    namespace: "{{ k8s.namespace }}"
+    namespace: "{{ k8s_namespace }}"
     definition: "{{ lookup('template', 'manifest/default_role.yml') | from_yaml }}"
 
 - name: Add namespace default RBAC - rolebinding
   community.kubernetes.k8s:
     state: present
-    namespace: "{{ k8s.namespace }}"
+    namespace: "{{ k8s_namespace }}"
     definition: "{{ lookup('template', 'manifest/default_rolebinding.yml') | from_yaml }}"
 
 - name: Add NexR Enterprise chart repo
   community.kubernetes.helm_repository:
-    name: "{{ chart.repoName }}"
+    name: "{{ chart.repo_name }}"
     state: present
-    repo_url: "{{ chart.repoUrl }}"
+    repo_url: "{{ chart.repo_url }}"
 
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:
     name: pxc-operator
-    chart_ref: "{{ chart.repoName }}/pxc-operator"
+    chart_ref: "{{ chart.repo_name }}/pxc-operator"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
 
 - name: Deploy pmm-server chart
   community.kubernetes.helm:
     name: pmm-server
-    chart_ref: "{{ chart.repoName }}/pmm-server"
+    chart_ref: "{{ chart.repo_name }}/pmm-server"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
       persistence:
@@ -59,9 +59,9 @@
 - name: Deploy pxc-database chart
   community.kubernetes.helm:
     name: pxc-database
-    chart_ref: "{{ chart.repoName }}/pxc-database"
+    chart_ref: "{{ chart.repo_name }}/pxc-database"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
@@ -75,18 +75,18 @@
 - name: Deploy nexus chart
   community.kubernetes.helm:
     name: nexus
-    chart_ref: "{{ chart.repoName }}/nexus"
+    chart_ref: "{{ chart.repo_name }}/nexus"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
 
 - name: Deploy ne-init chart
   community.kubernetes.helm:
     name: ne-init
-    chart_ref: "{{ chart.repoName }}/ne-init"
+    chart_ref: "{{ chart.repo_name }}/ne-init"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
@@ -103,9 +103,9 @@
 - name: Deploy ne-depend chart
   community.kubernetes.helm:
     name: ne-depend
-    chart_ref: "{{ chart.repoName }}/ne-depend"
+    chart_ref: "{{ chart.repo_name }}/ne-depend"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
       resources:
@@ -116,9 +116,9 @@
 - name: Deploy pinpoint chart
   community.kubernetes.helm:
     name: pinpoint
-    chart_ref: "{{ chart.repoName }}/pinpoint"
+    chart_ref: "{{ chart.repo_name }}/pinpoint"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
@@ -130,9 +130,9 @@
 - name: Deploy ccs chart
   community.kubernetes.helm:
     name: ccs
-    chart_ref: "{{ chart.repoName }}/ccs"
+    chart_ref: "{{ chart.repo_name }}/ccs"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
@@ -143,18 +143,18 @@
 - name: Deploy cui chart
   community.kubernetes.helm:
     name: cui
-    chart_ref: "{{ chart.repoName }}/cui"
+    chart_ref: "{{ chart.repo_name }}/cui"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
 
 - name: Deploy cgw chart
   community.kubernetes.helm:
     name: cgw
-    chart_ref: "{{ chart.repoName }}/cgw"
+    chart_ref: "{{ chart.repo_name }}/cgw"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
       ne:
@@ -167,9 +167,9 @@
 - name: Deploy openldap chart
   community.kubernetes.helm:
     name: openldap
-    chart_ref: "{{ chart.repoName }}/openldap"
+    chart_ref: "{{ chart.repo_name }}/openldap"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
       istio:
@@ -181,9 +181,9 @@
 - name: Deploy ranger-admin chart
   community.kubernetes.helm:
     name: ranger-admin
-    chart_ref: "{{ chart.repoName }}/ranger-admin"
+    chart_ref: "{{ chart.repo_name }}/ranger-admin"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
@@ -196,9 +196,9 @@
 - name: Deploy ranger-usersync chart
   community.kubernetes.helm:
     name: ranger-usersync
-    chart_ref: "{{ chart.repoName }}/ranger-usersync"
+    chart_ref: "{{ chart.repo_name }}/ranger-usersync"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
       istio:
@@ -208,9 +208,9 @@
 - name: Deploy a3s chart
   community.kubernetes.helm:
     name: a3s
-    chart_ref: "{{ chart.repoName }}/a3s"
+    chart_ref: "{{ chart.repo_name }}/a3s"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s.namespace }}"
+    release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
     values:
