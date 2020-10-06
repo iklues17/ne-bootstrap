@@ -5,11 +5,6 @@
     state: present
     repo_url: "{{ chart_repo_url }}"
 
-# - name: Templating values.yaml
-#   template:
-#     src: values.yaml
-#     dest: /tmp/rook-ceph-values.yaml
-
 - name: Create a k8s namespace for rook-ceph operator
   community.kubernetes.k8s:
     state: present
@@ -30,23 +25,3 @@
     wait: yes
     atomic: yes
     values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
-    # values:
-    #   cephBlockPools:
-    #   - name: "{{ cephBlockPool.name }}"
-    #   csi:
-    #     enableRbdDriver: true
-    #     rbdStorageClasses:
-    #     - name: rook-ceph-block-helm
-    #       pool: "{{ cephBlockPool.name }}"
-    #     enableCephfsDriver: false
-    #   ceph:
-    #     external:
-    #       enable: "{{ ceph.external.enable }}"
-    #       fsid: "{{ ceph.external.fsid }}"
-    #       clientAdminKey: "{{ ceph.external.clientAdminKey }}"
-    #       monKey: "{{ ceph.external.monKey }}"
-    #       mons:
-    #       {% for mon in ceph.external.mons %}
-    #       - name: "{{ mon.name }}"
-    #         addr: "{{ mon.addr }}"
-    #       {% endfor %}
