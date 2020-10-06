@@ -1,0 +1,21 @@
+cephBlockPools:
+  - name: "{{ cephBlockPool.name }}"
+
+csi:
+  enableRbdDriver: true
+  rbdStorageClasses:
+    - name: "rook-ceph-block-helm"
+      pool: "{{ cephBlockPool.name }}"
+  enableCephfsDriver: false
+
+ceph:
+  external:
+    enable: {{ ceph.external.enable | lower }}
+    fsid: "{{ ceph.external.fsid }}"
+    clientAdminKey: "{{ ceph.external.clientAdminKey }}"
+    monKey: "{{ ceph.external.monKey }}"
+    mons:
+{% for mon in ceph.external.mons %}
+      - name: "{{ mon.name }}"
+        addr: "{{ mon.addr }}"
+{% endfor %}
