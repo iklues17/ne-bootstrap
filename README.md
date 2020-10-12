@@ -20,6 +20,11 @@ $ ansible-playbook -i inventory/sample/inventory.ini remove.yml
 
 ### Roles
 
+#### ne-storageclass
+- Regist chart repo to helm
+- Create a namespace for rook-ceph operator
+- Deploy the ne-rook-ceph chart via helm
+
 #### ne-preinstall
 - Regist namespace
 - Create RBAC
