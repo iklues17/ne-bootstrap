@@ -4,7 +4,7 @@ cephBlockPools:
 csi:
   enableRbdDriver: true
   rbdStorageClasses:
-    - name: "rook-ceph-block-helm"
+    - name: "rook-ceph-block"
       pool: "{{ cephBlockPool.name }}"
   enableCephfsDriver: false
 

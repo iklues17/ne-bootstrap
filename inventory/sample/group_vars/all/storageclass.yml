@@ -1,6 +1,3 @@
-rook_ceph:
-  namespace: rook-ceph
-
 cephBlockPool:
   name: ceph-rbd-pool123
 

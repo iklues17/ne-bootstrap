@@ -1,5 +1,5 @@
 ---
-- hosts: k8s-bootstrap
+- hosts: ne-bootstrap
   gather_facts: False
   roles:
     - { role: "ne-storageclass" }

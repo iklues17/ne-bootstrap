@@ -6,10 +6,10 @@ chart_repo_name: ne
 
 kubeapps_namespace: kubeapps
 
-k8s_namespace: ne-boot
+k8s_namespace: ne
 k8s_cluster_name: cluster.local
 
-ingress_vhost: boot.nexr.kr
+ingress_vhost: nexr.kr
 pxc_port: 33306
 
 s3:

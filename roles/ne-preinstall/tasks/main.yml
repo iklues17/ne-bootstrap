@@ -15,13 +15,13 @@
   community.kubernetes.k8s:
     state: present
     namespace: "{{ k8s_namespace }}"
-    definition: "{{ lookup('template', 'manifest/default_role.yml') | from_yaml }}"
+    definition: "{{ lookup('template', 'default_role.yml') | from_yaml }}"
 
 - name: Add namespace default RBAC - rolebinding
   community.kubernetes.k8s:
     state: present
     namespace: "{{ k8s_namespace }}"
-    definition: "{{ lookup('template', 'manifest/default_rolebinding.yml') | from_yaml }}"
+    definition: "{{ lookup('template', 'default_rolebinding.yml') | from_yaml }}"
 
 - name: Add NexR Enterprise chart repo
   community.kubernetes.helm_repository:
@@ -98,7 +98,7 @@
         MYSQL_SERVER: pxc-database-proxysql
         PROXYSQL_SERVER: pxc-database-proxysql-unready
         NEXUS_HOST: nexus
-        NE_VERSION: "{{ ne.schemaVersion }}"
+        NE_VERSION: "{{ ne.schema_version }}"
 
 - name: Deploy ne-depend chart
   community.kubernetes.helm:

@@ -12,16 +12,54 @@
       kind: Namespace
       api_version: v1
       metadata:
-        name: "{{ rook_ceph.namespace }}"
+        name: rook-ceph
         labels:
           istio-injection: disabled
 
-- name: Deploy rook-ceph-block StorageClass chart
+- name: Check installation of Rook ceph chart inside the namespace
+  community.kubernetes.helm_info:
+    name: rook-ceph
+    release_namespace: rook-ceph
+  register: check_install_result
+
+- name: Debug When chart is failed
+  debug:
+    var: check_install_result
+  when: check_install_result.status is defined and check_install_result.status.status == 'failed'
+
+- name: Debug When chart is deployed
+  debug:
+    var: check_install_result
+  when: check_install_result.status is defined and check_install_result.status.status == 'deployed'
+
+- name: Debug When chart is not installed
+  debug:
+    var: check_install_result
+  when: check_install_result.status is undefined
+
+- name: Get k8s StorageClass object
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: StorageClass
+    name: rook-ceph-block
+  register: check_storageclass_result
+
+- name: Debug When StorageClass is not installed
+  debug:
+    var: check_storageclass_result
+
+- name: Deploy rook-ceph-block StorageClass chart when is not installed
   community.kubernetes.helm:
     name: rook-ceph
     chart_ref: "{{ chart_repo_name }}/ne-rook-ceph"
     chart_version: "{{ ne.version }}"
-    release_namespace: "{{ rook_ceph.namespace }}"
+    release_namespace: rook-ceph
     wait: yes
     atomic: yes
+    force: yes
     values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
+  when:
+    - check_install_result.status is undefined or
+      check_install_result.status is defined and check_install_result.status.status == 'failed'
+    - check_storageclass_result.resources is undefined or
+      check_storageclass_result.resources | length <= 0
