@@ -3,6 +3,7 @@
   gather_facts: False
   roles:
     - { role: "ne-storageclass" }
+    - { role: "ne-initialize" }
     - { role: "ne-preinstall" }
     - { role: "kube-apiserver" }
     - { role: "ne-login" }
