@@ -4,6 +4,13 @@ chart_repo_name: ne
 k8s_namespace: ne
 
 ingress_vhost: nexr.kr
+pxc_port: 33306
+
+s3:
+  endpoint: 10.0.3.5:80
+  bucket: ne-hdfs
+  accesskey: 5M4SROOODT1DCSAOM8IA
+  secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
 
 ne:
   version: 1.2.0
