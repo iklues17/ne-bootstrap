@@ -2,4 +2,4 @@
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
-    - { role: "kube-apiserver" }
+    - { role: "set-kube-apiserver" }
