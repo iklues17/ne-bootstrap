@@ -1,0 +1,7 @@
+# kubectl path
+bin_dir: /usr/local/bin
+
+k8s_namespace: ne
+k8s_cluster_name: cluster.local
+
+ne_ccs_install_timeout: 300

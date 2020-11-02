@@ -1,4 +1,7 @@
-# kubectl path
+chart_repo_url: http://192.168.70.13:28080/ne-1.2.0
+chart_repo_name: ne
+
+k8s_namespace: ne
 
 ingress_vhost: nexr.kr
 pxc_port: 33306
@@ -9,3 +12,6 @@ s3:
   accesskey: 5M4SROOODT1DCSAOM8IA
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
 
+ne:
+  version: 1.2.0
+  schema_version: 1.2.0

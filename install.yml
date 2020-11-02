@@ -4,4 +4,8 @@
   roles:
     - { role: "ne-storageclass" }
     - { role: "ne-preinstall" }
-    - { role: "ne-install" }
+    - { role: "kube-apiserver" }
+    - { role: "ne-login" }
+    - { role: "ne-update-kubeapps" }
+    - { role: "ne-install-managed" }
+    - { role: "ne-install-service" }

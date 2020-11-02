@@ -1,0 +1,5 @@
+---
+- hosts: ne-bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-install" }

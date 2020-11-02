@@ -1,0 +1,160 @@
+---
+- name: Deploy - Elasticsearch
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/25/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Hive-metastore
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/26/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Spark-historyserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/29/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Spark-thriftserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/30/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Conductor
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/33/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Selenium
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/41/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Zookeeper
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Kafka
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/24/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+
+- debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"

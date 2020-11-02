@@ -23,11 +23,11 @@
     namespace: "{{ k8s_namespace }}"
     definition: "{{ lookup('template', 'default_rolebinding.yml') | from_yaml }}"
 
-- name: Add NexR Enterprise chart repo
-  community.kubernetes.helm_repository:
-    name: "{{ chart_repo_name }}"
-    state: present
-    repo_url: "{{ chart_repo_url }}"
+# - name: Add NexR Enterprise chart repo
+#   community.kubernetes.helm_repository:
+#     name: "{{ chart_repo_name }}"
+#     state: present
+#     repo_url: "{{ chart_repo_url }}"
 
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:
@@ -117,9 +117,13 @@
         S3_ACCESSKEY: "{{ s3.accesskey }}"
         S3_SECRETKEY: "{{ s3.secretkey }}"
         MYSQL_SERVER: pxc-database-proxysql
-        PROXYSQL_SERVER: pxc-database-proxysql-unready
+        MYSQL_PORT: 3306
         NEXUS_HOST: nexus
+        HOST_REPO_NAME: nexr-host
+        GROUP_REPO_NAME: nexr-maven
         NE_VERSION: "{{ ne.schema_version }}"
+        NE_NAMESPACE: "{{ k8s_namespace }}"
+        CHART_REPO_NAME: "{{ chart_repo_name }}"
 
 - name: Deploy ne-depend chart
   community.kubernetes.helm:
@@ -185,46 +189,46 @@
         hosts:
           - "ne.{{ ingress_vhost }}"
 
-- name: Deploy openldap chart
-  community.kubernetes.helm:
-    name: openldap
-    chart_ref: "{{ chart_repo_name }}/openldap"
-    chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
-        hosts:
-          - "openldap.{{ ingress_vhost }}"
+# - name: Deploy openldap chart
+#   community.kubernetes.helm:
+#     name: openldap
+#     chart_ref: "{{ chart_repo_name }}/openldap"
+#     chart_version: "{{ ne.version }}"
+#     release_namespace: "{{ k8s_namespace }}"
+#     atomic: yes
+#     values:
+#       istio:
+#         sidecar:
+#           enabled: false
+#         hosts:
+#           - "openldap.{{ ingress_vhost }}"
 
-- name: Deploy ranger-admin chart
-  community.kubernetes.helm:
-    name: ranger-admin
-    chart_ref: "{{ chart_repo_name }}/ranger-admin"
-    chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    wait: yes
-    atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
-        hosts:
-          - "ranger.{{ ingress_vhost }}"
+# - name: Deploy ranger-admin chart
+#   community.kubernetes.helm:
+#     name: ranger-admin
+#     chart_ref: "{{ chart_repo_name }}/ranger-admin"
+#     chart_version: "{{ ne.version }}"
+#     release_namespace: "{{ k8s_namespace }}"
+#     wait: yes
+#     atomic: yes
+#     values:
+#       istio:
+#         sidecar:
+#           enabled: false
+#         hosts:
+#           - "ranger.{{ ingress_vhost }}"
 
-- name: Deploy ranger-usersync chart
-  community.kubernetes.helm:
-    name: ranger-usersync
-    chart_ref: "{{ chart_repo_name }}/ranger-usersync"
-    chart_version: "{{ ne.version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
+# - name: Deploy ranger-usersync chart
+#   community.kubernetes.helm:
+#     name: ranger-usersync
+#     chart_ref: "{{ chart_repo_name }}/ranger-usersync"
+#     chart_version: "{{ ne.version }}"
+#     release_namespace: "{{ k8s_namespace }}"
+#     atomic: yes
+#     values:
+#       istio:
+#         sidecar:
+#           enabled: false
 
 - name: Deploy a3s chart
   community.kubernetes.helm:

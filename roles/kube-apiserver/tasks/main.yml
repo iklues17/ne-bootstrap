@@ -1,0 +1,38 @@
+---
+- name: Create variable - k8s apiserver url
+  shell: "{{ bin_dir }}/kubectl config view --minify | grep server | cut -f 2- -d ':' | tr -d ' '"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  register: apiserver_url
+
+- name: Set variable - k8s apiserver url
+  set_stats:
+    data:
+      k8s_api_server: "{{ apiserver_url.stdout }}"
+
+- name: Create variable - k8s secret name
+  shell: "{{ bin_dir }}/kubectl get secrets -n {{ k8s_namespace }} | grep ^default | cut -f1 -d ' '"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  register: secret_name
+
+- name: Set stats variable - k8s secret name
+  set_stats:
+    data:
+      k8s_secret_name: "{{ secret_name.stdout }}"
+
+- name: Set fact variable - k8s secret name
+  set_fact:
+    cacheable: yes
+    k8s_secret_name: "{{ secret_name.stdout }}"
+
+- name: Create variable - k8s api proxy token
+  shell: "{{ bin_dir }}/kubectl describe secret {{ k8s_secret_name }} -n {{ k8s_namespace }} | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  register: api_token
+
+- name: Set variable - k8s api proxy token
+  set_stats:
+    data:
+      k8s_api_token: "{{ api_token.stdout }}"
