@@ -5,7 +5,7 @@
     - { role: "ne-storageclass" }
     - { role: "ne-initialize" }
     - { role: "ne-preinstall" }
-    - { role: "kube-apiserver" }
+    - { role: "set-kube-apiserver" }
     - { role: "ne-login" }
     - { role: "ne-update-kubeapps" }
     - { role: "ne-install-managed" }
