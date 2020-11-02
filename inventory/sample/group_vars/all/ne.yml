@@ -26,3 +26,5 @@ ne:
 
 ne_admin_username: admin
 ne_admin_password: admin
+
+ne_ccs_install_timeout: 300

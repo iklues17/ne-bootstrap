@@ -39,6 +39,7 @@
     body_format: json
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
     body:
@@ -52,6 +53,7 @@
     body_format: json
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
     body:
@@ -86,6 +88,7 @@
     body_format: json
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
@@ -106,17 +109,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Hive-metastore
   uri:
@@ -124,17 +129,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Spark-historyserver
   uri:
@@ -142,17 +149,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Spark-thriftserver
   uri:
@@ -160,17 +169,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Conductor
   uri:
@@ -178,17 +189,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Selenium
   uri:
@@ -196,17 +209,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Zookeeper
   uri:
@@ -214,17 +229,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Kafka
   uri:
@@ -232,17 +249,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - NE Post
   uri:
@@ -250,17 +269,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - EDS
   uri:
@@ -268,17 +289,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - CMS
   uri:
@@ -286,17 +309,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - DES
   uri:
@@ -304,17 +329,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - DSS
   uri:
@@ -322,17 +349,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - DVS
   uri:
@@ -340,17 +369,19 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
 
 - name: Deploy - Logstash
   uri:
@@ -358,14 +389,16 @@
     method: POST
     follow_redirects: all
     validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
       x-constantine-token: "{{ ne_accesstoken }}"
       content-type: application/json;charset=UTF-8
   register: response
-  failed_when:
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
 
 - debug:
     var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"

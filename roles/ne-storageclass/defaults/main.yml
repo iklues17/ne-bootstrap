@@ -1,0 +1,26 @@
+cephBlockPool:
+  name: asd
+
+ceph:
+  external:
+    enable: true
+    # fsid is external ceph fsid
+    ## return value of "ceph fsid" command on ceph-mon node
+    fsid: asd
+    # clientAdminKey is keyring of external ceph client admin
+    ## return value of "ceph auth get-key client.admin" command on ceph-mon node
+    clientAdminKey: asd
+    # monKey is keyring of external ceph-mon
+    ## return value of "ceph auth get-key mon." command on ceph-mon node
+    monKey: asd
+    # mons describe external ceph-mon endpoints
+    mons:
+      # ceph-mon0 endpoints (hostname/addr with port)
+    - name: <hostname of ceph-mon0>
+      addr: <address with port of ceph-mon0>
+      # ceph-mon1 endpoints (hostname/addr with port)
+    - name: <hostname of ceph-mon1>
+      addr: <address with port of ceph-mon1>
+      # ceph-mon2 endpoints (hostname/addr with port)
+    - name: <hostname of ceph-mon2>
+      addr: <address with port of ceph-mon2>

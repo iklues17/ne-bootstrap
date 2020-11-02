@@ -10,7 +10,7 @@ csi:
 
 ceph:
   external:
-    enable: {{ ceph.external.enable | lower }}
+    enable: "{{ ceph.external.enable | lower }}"
     fsid: "{{ ceph.external.fsid }}"
     clientAdminKey: "{{ ceph.external.clientAdminKey }}"
     monKey: "{{ ceph.external.monKey }}"

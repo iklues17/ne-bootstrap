@@ -72,6 +72,27 @@
           hostname: "mysql.{{ ingress_vhost }}"
           matchPortNumber: "{{ pxc_port }}"
 
+- debug:
+    msg: "Waiting for pxc"
+
+- name: Wait for pxc-database-pxc-2 pod running ready completely
+  community.kubernetes.k8s_info:
+    kind: Pod
+    namespace: "{{ k8s_namespace }}"
+    name: "pxc-database-pxc-2"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Ready"
+  register: result
+  until: "{{ result.resources|length == 1 }}"
+  retries: 50
+  delay: 10
+
+- debug:
+    var: result
+
+
 - name: Deploy nexus chart
   community.kubernetes.helm:
     name: nexus
