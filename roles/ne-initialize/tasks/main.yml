@@ -35,7 +35,7 @@
   amazon.aws.aws_s3:
     bucket: "{{ s3.bucket }}"
     object: "/var/log/spark/hello"
-    src: "../templates/hello"
+    src: "/root/hello"
     mode: put
     encrypt: false
     rgw: true
