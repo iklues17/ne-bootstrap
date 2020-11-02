@@ -31,6 +31,15 @@
     secret_key: "{{ s3.secretkey }}"
     ceph: true
 
+- name: Create Spark log directory
+  amazon.aws.aws_s3:
+    bucket: {{ s3.bucket }}
+    object: /var/log/spark/hello
+    src: ../templates/hello
+    mode: put
+    rgw: true
+    s3_url: "http://{{ s3.endpoint }}"
+
 - name: Create Bucket - ETCD Backup
   amazon.aws.s3_bucket:
     name: "etcd-backup"

@@ -2,4 +2,3 @@
 bin_dir: /usr/local/bin
 
 k8s_namespace: ne
-k8s_cluster_name: cluster.local
