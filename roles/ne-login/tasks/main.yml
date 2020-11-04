@@ -38,7 +38,7 @@
       ne_accesstoken: "{{ login_response.json.body.accessToken }}"
       ne_refreshtoken: "{{ login_response.json.body.refreshToken }}"
 
-- name: Set variable - NexR Enterprise accesstoken
+- name: Set fact variable - NexR Enterprise accesstoken
   set_fact:
     cacheable: yes
     ne_accesstoken: "{{ login_response.json.body.accessToken }}"

@@ -5,7 +5,7 @@
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: kubeapps_token_result
 
-- name: Set variable - k8s kubeapps token
+- name: Set fact variable - k8s kubeapps token
   set_fact:
     cacheable: yes
     kubeapps_token: "{{ kubeapps_token_result.stdout }}"

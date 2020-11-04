@@ -5,10 +5,15 @@
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: apiserver_url
 
-- name: Set variable - k8s apiserver url
+- name: Set stats variable - k8s apiserver url
   set_stats:
     data:
       k8s_api_server: "{{ apiserver_url.stdout }}"
+
+- name: Set fact variable - k8s apiserver url
+  set_fact:
+    cacheable: yes
+    k8s_api_server: "{{ apiserver_url.stdout }}"
 
 - name: Create variable - k8s secret name
   shell: "{{ bin_dir }}/kubectl get secrets -n {{ k8s_namespace }} | grep ^default | cut -f1 -d ' '"
@@ -32,7 +37,12 @@
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: api_token
 
-- name: Set variable - k8s api proxy token
+- name: Set stats variable - k8s api proxy token
   set_stats:
     data:
       k8s_api_token: "{{ api_token.stdout }}"
+
+- name: Set fact variable - k8s api proxy token
+  set_fact:
+    cacheable: yes
+    k8s_api_token: "{{ api_token.stdout }}"
