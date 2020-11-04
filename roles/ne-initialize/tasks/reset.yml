@@ -55,3 +55,12 @@
       api_version: v1
       metadata:
         name: "{{ k8s_namespace }}"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Terminating"
+
+- name: Replace k8s namespace finalizer
+  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}' | sed 's/\"finalizers\":\[\".*\"\]/\"finalizers\":\[\]/' |kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"

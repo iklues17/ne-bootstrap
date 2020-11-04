@@ -1,12 +1,12 @@
 ---
-- name: Remove pxc-database chart
+- name: Remove rook-ceph chart
   community.kubernetes.helm:
     name: rook-ceph
     release_namespace: "rook-ceph"
     state: absent
     wait: yes
 
-- name: Remove a k8s namespace for rook-ceph operator
+- name: Remove a rook-ceph namespace for rook-ceph operator
   community.kubernetes.k8s:
     state: absent
     definition:
@@ -14,3 +14,12 @@
       api_version: v1
       metadata:
         name: "rook-ceph"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Terminating"
+
+- name: Replace rook-ceph namespace finalizer
+  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}' | sed 's/\"finalizers\":\[\".*\"\]/\"finalizers\":\[\]/' |kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
