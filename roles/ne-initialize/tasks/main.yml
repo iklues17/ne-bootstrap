@@ -100,7 +100,8 @@
           hostname: "mysql.{{ ingress_vhost }}"
           matchPortNumber: "{{ pxc_port }}"
 
-- debug:
+- name: Waiting for pxc
+  debug:
     msg: "Waiting for pxc"
 
 - name: Wait for pxc-database-pxc-2 pod running ready completely
@@ -117,7 +118,8 @@
   retries: 50
   delay: 10
 
-- debug:
+- name: Result get pod 'pxc-database-pxc-2'
+  debug:
     var: result
 
 

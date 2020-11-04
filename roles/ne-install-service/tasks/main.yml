@@ -12,7 +12,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - NE Post
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -32,7 +33,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - EDS
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -52,7 +54,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - CMS
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -72,7 +75,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - DES
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -92,7 +96,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - DSS
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -112,7 +117,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - DVS
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -132,7 +138,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Logstash
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"

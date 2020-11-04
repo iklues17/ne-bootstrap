@@ -12,7 +12,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Elasticsearch
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -32,7 +33,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Hive-metastore
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -52,7 +54,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Spark-historyserver
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -72,7 +75,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Spark-thriftserver
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -92,7 +96,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Conductor
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -112,7 +117,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Selenium
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -132,7 +138,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Zookeeper
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"
@@ -152,7 +159,8 @@
       content-type: application/json;charset=UTF-8
   register: response
 
-- debug:
+- name: Result Deploy - Kafka
+  debug:
     var: response
   failed_when:
     - "{{ 'json' not in response }}"

@@ -34,5 +34,6 @@
       token: "{{ kubeapps_token }}"
   register: orchestrator_response
 
-- debug:
+- name: Result Change Kubeapps info
+  debug:
     var: orchestrator_response

@@ -28,7 +28,8 @@
       userPassword: "{{ ne_admin_password }}"
   register: login_response
 
-- debug:
+- name: Result Login NexR Enterprise
+  debug:
     var: login_response
 
 - name: Set ststs variable - NexR Enterprise accesstoken
