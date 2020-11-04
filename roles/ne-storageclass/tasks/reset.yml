@@ -19,7 +19,21 @@
       status: "True"
       type: "Terminating"
 
-- name: Replace rook-ceph namespace finalizer
-  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}' | sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
+- name: Get rook-ceph namespace finalizer
+  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph'"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  register: raw_namespace
+  failed_when:
+    - "raw_namespace.rc != 0"
+    - "'NotFound' not in raw_namespace.stderr"
+
+- name: Result rook-ceph namespace raw_namespace
+  debug:
+    var: raw_namespace
+
+- name: Replace rook-ceph namespace finalizer
+  shell: "echo {{ raw_namespace.stdout }} |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/rook-ceph/finalize' -f -"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  when: raw_namespace.stdout != ""

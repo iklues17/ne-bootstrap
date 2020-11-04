@@ -60,7 +60,21 @@
       status: "True"
       type: "Terminating"
 
-- name: Replace k8s namespace finalizer
-  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}' | sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
+- name: Get k8s namespace finalizer
+  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}'"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  register: raw_namespace
+  failed_when:
+    - "raw_namespace.rc != 0"
+    - "'NotFound' not in raw_namespace.stderr"
+
+- name: Result k8s namespace raw_namespace
+  debug:
+    var: raw_namespace
+
+- name: Replace k8s namespace finalizer
+  shell: "echo {{ raw_namespace.stdout }} |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+  when: raw_namespace.stdout != ""
