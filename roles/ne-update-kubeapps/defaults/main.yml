@@ -1,4 +1,3 @@
-# kubectl path
 bin_dir: /usr/local/bin
 
 k8s_namespace: ne
