@@ -125,6 +125,21 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Property - Logstash - istio.sidecar.enabled
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/44/configs/27/profiles/27/contents/istio.sidecar.enabled"
+    method: PUT
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configKey: "istio.sidecar.enabled"
+      configValue: "false"
+
 - name: Deploy - Logstash
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/44/deploy"
