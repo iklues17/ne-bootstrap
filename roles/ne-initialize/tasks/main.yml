@@ -45,17 +45,11 @@
 
 - name: Create Bucket - ETCD Backup
   amazon.aws.s3_bucket:
-    name: "etcd-backup"
+    name: "{{ s3.backup_bucket }}"
     s3_url: "http://{{ s3.endpoint }}"
     access_key: "{{ s3.accesskey }}"
     secret_key: "{{ s3.secretkey }}"
     ceph: true
-
-# - name: Add NexR Enterprise chart repo
-#   community.kubernetes.helm_repository:
-#     name: "{{ chart_repo_name }}"
-#     state: present
-#     repo_url: "{{ chart_repo_url }}"
 
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:

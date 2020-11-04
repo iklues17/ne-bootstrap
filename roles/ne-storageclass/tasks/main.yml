@@ -1,10 +1,4 @@
 ---
-- name: Add NexR Enterprise chart repo
-  community.kubernetes.helm_repository:
-    name: "{{ chart_repo_name }}"
-    state: present
-    repo_url: "{{ chart_repo_url }}"
-
 - name: Create a k8s namespace for rook-ceph operator
   community.kubernetes.k8s:
     state: present

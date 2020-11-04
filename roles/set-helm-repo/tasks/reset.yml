@@ -1,0 +1,5 @@
+---
+- name: Remove NexR Enterprise chart repo
+  community.kubernetes.helm_repository:
+    name: "{{ chart_repo_name }}"
+    state: absent

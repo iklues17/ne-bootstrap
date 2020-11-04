@@ -1,0 +1,57 @@
+---
+- name: Remove nexus chart
+  community.kubernetes.helm:
+    name: nexus
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+
+- name: Remove pxc-database chart
+  community.kubernetes.helm:
+    name: pxc-database
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+
+- name: Remove pmm-server chart
+  community.kubernetes.helm:
+    name: pmm-server
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+
+- name: Remove pxc-operator chart
+  community.kubernetes.helm:
+    name: pxc-operator
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+    
+- name: Remove Bucket - NE User
+  amazon.aws.s3_bucket:
+    name: "{{ s3.bucket }}"
+    s3_url: "http://{{ s3.endpoint }}"
+    access_key: "{{ s3.accesskey }}"
+    secret_key: "{{ s3.secretkey }}"
+    state: absent
+    force: yes
+    ceph: true
+
+- name: Remove Bucket - ETCD Backup
+  amazon.aws.s3_bucket:
+    name: "{{ s3.backup_bucket }}"
+    s3_url: "http://{{ s3.endpoint }}"
+    access_key: "{{ s3.accesskey }}"
+    secret_key: "{{ s3.secretkey }}"
+    state: absent
+    force: yes
+    ceph: true
+
+- name: Remove a k8s namespace for Nexr Enterprise
+  community.kubernetes.k8s:
+    state: absent
+    definition:
+      kind: Namespace
+      api_version: v1
+      metadata:
+        name: "{{ k8s_namespace }}"
