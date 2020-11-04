@@ -59,6 +59,9 @@
     wait_condition:
       status: "True"
       type: "Terminating"
+  register: response
+  failed_when:
+    - "failed == true and response != 409"
 
 - name: Get k8s namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}'"
