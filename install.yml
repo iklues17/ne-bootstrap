@@ -2,7 +2,7 @@
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
-    - { role: "set-helm-repo.yml" }
+    - { role: "set-helm-repo" }
     - { role: "ne-storageclass" }
     - { role: "ne-initialize" }
     - { role: "ne-preinstall" }
