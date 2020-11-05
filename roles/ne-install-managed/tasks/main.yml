@@ -1,4 +1,48 @@
 ---
+- name: Deploy - Zookeeper
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+  ignore_errors: yes
+
+- name: Result Deploy - Zookeeper
+  debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
+- name: Deploy - Kafka
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/24/deploy"
+    method: POST
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: response
+  ignore_errors: yes
+
+- name: Result Deploy - Kafka
+  debug:
+    var: response
+  failed_when:
+    - "{{ 'json' not in response }}"
+    - "'ERROR' in '{{ response.json.status }}'"
+    - "609000 != {{ response.json.errorCode }}"
+
 - name: Deploy - Elasticsearch
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/25/deploy"
@@ -124,50 +168,6 @@
   ignore_errors: yes
 
 - name: Result Deploy - Selenium
-  debug:
-    var: response
-  failed_when:
-    - "{{ 'json' not in response }}"
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
-
-- name: Deploy - Zookeeper
-  uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/deploy"
-    method: POST
-    follow_redirects: all
-    validate_certs: no
-    timeout: "{{ ne_ccs_install_timeout }}"
-    headers:
-      Authorization: "Bearer {{ k8s_api_token }}"
-      x-constantine-token: "{{ ne_accesstoken }}"
-      content-type: application/json;charset=UTF-8
-  register: response
-  ignore_errors: yes
-
-- name: Result Deploy - Zookeeper
-  debug:
-    var: response
-  failed_when:
-    - "{{ 'json' not in response }}"
-    - "'ERROR' in '{{ response.json.status }}'"
-    - "609000 != {{ response.json.errorCode }}"
-
-- name: Deploy - Kafka
-  uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/24/deploy"
-    method: POST
-    follow_redirects: all
-    validate_certs: no
-    timeout: "{{ ne_ccs_install_timeout }}"
-    headers:
-      Authorization: "Bearer {{ k8s_api_token }}"
-      x-constantine-token: "{{ ne_accesstoken }}"
-      content-type: application/json;charset=UTF-8
-  register: response
-  ignore_errors: yes
-
-- name: Result Deploy - Kafka
   debug:
     var: response
   failed_when:
