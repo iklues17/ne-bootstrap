@@ -43,6 +43,22 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Reset Elasticsearch index - constatntine-error-log
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/elasticsearch-client:9200/proxy/constantine-error-log"
+    method: DELETE
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+  register: response
+  ignore_errors: yes
+
+- name: Result Reset Elasticsearch index
+  debug:
+    var: response
+
 - name: Deploy - CMS
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/5/deploy"
