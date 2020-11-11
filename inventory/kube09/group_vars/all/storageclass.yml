@@ -24,3 +24,5 @@ ceph:
       name: nvme05
     - addr: 10.0.3.21:6789
       name: nvme06
+
+remove_rook_when_reset: false

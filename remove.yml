@@ -3,6 +3,10 @@
   gather_facts: False
   tasks:
     - include_role:
+        name: ne-storageclass
+        tasks_from: reset
+      when: remove_rook_when_reset
+    - include_role:
         name: ne-initialize
         tasks_from: reset
     - include_role:
