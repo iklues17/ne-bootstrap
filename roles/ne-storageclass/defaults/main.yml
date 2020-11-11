@@ -27,3 +27,5 @@ ceph:
       # ceph-mon2 endpoints (hostname/addr with port)
     - name: <hostname of ceph-mon2>
       addr: <address with port of ceph-mon2>
+
+remove_rook_when_reset: false
