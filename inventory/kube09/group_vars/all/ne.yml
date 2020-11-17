@@ -1,6 +1,8 @@
 # kubectl path
 bin_dir: /usr/local/bin
 
+user_id: official@nexr.com
+
 chart_repo_url: http://192.168.70.13:28080/ne-1.2.0-aidx
 chart_repo_name: ne-aidx
 
@@ -12,10 +14,10 @@ pxc_port: 33306
 
 s3:
   endpoint: 10.0.3.5:80
-  bucket: dl-username40nexr-com
+  bucket: dl-official40nexr-com
   accesskey: 5M4SROOODT1DCSAOM8IA
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
-  backup_bucket: bk-username40nexr-com
+  backup_bucket: bk-official40nexr-com
 
 ne:
   version: 1.2.0
