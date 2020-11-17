@@ -1,6 +1,6 @@
 bin_dir: /usr/local/bin
 
-chart_repo_name: ne-aidx
+chart_repo_name: ne-1.3.0-snapshot
 
 cephBlockPool: asd
 

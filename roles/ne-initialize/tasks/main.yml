@@ -135,10 +135,6 @@
     wait: yes
     atomic: yes
     values:
-      image:
-        repository: "harbor.nexr.kr/nexr-enterprise/ne-init"
-        tag: "1.2.0-ktcloud"
-        pullPolicy: IfNotPresent
       envOverrides:
         S3_ENDPOINT: "{{ s3.endpoint }}"
         S3_BUCKET: "{{ s3.bucket }}"
@@ -161,10 +157,6 @@
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values:
-      image:
-        repository: "harbor.nexr.kr/nexr-enterprise/ne-depend"
-        tag: "1.2.0-ktcloud"
-        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: 5Gi

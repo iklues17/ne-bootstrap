@@ -50,46 +50,46 @@
         hosts:
           - "ne.{{ ingress_vhost }}"
 
-# - name: Deploy openldap chart
-#   community.kubernetes.helm:
-#     name: openldap
-#     chart_ref: "{{ chart_repo_name }}/openldap"
-#     chart_version: "{{ ne.version }}"
-#     release_namespace: "{{ k8s_namespace }}"
-#     atomic: yes
-#     values:
-#       istio:
-#         sidecar:
-#           enabled: false
-#         hosts:
-#           - "openldap.{{ ingress_vhost }}"
+- name: Deploy openldap chart
+  community.kubernetes.helm:
+    name: openldap
+    chart_ref: "{{ chart_repo_name }}/openldap"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    atomic: yes
+    values:
+      istio:
+        sidecar:
+          enabled: false
+        hosts:
+          - "openldap.{{ ingress_vhost }}"
 
-# - name: Deploy ranger-admin chart
-#   community.kubernetes.helm:
-#     name: ranger-admin
-#     chart_ref: "{{ chart_repo_name }}/ranger-admin"
-#     chart_version: "{{ ne.version }}"
-#     release_namespace: "{{ k8s_namespace }}"
-#     wait: yes
-#     atomic: yes
-#     values:
-#       istio:
-#         sidecar:
-#           enabled: false
-#         hosts:
-#           - "ranger.{{ ingress_vhost }}"
+- name: Deploy ranger-admin chart
+  community.kubernetes.helm:
+    name: ranger-admin
+    chart_ref: "{{ chart_repo_name }}/ranger-admin"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    wait: yes
+    atomic: yes
+    values:
+      istio:
+        sidecar:
+          enabled: false
+        hosts:
+          - "ranger.{{ ingress_vhost }}"
 
-# - name: Deploy ranger-usersync chart
-#   community.kubernetes.helm:
-#     name: ranger-usersync
-#     chart_ref: "{{ chart_repo_name }}/ranger-usersync"
-#     chart_version: "{{ ne.version }}"
-#     release_namespace: "{{ k8s_namespace }}"
-#     atomic: yes
-#     values:
-#       istio:
-#         sidecar:
-#           enabled: false
+- name: Deploy ranger-usersync chart
+  community.kubernetes.helm:
+    name: ranger-usersync
+    chart_ref: "{{ chart_repo_name }}/ranger-usersync"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    atomic: yes
+    values:
+      istio:
+        sidecar:
+          enabled: false
 
 - name: Deploy a3s chart
   community.kubernetes.helm:
@@ -103,4 +103,3 @@
       ne:
         pinpoint:
           enabled: true
-
