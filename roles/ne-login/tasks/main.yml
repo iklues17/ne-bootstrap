@@ -43,3 +43,32 @@
     cacheable: yes
     ne_accesstoken: "{{ login_response.json.body.accessToken }}"
     ne_refreshtoken: "{{ login_response.json.body.refreshToken }}"
+
+- name: Add Portal User
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/a3s:8189/proxy/users"
+    method: POST
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      userId: "{{ user_id }}"
+      userName: "{{ user_id.split('@')[0] | replace('.','-') | lower }}"
+      password: "{{ user_id.split('@')[0] | replace('.','-') | lower }}"
+      email: "{{ user_id }}"
+      channelReceiveYn: false
+      emailReceiveYn: true
+      useYn: true
+      roles:
+        - id: 1
+          name: "ADMINISTRATOR"
+  register: new_user
+
+- name: Result Add Portal User
+  debug:
+    var: new_user
