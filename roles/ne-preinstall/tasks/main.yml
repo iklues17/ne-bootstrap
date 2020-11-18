@@ -103,3 +103,54 @@
       ne:
         pinpoint:
           enabled: true
+
+- name: Deploy prometheus chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-prometheus"
+    chart_ref: "{{ chart_repo_name }}/prometheus"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    wait: yes
+    atomic: yes
+    values:
+      virtualServices:
+        gateway: "nexr-gateway"
+        namespace: "istio-system"
+        # for each pod
+        prometheusServer:
+          hostname: "prometheus.{{ ingress_vhost }}"
+          enabled: true
+          portNumber: 80
+          prefix: /
+        alertManager:
+          hostname: "alertmanager.{{ ingress_vhost }}"
+          enabled: true
+          portNumber: 80
+          prefix: /
+
+- name: Deploy grafana chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-grafana"
+    chart_ref: "{{ chart_repo_name }}/grafana"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    wait: yes
+    atomic: yes
+    values:
+      virtualServices:
+        gateway: "nexr-gateway"
+        namespace: "istio-system"
+        grafana:
+          hostname: "grafana.{{ ingress_vhost }}"
+          enabled: true
+          portNumber: 80
+          prefix: /
+
+- name: Deploy loki chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-loki"
+    chart_ref: "{{ chart_repo_name }}/loki"
+    chart_version: "{{ ne.version }}"
+    release_namespace: "{{ k8s_namespace }}"
+    wait: yes
+    atomic: yes

@@ -1,0 +1,21 @@
+---
+- name: Remove loki chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-loki"
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+
+- name: Remove grafana chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-grafana"
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
+
+- name: Remove prometheus chart
+  community.kubernetes.helm:
+    name: "{{ k8s_namespace }}-prometheus"
+    release_namespace: "{{ k8s_namespace }}"
+    state: absent
+    wait: yes
