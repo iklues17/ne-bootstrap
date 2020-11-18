@@ -1,0 +1,153 @@
+---
+- name: Check release zookeeper
+  community.kubernetes.helm_info:
+    name: zookeeper
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release kafka
+  community.kubernetes.helm_info:
+    name: kafka
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release elasticsearch
+  community.kubernetes.helm_info:
+    name: elasticsearch
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release hive-metastore
+  community.kubernetes.helm_info:
+    name: hive-metastore
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release spark-historyserver
+  community.kubernetes.helm_info:
+    name: spark-historyserver
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release spark-thriftserver
+  community.kubernetes.helm_info:
+    name: spark-thriftserver
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release conductor
+  community.kubernetes.helm_info:
+    name: conductor
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release selenium
+  community.kubernetes.helm_info:
+    name: selenium
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release ne-post
+  community.kubernetes.helm_info:
+    name: ne-post
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release eds
+  community.kubernetes.helm_info:
+    name: eds
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release cms
+  community.kubernetes.helm_info:
+    name: cms
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release des
+  community.kubernetes.helm_info:
+    name: des
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release dss
+  community.kubernetes.helm_info:
+    name: dss
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release dvs
+  community.kubernetes.helm_info:
+    name: dvs
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Check release logstash
+  community.kubernetes.helm_info:
+    name: logstash
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
+- name: Finalize NE
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/constantine/install/completed"
+    method: POST
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+  register: finalize
+
+- name: Finalize NE
+  debug:
+    var: finalize

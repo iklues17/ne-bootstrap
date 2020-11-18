@@ -1,0 +1,3 @@
+k8s_namespace: ne
+
+ne_ccs_install_timeout: 300
