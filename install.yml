@@ -11,3 +11,4 @@
     - { role: "ne-update-kubeapps" }
     - { role: "ne-install-managed" }
     - { role: "ne-install-service" }
+    - { role: "ne-finalize" }

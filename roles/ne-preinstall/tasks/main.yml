@@ -13,6 +13,15 @@
           hosts:
             - "apm.{{ ingress_vhost }}"
 
+- name: Check release pinpoint
+  community.kubernetes.helm_info:
+    name: pinpoint
+    release_namespace: "{{ k8s_namespace }}"
+  register: result
+  until: "{{ result.status.status == 'deployed' }}"
+  retries: 10
+  delay: 10
+
 - name: Deploy ccs chart
   community.kubernetes.helm:
     name: ccs
