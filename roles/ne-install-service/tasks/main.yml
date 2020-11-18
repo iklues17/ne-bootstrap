@@ -55,10 +55,6 @@
   register: response
   ignore_errors: yes
 
-- name: Result Reset Elasticsearch index
-  debug:
-    var: response
-
 - name: Deploy - CMS
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/5/deploy"

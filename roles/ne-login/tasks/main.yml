@@ -28,10 +28,6 @@
       userPassword: "{{ ne_admin_password }}"
   register: login_response
 
-- name: Result Login NexR Enterprise
-  debug:
-    var: login_response
-
 - name: Set ststs variable - NexR Enterprise accesstoken
   set_stats:
     data:
@@ -68,7 +64,3 @@
         - id: 1
           name: "ADMINISTRATOR"
   register: new_user
-
-- name: Result Add Portal User
-  debug:
-    var: new_user

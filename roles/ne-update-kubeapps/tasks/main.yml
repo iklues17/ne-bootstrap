@@ -33,7 +33,3 @@
       title: "Kubernetes"
       token: "{{ kubeapps_token }}"
   register: orchestrator_response
-
-- name: Result Change Kubeapps info
-  debug:
-    var: orchestrator_response
