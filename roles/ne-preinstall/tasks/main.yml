@@ -119,7 +119,6 @@
     chart_ref: "{{ chart_repo_name }}/prometheus"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
-    wait: yes
     atomic: yes
     values:
       virtualServices:
@@ -136,6 +135,7 @@
           enabled: true
           portNumber: 80
           prefix: /
+  ignore_errors: yes
 
 - name: Deploy grafana chart
   community.kubernetes.helm:
@@ -143,7 +143,6 @@
     chart_ref: "{{ chart_repo_name }}/grafana"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
-    wait: yes
     atomic: yes
     values:
       virtualServices:
@@ -154,6 +153,7 @@
           enabled: true
           portNumber: 80
           prefix: /
+  ignore_errors: yes
 
 - name: Deploy loki chart
   community.kubernetes.helm:
@@ -161,5 +161,5 @@
     chart_ref: "{{ chart_repo_name }}/loki"
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
-    wait: yes
     atomic: yes
+  ignore_errors: yes
