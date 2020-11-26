@@ -139,6 +139,7 @@
         NE_VERSION: "{{ ne.schema_version }}"
         NE_NAMESPACE: "{{ k8s_namespace }}"
         CHART_REPO_NAME: "{{ chart_repo_name }}"
+        DATALAKE_USER_HOST: "https://{{ user_subdomain }}.datalake.cloud.kt.com"
 
 - name: Deploy ne-depend chart
   community.kubernetes.helm:
