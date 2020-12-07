@@ -1,4 +1,16 @@
 ---
+- name: Wait for hive-metastore pod running ready completely
+  community.kubernetes.k8s_info:
+    kind: Deployment
+    namespace: "{{ k8s_namespace }}"
+    name: "hive-metastore"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Available"
+    wait_sleep: 10
+    wait_timeout: 120
+
 - name: Deploy - NE Post
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/43/deploy"
