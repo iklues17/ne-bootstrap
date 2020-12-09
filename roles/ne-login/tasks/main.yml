@@ -64,3 +64,4 @@
         - id: 1
           name: "ADMINISTRATOR"
   register: new_user
+  ignore_errors: yes
