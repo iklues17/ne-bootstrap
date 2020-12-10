@@ -1,4 +1,4 @@
-cephBlockPool: pool-official40nexr-com
+cephBlockPool: ceph-rbd-pool
 
 ceph:
   external:

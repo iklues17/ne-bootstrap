@@ -67,16 +67,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      persistence:
-        size: 100Gi
-      resources:
-        requests:
-          memory: 4Gi
-          cpu: 1
-      virtualServices:
-        pmm:
-          hostname: "pmm.{{ ingress_vhost }}"
+    values: "{{ pmm_server['values'] | from_yaml }}"
 
 - name: Deploy pxc-database chart
   community.kubernetes.helm:
@@ -86,13 +77,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      proxysql:
-        size: 2
-      virtualServices:
-        pxcProxy:
-          hostname: "mysql.{{ ingress_vhost }}"
-          matchPortNumber: "{{ pxc_port }}"
+    values: "{{ pxc_database['values'] | from_yaml }}"
 
 - name: Waiting for pxc
   debug:
@@ -125,6 +110,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
+    values: "{{ nexus['values'] | from_yaml }}"
 
 - name: Deploy ne-init chart
   community.kubernetes.helm:
@@ -134,24 +120,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      image:
-        repository: "harbor.nexr.kr/nexr-enterprise/ne-init"
-        tag: "1.2.0-ktcloud"
-        pullPolicy: IfNotPresent
-      envOverrides:
-        S3_ENDPOINT: "{{ s3.endpoint }}"
-        S3_BUCKET: "{{ s3.bucket }}"
-        S3_ACCESSKEY: "{{ s3.accesskey }}"
-        S3_SECRETKEY: "{{ s3.secretkey }}"
-        MYSQL_SERVER: pxc-database-proxysql
-        MYSQL_PORT: 3306
-        NEXUS_HOST: nexus
-        HOST_REPO_NAME: nexr-host
-        GROUP_REPO_NAME: nexr-maven
-        NE_VERSION: "{{ ne.schema_version }}"
-        NE_NAMESPACE: "{{ k8s_namespace }}"
-        CHART_REPO_NAME: "{{ chart_repo_name }}"
+    values: "{{ ne_init['values'] | from_yaml }}"
 
 - name: Deploy ne-depend chart
   community.kubernetes.helm:
@@ -160,12 +129,4 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      image:
-        repository: "harbor.nexr.kr/nexr-enterprise/ne-depend"
-        tag: "1.2.0-ktcloud"
-        pullPolicy: IfNotPresent
-      resources:
-        requests:
-          memory: 5Gi
-          cpu: 2000m
+    values: "{{ ne_depend['values'] | from_yaml }}"

@@ -1,0 +1,47 @@
+bin_dir: /usr/local/bin
+
+chart_repo_url: http://192.168.70.13:28080/ne-1.2.0-aidx
+chart_repo_name: ne-1.2.0-aidx
+
+k8s_namespace: ne
+k8s_cluster_name: cluster.local
+
+ingress_vhost: nexr.ne.kr
+pxc_port: 43306
+
+s3:
+  endpoint: 10.0.3.5:80
+  bucket: dl-nexrqa40nexr-com
+  accesskey: 5M4SROOODT1DCSAOM8IA
+  secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
+  backup_bucket: bk-nexrqa40nexr-com
+
+user_subdomain: nexrtest
+
+ne_admin_username: admin
+ne_admin_password: admin
+
+ne_ccs_install_timeout: 300
+
+ne:
+  version: "1.2.0"
+  schema_version: "1.2.0"
+  sitename: nexr-gs
+  licensekey: "aOZudEC8fv1BjwiO0Mm6bYmwYBtqAgip7C8Lvhn0K4yefhaAQ0Le/+OnSJCsIk3XRutcJX/WMxYp2a4s8ZBcf3x/rNKEEqtDqW3+GlrHOdgdKokNqjREch9mOkxN0FNTvivGpITWkhXe0p0RfGGv1Qd/GFR5M9q/gkZcmLFPTEKVYKu/5pJhb338XsPhBrgjHkDyNjCmHmHDIjq6lK82AA=="
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: Always
+
+ne_context:
+  image_build_num: "ktcloud"
+  image_project: nexr-enterprise
+  imgae_pullPolicy: Always
+
+ne_ui:
+  image_build_num: "ktcloud"
+  image_project: nexr-enterprise
+  imgae_pullPolicy: Always
+
+oss:
+  image_project: nexr-enterprise
+  imgae_pullPolicy: Always

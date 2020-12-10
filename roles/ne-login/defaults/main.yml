@@ -1,7 +1,5 @@
 bin_dir: /usr/local/bin
 
-user_id: official@nexr.com
-
 k8s_namespace: ne
 
 ne:

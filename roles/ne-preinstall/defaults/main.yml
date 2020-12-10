@@ -1,4 +1,4 @@
-chart_repo_name: ne-aidx
+chart_repo_name: ne-1.2.0-aidx
 
 k8s_namespace: ne
 
@@ -7,3 +7,58 @@ ingress_vhost: nexr.kr
 ne:
   version: 1.2.0
   schema_version: 1.2.0
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+ne_ui:
+  image_build_num: "ktcloud"
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+pinpoint:
+  values:
+    web:
+      istio:
+        hosts:
+          - "apm.{{ ingress_vhost }}"
+
+ccs:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne.image_project }}/ccs-server-web"
+      pullPolicy: "{{ ne.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    ne:
+      pinpoint:
+        enabled: true
+
+cui:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne_ui.image_project }}/constantine-ui"
+      pullPolicy: "{{ ne_ui.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne_ui.image_build_num if ne_ui.image_build_num is defined and ne_ui.image_build_num|length else '' }}"
+
+cgw:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne.image_project }}/cgw-server-web"
+      pullPolicy: "{{ ne.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    ne:
+      pinpoint:
+        enabled: true
+    istio:
+      hosts:
+        - "ne.{{ ingress_vhost }}"
+
+a3s:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne.image_project }}/a3s-server-web"
+      pullPolicy: "{{ ne.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    ne:
+      pinpoint:
+        enabled: true
