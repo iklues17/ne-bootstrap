@@ -1,6 +1,6 @@
 bin_dir: /usr/local/bin
 
-chart_repo_name: ne-1.3.0-snapshot
+chart_repo_name: ne-1.3.0
 
 k8s_namespace: ne
 
@@ -14,8 +14,71 @@ s3:
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
   backup_bucket: bk-official
 
-ne:
-  version: 1.3.0-SNAPSHOT
-  schema_version: 1.3.0
-
 user_subdomain: nexrtest
+
+ne:
+  version: "1.3.0"
+  schema_version: "1.3.0"
+
+ne_context:
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+pmm_server:
+  values:
+    persistence:
+      size: 100Gi
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: 1
+    virtualServices:
+      pmm:
+        hostname: "pmm.{{ ingress_vhost }}"
+
+pxc_database:
+  values:
+    proxysql:
+      size: 2
+    virtualServices:
+      pxcProxy:
+        hostname: "mysql.{{ ingress_vhost }}"
+        matchPortNumber: "{{ pxc_port }}"
+
+ne_init:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-init"
+      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+    envOverrides:
+      S3_ENDPOINT: "{{ s3.endpoint }}"
+      S3_BUCKET: "{{ s3.bucket }}"
+      S3_ACCESSKEY: "{{ s3.accesskey }}"
+      S3_SECRETKEY: "{{ s3.secretkey }}"
+      MYSQL_SERVER: pxc-database-proxysql
+      MYSQL_PORT: 3306
+      NEXUS_HOST: nexus
+      HOST_REPO_NAME: nexr-host
+      GROUP_REPO_NAME: nexr-maven
+      NE_SCHEMA_VERSION: "{{ ne.schema_version }}"
+      NE_NAMESPACE: "{{ k8s_namespace }}"
+      CHART_REPO_NAME: "{{ chart_repo_name }}"
+      DATALAKE_USER_HOST: "https://{{ user_subdomain }}.datalake.cloud.kt.com"
+
+nexus:
+  values:
+    image:
+      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
+
+ne_depend:
+  values:
+    image:
+      repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-depend"
+      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
+      tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+    resources:
+      requests:
+        memory: 5Gi
+        cpu: 2000m

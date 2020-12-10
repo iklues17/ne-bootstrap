@@ -7,11 +7,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      web:
-        istio:
-          hosts:
-            - "apm.{{ ingress_vhost }}"
+    values: "{{  pinpoint['values'] | from_yaml }}"
 
 - name: Check release pinpoint
   community.kubernetes.helm_info:
@@ -30,10 +26,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      ne:
-        pinpoint:
-          enabled: true
+    values: "{{  ccs['values'] | from_yaml }}"
 
 - name: Deploy cui chart
   community.kubernetes.helm:
@@ -43,6 +36,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
+    values: "{{  cui['values'] | from_yaml }}"
 
 - name: Deploy cgw chart
   community.kubernetes.helm:
@@ -51,13 +45,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      ne:
-        pinpoint:
-          enabled: true
-      istio:
-        hosts:
-          - "ne.{{ ingress_vhost }}"
+    values: "{{  cgw['values'] | from_yaml }}"
 
 - name: Deploy openldap chart
   community.kubernetes.helm:
@@ -66,12 +54,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
-        hosts:
-          - "openldap.{{ ingress_vhost }}"
+    values: "{{  openldap['values'] | from_yaml }}"
 
 - name: Deploy ranger-admin chart
   community.kubernetes.helm:
@@ -81,12 +64,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
-        hosts:
-          - "ranger.{{ ingress_vhost }}"
+    values: "{{  ranger_admin['values'] | from_yaml }}"
 
 - name: Deploy ranger-usersync chart
   community.kubernetes.helm:
@@ -95,10 +73,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      istio:
-        sidecar:
-          enabled: false
+    values: "{{  ranger_usersync['values'] | from_yaml }}"
 
 - name: Deploy a3s chart
   community.kubernetes.helm:
@@ -108,10 +83,7 @@
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
-    values:
-      ne:
-        pinpoint:
-          enabled: true
+    values: "{{  a3s['values'] | from_yaml }}"
 
 - name: Deploy prometheus chart
   community.kubernetes.helm:
@@ -120,21 +92,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      virtualServices:
-        gateway: "nexr-gateway"
-        namespace: "istio-system"
-        # for each pod
-        prometheusServer:
-          hostname: "prometheus.{{ ingress_vhost }}"
-          enabled: true
-          portNumber: 80
-          prefix: /
-        alertManager:
-          hostname: "alertmanager.{{ ingress_vhost }}"
-          enabled: true
-          portNumber: 80
-          prefix: /
+    values: "{{  prometheus['values'] | from_yaml }}"
   ignore_errors: yes
 
 - name: Deploy grafana chart
@@ -144,15 +102,7 @@
     chart_version: "{{ ne.version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
-    values:
-      virtualServices:
-        gateway: "nexr-gateway"
-        namespace: "istio-system"
-        grafana:
-          hostname: "grafana.{{ ingress_vhost }}"
-          enabled: true
-          portNumber: 80
-          prefix: /
+    values: "{{  grafana['values'] | from_yaml }}"
   ignore_errors: yes
 
 - name: Deploy loki chart

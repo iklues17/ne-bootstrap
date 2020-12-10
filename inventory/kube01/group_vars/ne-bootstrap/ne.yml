@@ -1,0 +1,51 @@
+bin_dir: /usr/local/bin
+
+user_id: nexrqa@nexr.com
+
+chart_repo_url: http://192.168.70.13:28080/ne-1.3.0
+chart_repo_name: ne-1.3.0
+
+k8s_namespace: ne
+k8s_cluster_name: cluster.local
+
+ingress_vhost: nexr.ne.kr
+pxc_port: 43306
+
+s3:
+  endpoint: 10.0.3.5:80
+  bucket: dl-nexrqa40nexr-com
+  accesskey: 5M4SROOODT1DCSAOM8IA
+  secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
+  backup_bucket: bk-nexrqa40nexr-com
+
+user_subdomain: nexrtest
+
+ne_admin_username: admin
+ne_admin_password: admin
+
+ne_ccs_install_timeout: 300
+
+ne:
+  version: "1.3.0"
+  schema_version: "1.3.0"
+  sitename: nexr-qa
+  licensekey: "aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoySseDbIBO7AX8ktWbw5rzVsqIPCbk35Hl7ycvTo1CKetKrNStZo/RXmZE7H2vYRj38MYKHTkd2LwX5SIEkyUU+pFoKiBkLNXK+IvbGASIPTHlORA05qgnjXwmlT48qM86M="
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+ne_context:
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+ne_ui:
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+oss:
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+  spark_build_num: ""
+  hive_metastore_build_num: ""

@@ -1,4 +1,23 @@
 ---
+- name: Change Values - Zookeeper
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/configs/23/profiles/23/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', zookeeper['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - Zookeeper
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/35/deploy"
@@ -20,6 +39,25 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - Kafka
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/24/configs/13/profiles/13/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', kafka['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Deploy - Kafka
   uri:
@@ -43,6 +81,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - Elasticsearch
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/25/configs/14/profiles/14/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', elasticsearch['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - Elasticsearch
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/25/deploy"
@@ -64,6 +121,25 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - Hive-metastore
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/26/configs/15/profiles/15/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', hive_metastore['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Deploy - Hive-metastore
   uri:
@@ -87,6 +163,44 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - Spark-historyserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/29/configs/18/profiles/18/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', spark_historyserver['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
+- name: Change spark-default.conf - Spark-historyserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/29/configs/2020/profiles/18/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', spark_historyserver['spark-default.conf'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - Spark-historyserver
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/29/deploy"
@@ -108,6 +222,44 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - Spark-thriftserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/30/configs/19/profiles/19/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', spark_thriftserver['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
+- name: Change spark-default.conf - Spark-thriftserver
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/30/configs/2030/profiles/19/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', spark_thriftserver['spark-default.conf'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Deploy - Spark-thriftserver
   uri:
@@ -131,6 +283,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - Conductor
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/33/configs/22/profiles/22/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', conductor['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - Conductor
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/33/deploy"
@@ -153,6 +324,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - Selenium
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/41/configs/25/profiles/25/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', selenium['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - Selenium
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/41/deploy"
@@ -174,3 +364,22 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - Zeppelin
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/27/configs/16/profiles/16/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', zeppelin['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1

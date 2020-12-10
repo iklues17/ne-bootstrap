@@ -1,3 +1,57 @@
 k8s_namespace: ne
 
 ne_ccs_install_timeout: 300
+
+ingress_vhost: nexr.kr
+
+ne:
+  version: "1.3.0"
+
+oss:
+  image_build_num: ""
+  image_project: nexr-enterprise
+  imgae_pullPolicy: IfNotPresent
+
+zookeeper:
+kafka:
+elasticsearch:
+hive_metastore:
+  values:
+    image.repository: harbor.nexr.kr/{{ oss.image_project }}/hivemetastore
+    image.tag: 2.3.5-2.9.2-{{ ne.version }}{{ '-' ~ oss.hive_metastore_build_num if oss.hive_metastore_build_num is defined and oss.hive_metastore_build_num|length else '' }}
+
+spark_historyserver:
+  values:
+    image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
+    image.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    istio.hosts[0]: sparkhistory.{{ ingress_vhost }}
+  spark-default.conf:
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+
+spark_thriftserver:
+  values:
+    image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
+    image.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    replicaCount: 3
+  spark-default.conf:
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+
+zeppelin:
+  values:
+    sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
+    sparkImage.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+
+conductor:
+  values:
+    server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
+    server.resources.limits.memory: 10000Mi
+    server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
+    server.image.tag: 2.22.1-NR-{{ ne.version }}
+    ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
+    ui.image.tag: 2.22.1-NR-{{ ne.version }}
+    istio.hosts[0]: conductor.nexr.ne.kr
+
+selenium:
+  values:
+    hub.javaOpts: -Xms1024M -Xmx4096M -XX:-HeapDumpOnOutOfMemoryError
+    hub.resources.limits.memory: 5000Mi

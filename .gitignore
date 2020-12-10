@@ -18,6 +18,7 @@ vagrant/
 # Ansible inventory
 inventory/*
 !inventory/local
+!inventory/kube01
 !inventory/kube09
 !inventory/sample
 inventory/*/artifacts/

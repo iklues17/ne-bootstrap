@@ -1,4 +1,24 @@
 ---
+- name: Change Values - NE Post
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/43/configs/26/profiles/26/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  # loop: "{{ query('dict', lookup('file','values/ne-post.yaml', errors='ignore') | from_yaml, errors='ignore') | default([]) }}"
+  loop: "{{ query('dict', ne_post['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Wait for hive-metastore pod running ready completely
   community.kubernetes.k8s_info:
     kind: Deployment
@@ -33,6 +53,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - EDS
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/12/configs/10/profiles/10/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', eds['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - EDS
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/12/deploy"
@@ -54,6 +93,25 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - CMS
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/5/configs/3/profiles/3/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', cms['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Reset Elasticsearch index - constatntine-error-log
   uri:
@@ -89,6 +147,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - DES
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/6/configs/4/profiles/4/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', des['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - DES
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/6/deploy"
@@ -110,6 +187,25 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - DSS
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/10/configs/8/profiles/8/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', dss['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Deploy - DSS
   uri:
@@ -133,6 +229,25 @@
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
 
+- name: Change Values - DVS
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/11/configs/9/profiles/9/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', dvs['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
+
 - name: Deploy - DVS
   uri:
     url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/11/deploy"
@@ -154,6 +269,25 @@
     - "{{ 'json' not in response }}"
     - "'ERROR' in '{{ response.json.status }}'"
     - "609000 != {{ response.json.errorCode }}"
+
+- name: Change Values - Logstash
+  uri:
+    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/ccs:8180/proxy/applications/44/configs/27/profiles/27/contents/{{ item.key }}"
+    method: PUT
+    body_format: json
+    follow_redirects: all
+    validate_certs: no
+    timeout: "{{ ne_ccs_install_timeout }}"
+    headers:
+      Authorization: "Bearer {{ k8s_api_token }}"
+      x-constantine-token: "{{ ne_accesstoken }}"
+      content-type: application/json;charset=UTF-8
+    body:
+      configValue: "{{ item.value }}"
+  loop: "{{ query('dict', logstash['values'], errors='ignore') | default([]) }}"
+  loop_control:
+    label: "{{ item.key }} - {{ item.value }}"
+    pause: 1
 
 - name: Deploy - Logstash
   uri:
