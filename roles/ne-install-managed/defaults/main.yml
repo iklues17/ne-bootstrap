@@ -4,13 +4,12 @@ ne_ccs_install_timeout: 300
 
 ingress_vhost: nexr.kr
 
-ne:
-  version: "1.2.0"
+ne_version: "1.2.0"
 
 oss:
   image_build_num: ""
   image_project: nexr-enterprise
-  imgae_pullPolicy: Always
+  image_pullPolicy: Always
 
 zookeeper:
 kafka:
@@ -46,9 +45,9 @@ conductor:
     server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
     server.resources.limits.memory: 10000Mi
     server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
-    server.image.tag: 2.22.1-{{ ne.version }}-NR
+    server.image.tag: 2.22.1-{{ ne_version }}-NR
     ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
-    ui.image.tag: 2.22.1-{{ ne.version }}-NR
+    ui.image.tag: 2.22.1-{{ ne_version }}-NR
     istio.hosts[0]: conductor.nexr.ne.kr
 
 selenium:

@@ -2,11 +2,10 @@ bin_dir: /usr/local/bin
 
 k8s_namespace: ne
 
-ne:
-  version: 1.2.0
-  schema_version: 1.2.0
-  sitename: nexr-gs
-  licensekey: "aOZudEC8fv1BjwiO0Mm6bYmwYBtqAgip7C8Lvhn0K4yefhaAQ0Le/+OnSJCsIk3XRutcJX/WMxYp2a4s8ZBcf3x/rNKEEqtDqW3+GlrHOdgdKokNqjREch9mOkxN0FNTvivGpITWkhXe0p0RfGGv1Qd/GFR5M9q/gkZcmLFPTEKVYKu/5pJhb338XsPhBrgjHkDyNjCmHmHDIjq6lK82AA=="
+ne_version: 1.2.0
+ne_schema_version: 1.2.0
+ne_sitename: nexr-gs
+ne_licensekey: "aOZudEC8fv1BjwiO0Mm6bYmwYBtqAgip7C8Lvhn0K4yefhaAQ0Le/+OnSJCsIk3XRutcJX/WMxYp2a4s8ZBcf3x/rNKEEqtDqW3+GlrHOdgdKokNqjREch9mOkxN0FNTvivGpITWkhXe0p0RfGGv1Qd/GFR5M9q/gkZcmLFPTEKVYKu/5pJhb338XsPhBrgjHkDyNjCmHmHDIjq6lK82AA=="
   
 ne_admin_username: admin
 ne_admin_password: admin

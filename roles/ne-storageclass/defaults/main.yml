@@ -2,8 +2,7 @@ bin_dir: /usr/local/bin
 
 chart_repo_name: ne-1.2.0-aidx
 
-ne:
-  version: 1.2.0
+ne_version: 1.2.0
 
 cephBlockPool: asd
 

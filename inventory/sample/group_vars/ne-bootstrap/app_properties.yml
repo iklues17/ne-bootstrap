@@ -23,8 +23,8 @@ ne_init:
   values:
     image:
       repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-init"
-      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+      pullPolicy: "{{ ne_context.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
     envOverrides:
       S3_ENDPOINT: "{{ s3.endpoint }}"
       S3_BUCKET: "{{ s3.bucket }}"
@@ -35,21 +35,21 @@ ne_init:
       NEXUS_HOST: nexus
       HOST_REPO_NAME: nexr-host
       GROUP_REPO_NAME: nexr-maven
-      NE_VERSION: "{{ ne.schema_version }}"
+      NE_VERSION: "{{ ne_schema_version }}"
       NE_NAMESPACE: "{{ k8s_namespace }}"
       CHART_REPO_NAME: "{{ chart_repo_name }}"
 
 nexus:
   values:
     image:
-      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
+      pullPolicy: "{{ ne_context.image_pullPolicy }}"
 
 ne_depend:
   values:
     image:
       repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-depend"
-      pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+      pullPolicy: "{{ ne_context.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
     resources:
       requests:
         memory: 5Gi
@@ -65,9 +65,9 @@ pinpoint:
 ccs:
   values:
     image:
-      repository: "harbor.nexr.kr/{{ ne.image_project }}/ccs-server-web"
-      pullPolicy: "{{ ne.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+      repository: "harbor.nexr.kr/{{ ne_app.image_project }}/ccs-server-web"
+      pullPolicy: "{{ ne_app.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne:
       pinpoint:
         enabled: true
@@ -76,15 +76,15 @@ cui:
   values:
     image:
       repository: "harbor.nexr.kr/{{ ne_ui.image_project }}/constantine-ui"
-      pullPolicy: "{{ ne_ui.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne_ui.image_build_num if ne_ui.image_build_num is defined and ne_ui.image_build_num|length else '' }}"
+      pullPolicy: "{{ ne_ui.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_ui.image_build_num if ne_ui.image_build_num is defined and ne_ui.image_build_num|length else '' }}"
 
 cgw:
   values:
     image:
-      repository: "harbor.nexr.kr/{{ ne.image_project }}/cgw-server-web"
-      pullPolicy: "{{ ne.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+      repository: "harbor.nexr.kr/{{ ne_app.image_project }}/cgw-server-web"
+      pullPolicy: "{{ ne_app.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne:
       pinpoint:
         enabled: true
@@ -117,9 +117,9 @@ ranger_usersync:
 a3s:
   values:
     image:
-      repository: "harbor.nexr.kr/{{ ne.image_project }}/a3s-server-web"
-      pullPolicy: "{{ ne.imgae_pullPolicy }}"
-      tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+      repository: "harbor.nexr.kr/{{ ne_app.image_project }}/a3s-server-web"
+      pullPolicy: "{{ ne_app.image_pullPolicy }}"
+      tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne:
       pinpoint:
         enabled: true
@@ -163,32 +163,32 @@ hive_metastore:
 spark_historyserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    image.tag: 2.4.3-NR
     istio.hosts[0]: sparkhistory.{{ ingress_vhost }}
   spark-default.conf:
-    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
 
 spark_thriftserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    image.tag: 2.4.3-NR
     replicaCount: 3
   spark-default.conf:
-    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
 
 zeppelin:
   values:
     sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    sparkImage.tag: 2.4.3-NR-{{ ne.version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    sparkImage.tag: 2.4.3-NR
 
 conductor:
   values:
     server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
     server.resources.limits.memory: 10000Mi
     server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
-    server.image.tag: 2.22.1-NR-{{ ne.version }}
+    server.image.tag: 2.22.1-{{ ne_version }}-NR
     ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
-    ui.image.tag: 2.22.1-NR-{{ ne.version }}
+    ui.image.tag: 2.22.1-{{ ne_version }}-NR
     istio.hosts[0]: conductor.nexr.ne.kr
 
 selenium:
@@ -199,42 +199,42 @@ selenium:
 ne_post:
   values:
     image.repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-post"
-    image.pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+    image.pullPolicy: "{{ ne_context.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
 
 eds:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/eds-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/eds-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 cms:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/cms-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/cms-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 des:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/des-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/des-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 dss:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/dss-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/dss-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 dvs:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/dvs-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/dvs-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 logstash:
