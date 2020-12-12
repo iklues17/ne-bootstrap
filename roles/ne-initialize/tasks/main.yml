@@ -55,7 +55,7 @@
   community.kubernetes.helm:
     name: pxc-operator
     chart_ref: "{{ chart_repo_name }}/pxc-operator"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -64,7 +64,7 @@
   community.kubernetes.helm:
     name: pmm-server
     chart_ref: "{{ chart_repo_name }}/pmm-server"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{ pmm_server['values'] | from_yaml }}"
@@ -73,7 +73,7 @@
   community.kubernetes.helm:
     name: pxc-database
     chart_ref: "{{ chart_repo_name }}/pxc-database"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -97,7 +97,7 @@
   community.kubernetes.helm:
     name: nexus
     chart_ref: "{{ chart_repo_name }}/nexus"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -107,7 +107,7 @@
   community.kubernetes.helm:
     name: ne-init
     chart_ref: "{{ chart_repo_name }}/ne-init"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -117,7 +117,7 @@
   community.kubernetes.helm:
     name: ne-depend
     chart_ref: "{{ chart_repo_name }}/ne-depend"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{ ne_depend['values'] | from_yaml }}"

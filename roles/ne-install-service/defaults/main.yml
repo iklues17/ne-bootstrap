@@ -2,56 +2,57 @@ k8s_namespace: ne
 
 ne_ccs_install_timeout: 300
 
-ne:
-  version: "1.3.0"
+ne_version: "1.3.0"
+
+ne_app:
   image_build_num: ""
   image_project: nexr-enterprise
-  imgae_pullPolicy: IfNotPresent
+  image_pullPolicy: IfNotPresent
 
 ne_context:
   image_build_num: ""
   image_project: nexr-enterprise
-  imgae_pullPolicy: IfNotPresent
+  image_pullPolicy: IfNotPresent
 
 ne_post:
   values:
     image.repository: "harbor.nexr.kr/{{ ne_context.image_project }}/ne-post"
-    image.pullPolicy: "{{ ne_context.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
+    image.pullPolicy: "{{ ne_context.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_context.image_build_num if ne_context.image_build_num is defined and ne_context.image_build_num|length else '' }}"
 
 eds:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/eds-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/eds-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 cms:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/cms-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/cms-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 des:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/des-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/des-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 dss:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/dss-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/dss-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 dvs:
   values:
-    image.repository: "harbor.nexr.kr/{{ ne.image_project }}/dvs-server-web"
-    image.pullPolicy: "{{ ne.imgae_pullPolicy }}"
-    image.tag: "{{ ne.version }}{{ '-' ~ ne.image_build_num if ne.image_build_num is defined and ne.image_build_num|length else '' }}"
+    image.repository: "harbor.nexr.kr/{{ ne_app.image_project }}/dvs-server-web"
+    image.pullPolicy: "{{ ne_app.image_pullPolicy }}"
+    image.tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne.pinpoint.enabled: "true"
 
 logstash:

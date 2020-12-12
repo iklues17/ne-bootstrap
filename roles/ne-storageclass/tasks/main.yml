@@ -46,7 +46,7 @@
   community.kubernetes.helm:
     name: rook-ceph
     chart_ref: "{{ chart_repo_name }}/ne-rook-ceph"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: rook-ceph
     wait: yes
     atomic: yes

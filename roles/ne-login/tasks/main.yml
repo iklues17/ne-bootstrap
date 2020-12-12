@@ -10,8 +10,8 @@
     headers:
       Authorization: "Bearer {{ k8s_api_token }}"
     body:
-      licenseKey: "{{ ne.licensekey }}"
-      siteName: "{{ ne.sitename }}"
+      licenseKey: "{{ ne_licensekey }}"
+      siteName: "{{ ne_sitename }}"
 
 - name: Login NexR Enterprise
   uri:

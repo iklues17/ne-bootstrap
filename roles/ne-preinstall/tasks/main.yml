@@ -3,7 +3,7 @@
   community.kubernetes.helm:
     name: pinpoint
     chart_ref: "{{ chart_repo_name }}/pinpoint"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -22,7 +22,7 @@
   community.kubernetes.helm:
     name: ccs
     chart_ref: "{{ chart_repo_name }}/ccs"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -32,7 +32,7 @@
   community.kubernetes.helm:
     name: cui
     chart_ref: "{{ chart_repo_name }}/cui"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -42,7 +42,7 @@
   community.kubernetes.helm:
     name: cgw
     chart_ref: "{{ chart_repo_name }}/cgw"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  cgw['values'] | from_yaml }}"
@@ -51,7 +51,7 @@
   community.kubernetes.helm:
     name: openldap
     chart_ref: "{{ chart_repo_name }}/openldap"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  openldap['values'] | from_yaml }}"
@@ -60,7 +60,7 @@
   community.kubernetes.helm:
     name: ranger-admin
     chart_ref: "{{ chart_repo_name }}/ranger-admin"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -70,7 +70,7 @@
   community.kubernetes.helm:
     name: ranger-usersync
     chart_ref: "{{ chart_repo_name }}/ranger-usersync"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  ranger_usersync['values'] | from_yaml }}"
@@ -79,7 +79,7 @@
   community.kubernetes.helm:
     name: a3s
     chart_ref: "{{ chart_repo_name }}/a3s"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -89,7 +89,7 @@
   community.kubernetes.helm:
     name: "{{ k8s_namespace }}-prometheus"
     chart_ref: "{{ chart_repo_name }}/prometheus"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  prometheus['values'] | from_yaml }}"
@@ -99,7 +99,7 @@
   community.kubernetes.helm:
     name: "{{ k8s_namespace }}-grafana"
     chart_ref: "{{ chart_repo_name }}/grafana"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  grafana['values'] | from_yaml }}"
@@ -109,7 +109,7 @@
   community.kubernetes.helm:
     name: "{{ k8s_namespace }}-loki"
     chart_ref: "{{ chart_repo_name }}/loki"
-    chart_version: "{{ ne.version }}"
+    chart_version: "{{ ne_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
   ignore_errors: yes
