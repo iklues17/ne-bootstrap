@@ -24,7 +24,7 @@
       type: "Terminating"
   register: response
   failed_when:
-    - "failed == true and response != 409"
+    - "response.status is defined and response.status != 409"
 
 - name: Get rook-ceph namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph'"
@@ -40,7 +40,7 @@
     var: raw_namespace
 
 - name: Replace rook-ceph namespace finalizer
-  shell: "echo {{ raw_namespace.stdout }} |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/rook-ceph/finalize' -f -"
+  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/rook-ceph/finalize' -f -"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   when: raw_namespace.stdout != ""
