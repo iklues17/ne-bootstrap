@@ -10,6 +10,53 @@
     state: absent
     wait: yes
 
+- name: Remove a DaemonSet csi-rbdplugin
+  community.kubernetes.k8s:
+    state: absent
+    namespace: "rook-ceph"
+    definition:
+      kind: DaemonSet
+      api_version: apps/v1
+      metadata:
+        name: "csi-rbdplugin"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Terminating"
+
+- name: Remove a Deployment csi-rbdplugin-provisioner
+  community.kubernetes.k8s:
+    state: absent
+    namespace: "rook-ceph"
+    definition:
+      kind: Deployment
+      api_version: apps/v1
+      metadata:
+        name: "csi-rbdplugin-provisioner"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Terminating"
+
+- name: Replace CephCluster finalizer
+  shell: "{{ bin_dir }}/kubectl get --raw '/apis/ceph.rook.io/v1/namespaces/rook-ceph/cephclusters/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace cephclusters rook-ceph -n rook-ceph -f -"
+  environment:
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+
+- name: Remove a CephCluster
+  community.kubernetes.k8s:
+    state: absent
+    namespace: "rook-ceph"
+    definition:
+      kind: CephCluster
+      api_version: v1
+      metadata:
+        name: "rook-ceph"
+    wait: yes
+    wait_condition:
+      status: "True"
+      type: "Terminating"
+
 - name: Remove a rook-ceph namespace for rook-ceph operator
   community.kubernetes.k8s:
     state: absent
