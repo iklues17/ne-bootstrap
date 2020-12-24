@@ -4,3 +4,14 @@
     name: "{{ chart_repo_name }}"
     state: present
     repo_url: "{{ chart_repo_url }}"
+
+- name: Update helm repo
+  shell: "helm repo update"
+
+- name: Verify helm repo updated
+  shell: "helm search repo {{ chart_repo_name }}/ -oyaml"
+  register: charts
+
+- name: Print chart list
+  debug:
+    msg: "{{ charts }}"
