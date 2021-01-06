@@ -21,6 +21,8 @@ pinpoint:
   values:
     web:
       istio:
+        gateways:
+        - "{{ ingress_gateway }}"
         hosts:
           - "apm.{{ ingress_vhost }}"
 
@@ -51,6 +53,8 @@ cgw:
       pinpoint:
         enabled: true
     istio:
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "ne.{{ ingress_vhost }}"
 
@@ -59,6 +63,8 @@ openldap:
     istio:
       sidecar:
         enabled: false
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "openldap.{{ ingress_vhost }}"
 
@@ -67,6 +73,8 @@ ranger_admin:
     istio:
       sidecar:
         enabled: false
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "ranger.{{ ingress_vhost }}"
 
@@ -89,8 +97,8 @@ a3s:
 prometheus:
   values:
     virtualServices:
-      gateway: "nexr-gateway"
-      namespace: "istio-system"
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       # for each pod
       prometheusServer:
         hostname: "prometheus.{{ ingress_vhost }}"
@@ -106,8 +114,8 @@ prometheus:
 grafana:
   values:
     virtualServices:
-      gateway: "nexr-gateway"
-      namespace: "istio-system"
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       grafana:
         hostname: "grafana.{{ ingress_vhost }}"
         enabled: true

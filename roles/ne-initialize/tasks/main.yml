@@ -51,6 +51,12 @@
     secret_key: "{{ s3.secretkey }}"
     ceph: true
 
+- name: Create NE Istio Gateway
+  community.kubernetes.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('template', 'istio_ne_gateway.yml') | from_yaml }}"
+
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:
     name: pxc-operator

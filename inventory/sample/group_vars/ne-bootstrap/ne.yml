@@ -9,6 +9,7 @@ k8s_namespace: ne
 k8s_cluster_name: cluster.local
 
 ingress_vhost: nexr.kr
+ingress_gateway: nexr-gateway
 pxc_port: 33306
 
 s3:

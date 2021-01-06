@@ -7,6 +7,8 @@ pmm_server:
         memory: 4Gi
         cpu: 1
     virtualServices:
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       pmm:
         hostname: "pmm.{{ ingress_vhost }}"
 
@@ -15,6 +17,8 @@ pxc_database:
     proxysql:
       size: 2
     virtualServices:
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       pxcProxy:
         hostname: "mysql.{{ ingress_vhost }}"
         matchPortNumber: "{{ pxc_port }}"
@@ -39,6 +43,7 @@ ne_init:
       NE_NAMESPACE: "{{ k8s_namespace }}"
       CHART_REPO_NAME: "{{ chart_repo_name }}"
       DATALAKE_USER_HOST: "https://{{ user_subdomain }}.datalake.cloud.kt.com"
+      ISTIO_SIDECAR_ENABLE: "false"
 
 nexus:
   values:
@@ -60,6 +65,8 @@ pinpoint:
   values:
     web:
       istio:
+        gateways:
+        - "{{ ingress_gateway }}"
         hosts:
           - "apm.{{ ingress_vhost }}"
 
@@ -90,6 +97,8 @@ cgw:
       pinpoint:
         enabled: true
     istio:
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "ne.{{ ingress_vhost }}"
 
@@ -98,6 +107,8 @@ openldap:
     istio:
       sidecar:
         enabled: false
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "openldap.{{ ingress_vhost }}"
 
@@ -106,6 +117,8 @@ ranger_admin:
     istio:
       sidecar:
         enabled: false
+      gateways:
+      - "{{ ingress_gateway }}"
       hosts:
         - "ranger.{{ ingress_vhost }}"
 
@@ -128,8 +141,8 @@ a3s:
 prometheus:
   values:
     virtualServices:
-      gateway: "nexr-gateway"
-      namespace: "istio-system"
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       # for each pod
       prometheusServer:
         hostname: "prometheus.{{ ingress_vhost }}"
@@ -145,8 +158,8 @@ prometheus:
 grafana:
   values:
     virtualServices:
-      gateway: "nexr-gateway"
-      namespace: "istio-system"
+      gateway: "{{ ingress_gateway }}"
+      namespace: "{{ k8s_namespace }}"
       grafana:
         hostname: "grafana.{{ ingress_vhost }}"
         enabled: true
@@ -164,7 +177,8 @@ hive_metastore:
 spark_historyserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR
+    image.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    istio.gateways[0]: {{ ingress_gateway }}
     istio.hosts[0]: sparkhistory.{{ ingress_vhost }}
   spark-default.conf:
     spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
@@ -172,7 +186,7 @@ spark_historyserver:
 spark_thriftserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR
+    image.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
     replicaCount: 3
   spark-default.conf:
     spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
@@ -180,17 +194,18 @@ spark_thriftserver:
 zeppelin:
   values:
     sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    sparkImage.tag: 2.4.3-NR
+    sparkImage.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
 
 conductor:
   values:
     server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
     server.resources.limits.memory: 10000Mi
     server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
-    server.image.tag: 2.22.1-{{ ne_version }}-NR
+    server.image.tag: 2.22.1-NR-{{ ne_version }}
     ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
-    ui.image.tag: 2.22.1-{{ ne_version }}-NR
-    istio.hosts[0]: conductor.nexr.ne.kr
+    ui.image.tag: 2.22.1-NR-{{ ne_version }}
+    istio.gateways[0]: {{ ingress_gateway }}
+    istio.hosts[0]: conductor.{{ ingress_vhost }}
 
 selenium:
   values:
