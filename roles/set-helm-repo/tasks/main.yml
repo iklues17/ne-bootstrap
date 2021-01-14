@@ -4,6 +4,7 @@
     name: "{{ chart_repo_name }}"
     state: present
     repo_url: "{{ chart_repo_url }}"
+  ignore_errors: yes
 
 - name: Update helm repo
   shell: "helm repo update"
