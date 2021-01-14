@@ -151,27 +151,3 @@
 - name: Finalize NE
   debug:
     var: finalize
-
-- name: Disable user admin
-  uri:
-    url: "{{ k8s_api_server }}/api/v1/namespaces/{{ k8s_namespace }}/services/a3s:8189/proxy/users/1"
-    method: PUT
-    body_format: json
-    follow_redirects: all
-    validate_certs: no
-    timeout: "{{ ne_ccs_install_timeout }}"
-    headers:
-      Authorization: "Bearer {{ k8s_api_token }}"
-      x-constantine-token: "{{ ne_accesstoken }}"
-      content-type: application/json;charset=UTF-8
-    body:
-      id: 1
-      userId: "{{ ne_admin_username }}"
-      userName: "{{ ne_admin_username }}"
-      email: "admin@nexr.com"
-      useYn: false
-      lockYn: false
-      roles:
-        - id: 1
-          name: "ADMINISTRATOR"
-      admin: false
