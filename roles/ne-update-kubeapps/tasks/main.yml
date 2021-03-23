@@ -33,3 +33,40 @@
       title: "Kubernetes"
       token: "{{ kubeapps_token }}"
   register: orchestrator_response
+
+- name: Get k8s AppRepository object
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: AppRepository
+    namespace: "{{ k8s_namespace }}"
+    name: "{{ chart_repo_name }}"
+  register: check_apprepository_result
+
+- name: Debug When AppRepository is not installed
+  debug:
+    var: check_apprepository_result
+
+- name: Generate ne apprepository when is not existed
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: kubeapps.com/v1alpha1
+      kind: AppRepository
+      metadata:
+        name: "{{ chart_repo_name }}"
+        namespace: "{{ k8s_namespace }}"
+      spec:
+        auth: {}
+        resyncRequests: 0
+        syncJobPodTemplate:
+          metadata:
+            creationTimestamp: null
+          spec:
+            containers: null
+        type: helm
+        url: "{{ chart_repo_url }}"
+  when:
+    - check_apprepository_result.status is undefined or
+      check_apprepository_result.status is defined and check_apprepository_result.status.status == 'failed'
+    - check_apprepository_result.resources is undefined or
+      check_apprepository_result.resources | length <= 0
