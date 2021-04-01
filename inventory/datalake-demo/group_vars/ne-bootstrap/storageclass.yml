@@ -1,0 +1,22 @@
+cephBlockPool: rbd-ne-demo-pool
+
+ceph:
+  external:
+    enable: true
+    fsid: 48a64a43-3393-4554-84a8-9faf02ed8001
+    clientAdminKey: AQBxqjBfHF2nBRAA65JMOClDj67mkfhXW6ArfA==
+    monKey: AQBkqjBfAAAAABAAFv0Nm2ocivmaDzORyfWgpw==
+    # mons describe external ceph-mon endpoints
+    mons:
+    - addr: 172.24.0.11:6789
+      name: 172.24.0.11
+    - addr: 172.24.0.12:6789
+      name: 172.24.0.12
+    - addr: 172.24.0.14:6789
+      name: 172.24.0.14
+    - addr: 172.24.0.15:6789
+      name: 172.24.0.15
+    - addr: 172.24.0.17:6789
+      name: 172.24.0.17
+
+remove_rook_when_reset: false
