@@ -47,5 +47,9 @@ ne_ui:
 oss:
   image_project: nexr-enterprise
   image_pullPolicy: IfNotPresent
+  spark_version: 2.4.3-NR
   spark_build_num: ""
+  hive_metastore_version: 2.3.5-2.9.2
   hive_metastore_build_num: ""
+  conductor_veresion: 2.22.1-NR-{{ ne_version }}
+  conductor_build_num: ""

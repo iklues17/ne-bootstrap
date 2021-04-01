@@ -172,38 +172,38 @@ elasticsearch:
 hive_metastore:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/hivemetastore
-    image.tag: 2.3.5-2.9.2-{{ ne_version }}{{ '-' ~ oss.hive_metastore_build_num if oss.hive_metastore_build_num is defined and oss.hive_metastore_build_num|length else '' }}
+    image.tag: "{{ oss.hive_metastore_version }}{{ '-' ~ oss.hive_metastore_build_num if oss.hive_metastore_build_num is defined and oss.hive_metastore_build_num|length else '' }}"
 
 spark_historyserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    image.tag: "{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}"
     istio.gateways[0]: {{ ingress_gateway }}
     istio.hosts[0]: sparkhistory.{{ ingress_vhost }}
   spark-default.conf:
-    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
 
 spark_thriftserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    image.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    image.tag: "{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}"
     replicaCount: 3
   spark-default.conf:
-    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:2.4.3-NR
+    spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
 
 zeppelin:
   values:
     sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
-    sparkImage.tag: 2.4.3-NR-{{ ne_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    sparkImage.tag: "{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}"
 
 conductor:
   values:
     server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
     server.resources.limits.memory: 10000Mi
     server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
-    server.image.tag: 2.22.1-NR-{{ ne_version }}
+    server.image.tag: "{{ oss.conductor_veresion }}{{ '-' ~ oss.conductor_build_num if oss.conductor_build_num is defined and oss.conductor_build_num|length else '' }}"
     ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
-    ui.image.tag: 2.22.1-NR-{{ ne_version }}
+    ui.image.tag: "{{ oss.conductor_veresion }}{{ '-' ~ oss.conductor_build_num if oss.conductor_build_num is defined and oss.conductor_build_num|length else '' }}"
     istio.gateways[0]: {{ ingress_gateway }}
     istio.hosts[0]: conductor.{{ ingress_vhost }}
 
