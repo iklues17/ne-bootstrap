@@ -2,10 +2,10 @@ bin_dir: /usr/local/bin
 
 user_id: demo@nexr.com
 
-chart_repo_url: http://172.24.1.19:28080/ne-1.3.0
-chart_repo_name: ne-1.3.0
+chart_repo_url: http://172.24.1.19:28080/ne-1.3.1
+chart_repo_name: ne-1.3.1
 
-k8s_namespace: ne-130
+k8s_namespace: ne
 k8s_cluster_name: cluster.ne
 
 ingress_vhost: nexr.kr
@@ -24,28 +24,28 @@ user_subdomain: demo
 ne_admin_username: admin
 ne_admin_password: admin
 ne_ccs_install_timeout: 300
-ne_version: "1.3.0"
-ne_schema_version: "1.3.0"
+ne_version: "1.3.1-SNAPSHOT"
+ne_schema_version: "1.3.1"
 ne_sitename: ne-demo
-ne_licensekey: "qyN0c4O5/9wsbEgEDWjKS6qhK9vziU24dqUNFksl1GGAbPMjv1nFYLLZrn3JGhttYV/c6ks1oQwXvzMfN4ve2NkKfWbAvHUWyV8a2+jmMasDBQF2QI9qTo08eAj8infpz6xoIWtiJr/H9/Mz0QjXuPxZaBvVlnmQYZ7Fxo68A5w="
+ne_licensekey: "uo6KKB6nq8FLYY3obqK74t3azDGBoomKYVr5AKccy7thKJwhoeSurUUGZDdxgTjbYJRfENmC5dj5Fh+F/cq9NeWWWymMZ+oVIaSyBD3Lp/4bmHDbBAXQ5eKQIHHNRrLig6PZnwcPvldkxvwLOWqdluVdoc6z81cxPur70DJJy8g="
 
 ne_app:
   image_build_num: ""
   image_project: nexr-enterprise
-  image_pullPolicy: Always
+  image_pullPolicy: IfNotPresent
 
 ne_context:
   image_build_num: ""
   image_project: nexr-enterprise
-  image_pullPolicy: Always
+  image_pullPolicy: IfNotPresent
 
 ne_ui:
   image_build_num: ""
   image_project: nexr-enterprise
-  image_pullPolicy: Always
+  image_pullPolicy: IfNotPresent
 
 oss:
   image_project: nexr-enterprise
-  image_pullPolicy: Always
+  image_pullPolicy: IfNotPresent
   spark_build_num: ""
   hive_metastore_build_num: ""

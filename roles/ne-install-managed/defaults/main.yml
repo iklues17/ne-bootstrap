@@ -4,7 +4,7 @@ ne_ccs_install_timeout: 300
 
 ingress_vhost: nexr.kr
 
-ne_version: "1.3.0"
+ne_version: "1.3.1-SNAPSHOT"
 
 oss:
   image_build_num: ""
