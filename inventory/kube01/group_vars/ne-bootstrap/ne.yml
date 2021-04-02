@@ -53,3 +53,5 @@ oss:
   hive_metastore_build_num: ""
   conductor_veresion: 2.22.1-NR-{{ ne_version }}
   conductor_build_num: ""
+  zeppelin_version: 0.9.0-NR-{{ ne_version }}
+  zeppelin_build_num: ""

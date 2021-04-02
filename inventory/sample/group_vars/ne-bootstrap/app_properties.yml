@@ -195,6 +195,8 @@ zeppelin:
   values:
     sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
     sparkImage.tag: "{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}"
+    zeppelinImage.repository: harbor.nexr.kr/{{ oss.image_project }}/zeppelin
+    zeppelinImage.tag: "{{ oss.zeppelin_version }}{{ '-' ~ oss.zeppelin_build_num if oss.zeppelin_build_num is defined and oss.zeppelin_build_num|length else '' }}"
 
 conductor:
   values:
