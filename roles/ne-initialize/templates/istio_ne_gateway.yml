@@ -31,3 +31,9 @@ spec:
         name: ne-mysql
         number: {{ pxc_port }}
         protocol: TCP
+    - hosts:
+        - openldap.{{ ingress_vhost }}
+      port:
+        name: ne-openldap
+        number: {{ ldap_port }}
+        protocol: TCP

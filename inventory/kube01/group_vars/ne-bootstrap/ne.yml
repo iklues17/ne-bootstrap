@@ -11,6 +11,7 @@ k8s_cluster_name: cluster.local
 ingress_vhost: nexr.ne.kr
 ingress_gateway: nexr-gateway
 pxc_port: 43306
+ldap_port: 389
 
 s3:
   endpoint: 10.0.3.5:80
