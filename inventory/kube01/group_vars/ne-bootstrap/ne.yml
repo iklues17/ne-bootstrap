@@ -2,8 +2,8 @@ bin_dir: /usr/local/bin
 
 user_id: nexrqa@nexr.com
 
-chart_repo_url: http://192.168.70.13:28080/ne-1.3.1
-chart_repo_name: ne-1.3.1
+chart_repo_url: http://192.168.70.13:28080/ne
+chart_repo_name: ne
 
 k8s_namespace: ne
 k8s_cluster_name: cluster.local
@@ -25,10 +25,10 @@ user_subdomain: nexrqa
 ne_admin_username: admin
 ne_admin_password: admin
 ne_ccs_install_timeout: 300
-ne_version: "1.3.1-SNAPSHOT"
+ne_version: "1.3.1"
 ne_schema_version: "1.3.1"
 ne_sitename: nexr-qa
-ne_licensekey: "aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoyQKv8iuZkLIHIIjYjzKa5kU3bBTwTt+n9AwQwuphGdKxVXbVyiX5KGWJKqR5AsNcIqs/v+e89My/FKTgfcPpwwR7fYj36g2+f7eTtBecb/s+UPW7TxvpNM5z1WtYwl+Oxs="
+ne_licensekey: "aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoyQoWVutY1mevnEVMoNgVfDCNAqqdT+DncNSDzH8+XK3mE2EOSdh98AOgtWifw7t6ywXgsv9wn3MZVNmcCUBSXzozUf48gQOX2gcuncEmNDEZbAZ2j+xNOCYOBtpeDKpIc8="
 
 ne_app:
   image_build_num: ""

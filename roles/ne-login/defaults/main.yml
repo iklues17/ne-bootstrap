@@ -4,10 +4,10 @@ user_id: official@nexr.com
 
 k8s_namespace: ne
 
-ne_version: 1.3.1-SNAPSHOT
+ne_version: 1.3.1
 ne_schema_version: 1.3.1
 ne_sitename: nexr-qa
-ne_licensekey: "aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoySseDbIBO7AX8ktWbw5rzVsqIPCbk35Hl7ycvTo1CKetKrNStZo/RXmZE7H2vYRj38MYKHTkd2LwX5SIEkyUU+pFoKiBkLNXK+IvbGASIPTHlORA05qgnjXwmlT48qM86M="
+ne_licensekey: "aWPl13uBrzYZ0QZg1X6T97lYRUOg6aN8yfrg+oFDoyQoWVutY1mevnEVMoNgVfDCNAqqdT+DncNSDzH8+XK3mE2EOSdh98AOgtWifw7t6ywXgsv9wn3MZVNmcCUBSXzozUf48gQOX2gcuncEmNDEZbAZ2j+xNOCYOBtpeDKpIc8="
   
 ne_admin_username: admin
 ne_admin_password: admin
