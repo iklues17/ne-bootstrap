@@ -1,6 +1,6 @@
 # AI/DX Bootstrap Ansible Playbook
 
-### Requirements todo
+### Requirements todoccccccc
 - kubectl
 - helm
 - Python package
