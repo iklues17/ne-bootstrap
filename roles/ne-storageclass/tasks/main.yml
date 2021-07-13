@@ -1,59 +1,62 @@
 ---
-- name: Create a k8s namespace for rook-ceph operator
+- name: cephblockpool
   community.kubernetes.k8s:
     state: present
     definition:
-      kind: Namespace
-      api_version: v1
+      kind: CephBlockPool
+      apiVersion: ceph.rook.io/v1
       metadata:
-        name: rook-ceph
-        labels:
-          istio-injection: disabled
+        name: robert-ceph-rbd-pool
+        namespace: rook-ceph
+     replicated:
+       size: 3
+       targetSizeRatio: 0
 
-- name: Check installation of Rook ceph chart inside the namespace
-  community.kubernetes.helm_info:
-    name: rook-ceph
-    release_namespace: rook-ceph
-  register: check_install_result
+- name: check cephblockpool
+  community.kubernetes.k8s_info: 
+    name: cephblockpool
+    kind: CephBlockPool
+    api_version: ceph.rook.io/v1
+  register: check_cephblockpool_result
+  
 
-- name: Debug When chart is failed
+- name: debug
   debug:
-    var: check_install_result
-  when: check_install_result.status is defined and check_install_result.status.status == 'failed'
+    var: check_cephblockpool_result
+  when: check_cephblockpool_result is defined and check_cephblockpool_result.resources | length > 0
 
-- name: Debug When chart is deployed
-  debug:
-    var: check_install_result
-  when: check_install_result.status is defined and check_install_result.status.status == 'deployed'
-
-- name: Debug When chart is not installed
-  debug:
-    var: check_install_result
-  when: check_install_result.status is undefined
+- name: storageclass
+  community.kubernetes.k8s:
+    state: present
+    definition: 
+      kind: StorageClass
+      apiVersion: storage.k8s.io/v1
+      metadata:
+        name: robert-rook-ceph-block
+      provisioner: rook-ceph.rbd.csi.ceph.com
+      parameters:
+        clusterID: rook-ceph
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+        csi.storage.k8s.io/fstype: ext4
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+        csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: roo-ceph
+        imageFeatures: layering
+        imageFormat: '2'
+        pool: ceph-rbd-pool
+      reclaimPolicy: Delete
+      allowVolumeExpansion: true
+      volumeBindingMode: Immediate
 
 - name: Get k8s StorageClass object
   community.kubernetes.k8s_info:
     api_version: v1
     kind: StorageClass
-    name: rook-ceph-block
+    name: robert-rook-ceph-block
   register: check_storageclass_result
 
-- name: Debug When StorageClass is not installed
-  debug:
-    var: check_storageclass_result
+## create storageclass and cephpool for client
+#
 
-- name: Deploy rook-ceph-block StorageClass chart when is not installed
-  community.kubernetes.helm:
-    name: rook-ceph
-    chart_ref: "{{ chart_repo_name }}/ne-rook-ceph"
-    chart_version: "{{ ne_version }}"
-    release_namespace: rook-ceph
-    wait: yes
-    atomic: yes
-    force: yes
-    values: "{{ lookup('template', 'values.yaml') | from_yaml }}"
-  when:
-    - check_install_result.status is undefined or
-      check_install_result.status is defined and check_install_result.status.status == 'failed'
-    - check_storageclass_result.resources is undefined or
-      check_storageclass_result.resources | length <= 0

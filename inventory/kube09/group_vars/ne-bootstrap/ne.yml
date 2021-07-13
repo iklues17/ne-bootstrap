@@ -1,26 +1,26 @@
 bin_dir: /usr/local/bin
 
-user_id: dev@nexr.com
+user_id: robert.no@nexr.com
 
 chart_repo_url: http://192.168.70.13:28080/ne
 chart_repo_name: ne
 
-k8s_namespace: ne
+k8s_namespace: robert
 k8s_cluster_name: cluster.local
 
 ingress_vhost: nexr.kr
 ingress_gateway: nexr-gateway
-pxc_port: 33306
-ldap_port: 389
+pxc_port: 63306
+ldap_port: 9389
 
 s3:
   endpoint: 10.0.3.5:80
-  bucket: dl-dev40nexr-com
+  bucket: robert-nexr-com
   accesskey: 5M4SROOODT1DCSAOM8IA
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
-  backup_bucket: bk-dev40nexr-com
+  backup_bucket: robert-nexr-com
 
-user_subdomain: nexrtest
+user_subdomain: robert
   
 ne_admin_username: admin
 ne_admin_password: admin
