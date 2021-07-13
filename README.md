@@ -1,6 +1,6 @@
 # AI/DX Bootstrap Ansible Playbook
 
-### Requirements todoccccccc
+### Requirements test seongong
 - kubectl
 - helm
 - Python package
