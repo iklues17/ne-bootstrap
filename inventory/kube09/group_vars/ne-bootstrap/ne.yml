@@ -3,10 +3,11 @@ bin_dir: /usr/local/bin
 user_id: robert.no@nexr.com
 
 #chart_repo_url: http://192.168.70.13:28080/ne
-chart_repo_url: http://172.24.9.148:28080/ne
+chart_repo_url: http://172.24.9.200:28080/ne
 chart_repo_name: ne
 
 k8s_namespace: robert
+#k8s_cluster_name: cluster.local
 k8s_cluster_name: cluster.datalake
 
 ingress_vhost: nexr.kr
