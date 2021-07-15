@@ -6,9 +6,9 @@
       kind: CephBlockPool
       apiVersion: ceph.rook.io/v1
       metadata:
-        name: robert-ceph-rbd-pool
+        name: "{{ client_name }}-ceph-rbd-pool"
         namespace: rook-ceph
-     replicated:
+      replicated:
        size: 3
        targetSizeRatio: 0
 
@@ -32,7 +32,7 @@
       kind: StorageClass
       apiVersion: storage.k8s.io/v1
       metadata:
-        name: robert-rook-ceph-block
+        name: "{{ client_name }}-rook-ceph-block"
       provisioner: rook-ceph.rbd.csi.ceph.com
       parameters:
         clusterID: rook-ceph
@@ -54,7 +54,7 @@
   community.kubernetes.k8s_info:
     api_version: v1
     kind: StorageClass
-    name: robert-rook-ceph-block
+    name: "{{ client_name }}-rook-ceph-block"
   register: check_storageclass_result
 
 ## create storageclass and cephpool for client

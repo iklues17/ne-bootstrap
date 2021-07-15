@@ -84,32 +84,3 @@
     wait: yes
     atomic: yes
     values: "{{  a3s['values'] | from_yaml }}"
-
-- name: Deploy prometheus chart
-  community.kubernetes.helm:
-    name: "{{ k8s_namespace }}-prometheus"
-    chart_ref: "{{ chart_repo_name }}/prometheus"
-    chart_version: "{{ ne_version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-    values: "{{  prometheus['values'] | from_yaml }}"
-  ignore_errors: yes
-
-- name: Deploy grafana chart
-  community.kubernetes.helm:
-    name: "{{ k8s_namespace }}-grafana"
-    chart_ref: "{{ chart_repo_name }}/grafana"
-    chart_version: "{{ ne_version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-    values: "{{  grafana['values'] | from_yaml }}"
-  ignore_errors: yes
-
-- name: Deploy loki chart
-  community.kubernetes.helm:
-    name: "{{ k8s_namespace }}-loki"
-    chart_ref: "{{ chart_repo_name }}/loki"
-    chart_version: "{{ ne_version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-  ignore_errors: yes

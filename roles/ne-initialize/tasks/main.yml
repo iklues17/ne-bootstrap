@@ -11,6 +11,9 @@
           app: nexr-enterprise
           istio-injection: disabled
 
+## 역할 기반 접근 제어(role-based access control, RBAC)는 컴퓨터 시스템 보안에서 권한이 있는 사용자들에게 시스템 접근을 통제하는 한 방법
+# pods, service, configmap은 조회만가능.
+# service,proxy,role,rolebinding은 "bind", "create", "get", "update", "patch", "list", "delete", "watch 가능.
 - name: Add namespace default RBAC - role
   community.kubernetes.k8s:
     state: present
@@ -23,6 +26,8 @@
     namespace: "{{ k8s_namespace }}"
     definition: "{{ lookup('template', 'default_rolebinding.yml') | from_yaml }}"
 
+
+## bootstrap relay에서 요청하는 api 파라미터값 name,accesskey랑 secretrey를 넣는지 안넣는지 확인.
 - name: Create Bucket - NE User
   amazon.aws.s3_bucket:
     name: "{{ s3.bucket }}"
@@ -51,11 +56,6 @@
     secret_key: "{{ s3.secretkey }}"
     ceph: true
 
-- name: Create NE Istio Gateway
-  community.kubernetes.k8s:
-    state: present
-    namespace: "{{ k8s_namespace }}"
-    definition: "{{ lookup('template', 'istio_ne_gateway.yml') | from_yaml }}"
 
 - name: Deploy pxc-operator chart
   community.kubernetes.helm:
@@ -99,15 +99,6 @@
   retries: 50
   delay: 10
 
-- name: Deploy nexus chart
-  community.kubernetes.helm:
-    name: nexus
-    chart_ref: "{{ chart_repo_name }}/nexus"
-    chart_version: "{{ ne_version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    wait: yes
-    atomic: yes
-    values: "{{ nexus['values'] | from_yaml }}"
 
 - name: Deploy ne-init chart
   community.kubernetes.helm:
@@ -118,12 +109,3 @@
     wait: yes
     atomic: yes
     values: "{{ ne_init['values'] | from_yaml }}"
-
-- name: Deploy ne-depend chart
-  community.kubernetes.helm:
-    name: ne-depend
-    chart_ref: "{{ chart_repo_name }}/ne-depend"
-    chart_version: "{{ ne_version }}"
-    release_namespace: "{{ k8s_namespace }}"
-    atomic: yes
-    values: "{{ ne_depend['values'] | from_yaml }}"

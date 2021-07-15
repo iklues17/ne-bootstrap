@@ -18,6 +18,7 @@
 - name: Create variable - k8s secret name
   shell: "{{ bin_dir }}/kubectl get secrets -n {{ k8s_namespace }} | grep ^default | cut -f1 -d ' '"
   environment:
+  
     - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
   register: secret_name
 

@@ -9,6 +9,7 @@ chart_repo_name: ne
 k8s_namespace: robert
 #k8s_cluster_name: cluster.local
 k8s_cluster_name: cluster.datalake
+## fqdn 형식을 유지하기 위해 필요한 파라미터.
 
 ingress_vhost: nexr.kr
 ingress_gateway: datalake-gateway
@@ -17,11 +18,14 @@ pxc_port: 63306
 ldap_port: 9389
 
 s3:
-  endpoint: 10.0.3.5:80
-  bucket: robert-nexr-com
+  endpoint: 10.0.3.5:80 
+  bucket: robert-nexr-com 
   accesskey: 5M4SROOODT1DCSAOM8IA
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
   backup_bucket: robert-nexr-com
+
+# accekey, secretkey, bucket, backup, endpoint 다들어옴.
+## 추가로 ceph-blockpool 이름 까지!!
 
 user_subdomain: robert
   
