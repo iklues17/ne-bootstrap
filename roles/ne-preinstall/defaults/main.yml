@@ -20,6 +20,13 @@ ne_ui:
 
 pinpoint:
   values:
+    hbase:
+      istio:
+        gateways:
+        - "{{ ingress_gateway }}"
+      persistence:
+        enabled: true
+        storageClass: "{{ client_name }}-rook-ceph-block"
     web:
       istio:
         gateways:
@@ -57,7 +64,7 @@ cgw:
       gateways:
       - "{{ ingress_gateway }}"
       hosts:
-        - "ne.{{ ingress_vhost }}"
+        - "{{ client_name }}.{{ ingress_vhost }}"
 
 openldap:
   values:
@@ -70,6 +77,9 @@ openldap:
         - "openldap.{{ ingress_vhost }}"
       tcp:
         matchPort: "{{ ldap_port }}"
+    persistence:
+      enabled: true
+      storageClass: "{{ client_name }}-rook-ceph-block"
 
 ranger_admin:
   values:
@@ -96,31 +106,3 @@ a3s:
     ne:
       pinpoint:
         enabled: true
-        
-prometheus:
-  values:
-    virtualServices:
-      gateway: "{{ ingress_gateway }}"
-      namespace: "{{ k8s_namespace }}"
-      # for each pod
-      prometheusServer:
-        hostname: "prometheus.{{ ingress_vhost }}"
-        enabled: true
-        portNumber: 80
-        prefix: /
-      alertManager:
-        hostname: "alertmanager.{{ ingress_vhost }}"
-        enabled: true
-        portNumber: 80
-        prefix: /
-
-grafana:
-  values:
-    virtualServices:
-      gateway: "{{ ingress_gateway }}"
-      namespace: "{{ k8s_namespace }}"
-      grafana:
-        hostname: "grafana.{{ ingress_vhost }}"
-        enabled: true
-        portNumber: 80
-        prefix: /
