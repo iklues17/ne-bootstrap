@@ -1,4 +1,4 @@
-k8s_namespace: ne
+3k8s_namespace: "ne"
 
 ne_ccs_install_timeout: 300
 
@@ -58,3 +58,4 @@ dvs:
 logstash:
   values:
     istio.sidecar.enabled: "false"
+    persistence.storageClass: "{{ client_name }}-rook-ceph-block"
