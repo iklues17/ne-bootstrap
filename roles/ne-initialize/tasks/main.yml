@@ -99,7 +99,7 @@
   retries: 50
   delay: 10
 
-
+## 
 - name: Deploy ne-init chart
   community.kubernetes.helm:
     name: ne-init
