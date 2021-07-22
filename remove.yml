@@ -8,10 +8,12 @@
     - include_role:
         name: ne-initialize
         tasks_from: reset
-    - include_role:
-        name: ne-storageclass
-        tasks_from: reset
-      when: remove_rook_when_reset
+#    - include_role:
+#        name: ne-storageclass
+#        tasks_from: reset
+#      when: remove_rook_when_reset
     - include_role:
         name: set-helm-repo
         tasks_from: reset
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
