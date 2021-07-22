@@ -25,7 +25,6 @@ ne_context:
   image_project: nexr-enterprise
   image_pullPolicy: IfNotPresent
 
-## storageclass 추가.
 pmm_server:
   values:
     persistence:
@@ -37,7 +36,7 @@ pmm_server:
         memory: 4Gi
         cpu: 1
     virtualServices:
-      gateway: "{{ ingress_gateway }}"
+      gateway: "{{ ingress_gateway_full_fqdn }}"
       namespace: "{{ k8s_namespace }}"
       pmm:
         hostname: "pmm.{{ ingress_gateway_full_fqdn }}"
@@ -54,7 +53,7 @@ pxc_database:
         enabled: true
         storageClass: "{{ client_name }}-rook-ceph-block"
     virtualServices:
-      gateway: "{{ ingress_gateway }}"
+      gateway: "{{ ingress_gateway_full_fqdn }}"
       namespace: "{{ k8s_namespace }}"
       pxcProxy:
         hostname: "mysql.{{ ingress_gateway_full_fqdn }}"

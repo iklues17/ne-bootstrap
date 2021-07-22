@@ -16,5 +16,3 @@
 - name: Print chart list
   debug:
     msg: "{{ charts }}"
-
-## 해당 datlakae.cluster에서 helm repo를 내부 repo url 경로로 추가를 해주었기 때문에 이 role은 안해줘도 될거같다..
