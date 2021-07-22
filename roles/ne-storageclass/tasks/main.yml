@@ -16,19 +16,6 @@
           size: 3
           targetSizeRatio: 0
 
-- name: check cephblockpool
-  community.kubernetes.k8s_info: 
-    name: cephblockpool
-    kind: CephBlockPool
-    api_version: ceph.rook.io/v1
-  register: check_cephblockpool_result
-  
-
-- name: debug
-  debug:
-    var: check_cephblockpool_result
-  when: check_cephblockpool_result is defined and check_cephblockpool_result.resources | length > 0
-
 - name: storageclass
   community.kubernetes.k8s:
     state: present
@@ -52,14 +39,3 @@
         pool: "{{ client_name }}-ceph-rbd-pool"
       reclaimPolicy: Delete
       allowVolumeExpansion: true
-
-- name: Get k8s StorageClass object
-  community.kubernetes.k8s_info:
-    api_version: v1
-    kind: StorageClass
-    name: "{{ client_name }}-rook-ceph-block"
-  register: check_storageclass_result
-
-## create storageclass and cephpool for client
-#
-
