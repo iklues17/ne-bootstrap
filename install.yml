@@ -12,3 +12,5 @@
     - { role: "ne-install-managed" }
     - { role: "ne-install-service" }
     - { role: "ne-finalize" }
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
