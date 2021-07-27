@@ -1,93 +1,27 @@
 ---
-- name: Reset rook-ceph
-  debug:
-    var: remove_rook_when_reset
-
-- name: Remove rook-ceph chart
-  community.kubernetes.helm:
-    name: rook-ceph
-    release_namespace: "rook-ceph"
-    state: absent
-    wait: yes
-
-- name: Remove a DaemonSet csi-rbdplugin
+- name: Remove CephBlockPool with client
   community.kubernetes.k8s:
     state: absent
     namespace: "rook-ceph"
     definition:
-      kind: DaemonSet
-      api_version: apps/v1
+      kind: CephBlockPool
+      api_version: ceph.rook.io/v1
       metadata:
-        name: "csi-rbdplugin"
+        name: "{{ client_name }}-ceph-rbd-pool"
     wait: yes
     wait_condition:
       status: "True"
       type: "Terminating"
 
-- name: Remove a Deployment csi-rbdplugin-provisioner
-  community.kubernetes.k8s:
-    state: absent
-    namespace: "rook-ceph"
-    definition:
-      kind: Deployment
-      api_version: apps/v1
-      metadata:
-        name: "csi-rbdplugin-provisioner"
-    wait: yes
-    wait_condition:
-      status: "True"
-      type: "Terminating"
-
-- name: Replace CephCluster finalizer
-  shell: "{{ bin_dir }}/kubectl get --raw '/apis/ceph.rook.io/v1/namespaces/rook-ceph/cephclusters/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace cephclusters rook-ceph -n rook-ceph -f -"
-  environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
-
-- name: Remove a CephCluster
-  community.kubernetes.k8s:
-    state: absent
-    namespace: "rook-ceph"
-    definition:
-      kind: CephCluster
-      api_version: v1
-      metadata:
-        name: "rook-ceph"
-    wait: yes
-    wait_condition:
-      status: "True"
-      type: "Terminating"
-
-- name: Remove a rook-ceph namespace for rook-ceph operator
+- name: Remove StorageClass with client
   community.kubernetes.k8s:
     state: absent
     definition:
-      kind: Namespace
-      api_version: v1
+      kind: StorageClass
+      api_version: storage.k8s.io/v1
       metadata:
-        name: "rook-ceph"
+        name: "{{ client_name }}-rook-ceph-block"
     wait: yes
     wait_condition:
       status: "True"
       type: "Terminating"
-  register: response
-  failed_when:
-    - "response.status is defined and response.status != 409"
-
-- name: Get rook-ceph namespace finalizer
-  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph'"
-  environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
-  register: raw_namespace
-  failed_when:
-    - "raw_namespace.rc != 0"
-    - "'NotFound' not in raw_namespace.stderr"
-
-- name: Result rook-ceph namespace raw_namespace
-  debug:
-    var: raw_namespace
-
-- name: Replace rook-ceph namespace finalizer
-  shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/rook-ceph/finalize' -f -"
-  environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
-  when: raw_namespace.stdout != ""
