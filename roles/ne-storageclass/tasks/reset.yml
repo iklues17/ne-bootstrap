@@ -41,7 +41,7 @@
 - name: Replace CephCluster finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/apis/ceph.rook.io/v1/namespaces/rook-ceph/cephclusters/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace cephclusters rook-ceph -n rook-ceph -f -"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
 
 - name: Remove a CephCluster
   community.kubernetes.k8s:
@@ -76,7 +76,7 @@
 - name: Get rook-ceph namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph'"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   register: raw_namespace
   failed_when:
     - "raw_namespace.rc != 0"
@@ -89,5 +89,5 @@
 - name: Replace rook-ceph namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/rook-ceph' |sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/rook-ceph/finalize' -f -"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   when: raw_namespace.stdout != ""

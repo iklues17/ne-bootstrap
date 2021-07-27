@@ -2,7 +2,7 @@
 - name: Create variable - k8s kubeapps token
   shell: "{{ bin_dir }}/kubectl describe secret $(kubectl get secrets -n default | grep ^kubeapps-operator | cut -f1 -d ' ') -n default | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   register: kubeapps_token_result
 
 - name: Set fact variable - k8s kubeapps token

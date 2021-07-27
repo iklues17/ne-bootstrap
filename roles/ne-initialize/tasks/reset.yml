@@ -66,7 +66,7 @@
 - name: Get k8s namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}'"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   register: raw_namespace
   failed_when:
     - "raw_namespace.rc != 0"
@@ -79,5 +79,5 @@
 - name: Replace k8s namespace finalizer
   shell: "{{ bin_dir }}/kubectl get --raw '/api/v1/namespaces/{{ k8s_namespace }}'|sed 's/\"finalizers\":\\[\".*\"\\]/\"finalizers\":\\[\\]/' |{{ bin_dir }}/kubectl replace --raw '/api/v1/namespaces/{{ k8s_namespace }}/finalize' -f -"
   environment:
-    - KUBECONFIG: "{{ ansible_env.HOME | default('/root') }}/.kube/config"
+    - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   when: raw_namespace.stdout != ""

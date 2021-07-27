@@ -40,7 +40,7 @@
   amazon.aws.aws_s3:
     bucket: "{{ s3.bucket }}"
     object: "/var/log/spark/hello"
-    src: "/root/hello"
+    src: "/home/centos/hello"
     mode: put
     encrypt: false
     rgw: true
