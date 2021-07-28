@@ -7,7 +7,7 @@
       kind: CephBlockPool
       api_version: ceph.rook.io/v1
       metadata:
-        name: "{{ client_name }}-ceph-rbd-pool"
+        name: "{{ datalake_name }}-ceph-rbd-pool"
     wait: yes
     wait_condition:
       status: "True"
@@ -20,7 +20,7 @@
       kind: StorageClass
       api_version: storage.k8s.io/v1
       metadata:
-        name: "{{ client_name }}-rook-ceph-block"
+        name: "{{ datalake_name }}-rook-ceph-block"
     wait: yes
     wait_condition:
       status: "True"

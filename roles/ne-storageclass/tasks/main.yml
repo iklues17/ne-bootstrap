@@ -6,7 +6,7 @@
       kind: CephBlockPool
       apiVersion: ceph.rook.io/v1
       metadata:  
-        name: "{{ client_name }}-ceph-rbd-pool"
+        name: "{{ datalake_name }}-ceph-rbd-pool"
         namespace: rook-ceph
       spec:
         crushRoot: default
@@ -23,7 +23,7 @@
       kind: StorageClass
       apiVersion: storage.k8s.io/v1
       metadata:
-        name: "{{ client_name }}-rook-ceph-block"
+        name: "{{ datalake_name }}-rook-ceph-block"
       provisioner: rook-ceph.rbd.csi.ceph.com
       parameters:
         clusterID: rook-ceph
@@ -36,6 +36,6 @@
         csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
         imageFeatures: layering
         imageFormat: '2'
-        pool: "{{ client_name }}-ceph-rbd-pool"
+        pool: "{{ datalake_name }}-ceph-rbd-pool"
       reclaimPolicy: Delete
       allowVolumeExpansion: true

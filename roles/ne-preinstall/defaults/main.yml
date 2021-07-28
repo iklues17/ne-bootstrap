@@ -26,7 +26,7 @@ pinpoint:
         - "{{ ingress_gateway }}"
       persistence:
         enabled: true
-        storageClass: "{{ client_name }}-rook-ceph-block"
+        storageClass: "{{ datalake_name }}-rook-ceph-block"
     web:
       istio:
         gateways:
@@ -64,7 +64,7 @@ cgw:
       gateways:
       - "{{ ingress_gateway }}"
       hosts:
-        - "{{ client_name }}.{{ ingress_vhost }}"
+        - "{{ datalake_name }}.{{ ingress_vhost }}"
 
 openldap:
   values:
@@ -79,7 +79,7 @@ openldap:
         matchPort: "{{ ldap_port }}"
     persistence:
       enabled: true
-      storageClass: "{{ client_name }}-rook-ceph-block"
+      storageClass: "{{ datalake_name }}-rook-ceph-block"
 
 ranger_admin:
   values:

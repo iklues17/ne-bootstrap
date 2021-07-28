@@ -53,7 +53,6 @@
     definition:
       kind: Namespace
       api_version: v1
-      metadata:
         name: "{{ k8s_namespace }}"
     wait: yes
     wait_condition:
