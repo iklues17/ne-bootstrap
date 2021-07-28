@@ -30,7 +30,7 @@ pmm_server:
     persistence:
       enabled: true
       size: 50Gi
-      storageClass: "{{ client_name }}-rook-ceph-block"
+      storageClass: "{{ datalake_name }}-rook-ceph-block"
     resources:
       requests:
         memory: 4Gi
@@ -46,12 +46,12 @@ pxc_database:
     pxc:
       persistence:
         enabled: true
-        storageClass: "{{ client_name }}-rook-ceph-block"
+        storageClass: "{{ datalake_name }}-rook-ceph-block"
     proxysql:
       size: 2
       persistence:
         enabled: true
-        storageClass: "{{ client_name }}-rook-ceph-block"
+        storageClass: "{{ datalake_name }}-rook-ceph-block"
     virtualServices:
       gateway: "{{ ingress_gateway_full_fqdn }}"
       namespace: "{{ k8s_namespace }}"
@@ -61,7 +61,7 @@ pxc_database:
     backup:
       storages:
         persistentVolumeClaim:
-          storageClassName: "{{ client_name }}-rook-ceph-block"
+          storageClassName: "{{ datalake_name }}-rook-ceph-block"
 ne_init:
   values:
     image:
@@ -81,7 +81,7 @@ ne_init:
       NE_SCHEMA_VERSION: "{{ ne_schema_version }}"
       NE_NAMESPACE: "{{ k8s_namespace }}"
       CHART_REPO_NAME: "{{ chart_repo_name }}"
-      DATALAKE_USER_HOST: "https://{{ client_name }}.datalake.cloud.kt.com"
+      DATALAKE_USER_HOST: "https://{{ datalake_name }}.datalake.cloud.kt.com"
       ISTIO_SIDECAR_ENABLE: "false"
 
 nexus:

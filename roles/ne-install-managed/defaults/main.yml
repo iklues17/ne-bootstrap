@@ -21,13 +21,13 @@ oss:
 
 zookeeper:
   values:
-    persistence.storageClass: "{{ client_name }}-rook-ceph-block"
+    persistence.storageClass: "{{ datalake_name }}-rook-ceph-block"
 kafka:
   values:
-    cpKafka.persistence.storageClass: "{{ client_name }}-rook-ceph-block"
+    cpKafka.persistence.storageClass: "{{ datalake_name }}-rook-ceph-block"
 elasticsearch:
   values:
-    data.persistence.storageClass: "{{ client_name }}-rook-ceph-block"
+    data.persistence.storageClass: "{{ datalake_name }}-rook-ceph-block"
 hive_metastore:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/hivemetastore
