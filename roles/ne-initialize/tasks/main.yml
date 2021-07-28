@@ -75,6 +75,12 @@
     atomic: yes
     values: "{{ pmm_server['values'] | from_yaml }}"
 
+- name: Update VirtualServices in Pmm-server Chart 
+  community.kubernetes.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('template', 'virtualservice_pmmserver.yml') | from_yaml }}"
+
 - name: Deploy pxc-database chart
   community.kubernetes.helm:
     name: pxc-database
@@ -84,6 +90,12 @@
     wait: yes
     atomic: yes
     values: "{{ pxc_database['values'] | from_yaml }}"
+
+- name: Update VirtualServices in pxc-database Chart 
+  community.kubernetes.k8s:
+    state: present
+    namespace: "{{ k8s_namespace }}"
+    definition: "{{ lookup('template', 'virtualservice_pxcdatabase.yml') | from_yaml }}"
 
 - name: Wait for pxc-database-pxc-2 pod running ready completely
   community.kubernetes.k8s_info:

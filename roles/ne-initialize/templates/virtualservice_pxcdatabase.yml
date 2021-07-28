@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: pxc-database-rule
+spec:
+  hosts:
+  - "mysql.{{ ingress_vhost }}"
+  gateways:
+  - "{{ ingress_gateway }}"
+  tcp:
+  - match:
+    - port: {{ pxc_port }}
+    route:
+    - destination:
+        host: "pxc-database.{{ datalake_name }}.svc.cluster.{{ datalake_name }}"
+        port:
+          number: 3306
