@@ -1,7 +1,7 @@
 bin_dir: /usr/local/bin
-datalake_name: "datalake"
+datalake_name: "demo"
 
-user_id: "{{ datalake_name }}.@nexr.com"
+user_id: "official.@nexr.com"
 
 chart_repo_url: http://172.24.9.200:28080/ne-1.3.1
 chart_repo_name: ne-1.3.1
@@ -9,6 +9,7 @@ chart_repo_name: ne-1.3.1
 k8s_namespace: "{{ datalake_name }}"
 k8s_cluster_name: cluster.datalake
 
+nexus_host: "nexus.common"
 
 ingress_vhost: datalake.cloud.kt.com
 ingress_gateway: istio-system/datalake-gateway
@@ -20,10 +21,10 @@ ldap_port: 9389
 
 s3:
   endpoint: 172.24.0.246:1000
-  bucket: ne-hdfs
+  bucket: dl-demo
   accesskey: FJU76L0JIZHONQ2IR0JG
   secretkey: 1JsQdNt9Iw6u4hAcaDMrUdziWSjvSpr6ILuMiTIl
-  backup_bucket: bk-ne-hdfs
+  backup_bucket: dl-demo
   ## add ceph-block-pool
 
 user_subdomain: "{{ datalake_name }}"
@@ -44,7 +45,7 @@ ne_app:
 ne_context:
   image_build_num: ""
   image_project: nexr-enterprise
-  image_pullPolicy: IfNotPresent
+  image_pullPolicy: Always
 
 ne_ui:
   image_build_num: ""
@@ -62,3 +63,4 @@ oss:
   conductor_build_num: ""
   zeppelin_version: 0.9.0-NR-{{ ne_version }}
   zeppelin_build_num: ""
+
