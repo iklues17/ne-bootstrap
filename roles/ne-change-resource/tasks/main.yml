@@ -1,0 +1,28 @@
+---
+
+- name: Get k8s Namespace of Client
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: Namespace
+    name: "common"
+  register: check_namespace_result
+
+- name: Debug When namespace is not installed
+  debug:
+    var: check_apprepository_result
+  failed_when: "check_apprepository_result.resources == []"
+
+
+- name: Change ResourceQuota for k8s namespace 
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      kind: ResourceQuota
+      apiVersion: v1
+      metadata:
+        name: "{{ k8s_namespace }}-resources"
+        namespace: "{{ k8s_namespace }}"
+      spec:
+        hard:
+          requests.cpu: "{{ total_cpu }}"
+          requests.memory: "{{ total_memory }}"

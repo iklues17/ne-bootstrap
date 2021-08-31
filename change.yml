@@ -1,0 +1,7 @@
+---
+- hosts: ne-bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-change-resource" }
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
