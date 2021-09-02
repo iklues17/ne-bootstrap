@@ -27,6 +27,22 @@
           limits.cpu: "{{ total_cpu }}"
           limits.memory: "{{ total_memory }}Gi"
 
+- name: Create LimitRange for k8s namespace 
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: LimitRange
+      metadata:
+        name: "{{ k8s_namespace }}-limit-range"
+        namespace: "{{ k8s_namespace }}"
+      spec:
+        limits:
+        - default:
+            memory: 1Gi
+            cpu: 0.5
+          type: Container
+
 ## 역할 기반 접근 제어(role-based access control, RBAC)는 컴퓨터 시스템 보안에서 권한이 있는 사용자들에게 시스템 접근을 통제하는 한 방법
 # pods, service, configmap은 조회만가능.
 # service,proxy,role,rolebinding은 "bind", "create", "get", "update", "patch", "list", "delete", "watch 가능.

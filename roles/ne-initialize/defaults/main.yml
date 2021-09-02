@@ -65,6 +65,7 @@ pxc_database:
       storages:
         persistentVolumeClaim:
           storageClassName: "{{ datalake_name }}-rook-ceph-block"
+
 ne_init:
   values:
     image:
