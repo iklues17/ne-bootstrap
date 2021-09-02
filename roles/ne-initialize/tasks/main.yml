@@ -11,7 +11,6 @@
           app: nexr-enterprise
           istio-injection: disabled
 
-<<<<<<< HEAD
 - name: Create ResourceQuota for k8s namespace 
   community.kubernetes.k8s:
     state: present
@@ -44,8 +43,6 @@
             cpu: 0.5
           type: Container
 
-=======
->>>>>>> parent of cc4bbcc... add Installing and Changing Resource Quota
 ## 역할 기반 접근 제어(role-based access control, RBAC)는 컴퓨터 시스템 보안에서 권한이 있는 사용자들에게 시스템 접근을 통제하는 한 방법
 # pods, service, configmap은 조회만가능.
 # service,proxy,role,rolebinding은 "bind", "create", "get", "update", "patch", "list", "delete", "watch 가능.
