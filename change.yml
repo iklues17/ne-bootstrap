@@ -4,4 +4,4 @@
   roles:
     - { role: "ne-change-resource" }
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3 

@@ -1,6 +1,6 @@
 bin_dir: /usr/local/bin
 
-chart_repo_name: ne-1.3.1-datalake
+chart_repo_name: ne-1.3.1
 
 k8s_namespace: "ne"
 
@@ -33,10 +33,10 @@ pmm_server:
       storageClass: "{{ datalake_name }}-rook-ceph-block"
     resources:
       requests:
-        memory: 2Gi
+        memory: 4Gi
         cpu: 1
       limits:
-        memory: 2Gi
+        memory: 4Gi
         cpu: 1
     virtualServices:
       gateway: "{{ ingress_gateway_full_fqdn }}"
@@ -103,6 +103,6 @@ ne_depend:
       requests:
         memory: 5Gi
         cpu: 2000m
-      limits:
         memory: 5Gi
         cpu: 2000m
+
