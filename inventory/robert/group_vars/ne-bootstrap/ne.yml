@@ -64,3 +64,8 @@ oss:
   zeppelin_version: 0.9.0-NR-{{ ne_version }}
   zeppelin_build_num: ""
 
+ne_ldap:
+  name: nexr-test
+  port: 9400
+  targetPort: 9400
+  protocol: TCP

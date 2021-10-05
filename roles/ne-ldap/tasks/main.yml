@@ -1,0 +1,22 @@
+---
+- name: Add Ldap TCP Port to Istio Operator
+  community.kubernetes.k8s:
+    state: present
+    api_version: install.istio.io/v1alpha1
+    kind: IstioOperator
+    name: istiocontrolplane-test
+    namespace: test
+    merge_type:
+    - json
+    definition: 
+    - op: add
+      path: /spec/components/ingressGateways/k8s/service/ports/-
+      value: { "name": "nexr-test", "port": 9400, "targetPort": 9400, "protocol": "TCP" }
+  register: cmm
+  
+- name: debug
+  debug:
+    var: cmm
+
+
+##  kubectl patch istiooperators.install.istio.io -n istio-system istiocontrolplane --type='json' -p '[{"op": "add", "path": "/spec/components/ingressGateways/0/k8s/service/ports/-", "value": {"name": "nexr-ldap", "port": 9389, "targetPort": 9389, "protocol": "TCP"} }]'
