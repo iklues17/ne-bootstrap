@@ -1,0 +1,12 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/components/ingressGateways/0/k8s/service/ports/-",
+    "value": {
+      "name": "nexr-test",
+      "port": 9400,
+      "targetPort": 9400,
+      "protocol": "TCP"
+    }
+  }
+]

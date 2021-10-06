@@ -1,22 +1,59 @@
 ---
-- name: Add Ldap TCP Port to Istio Operator
-  community.kubernetes.k8s:
-    state: present
+- name: Change Parameter for Setting istio_operator 
+  lineinfile:
+    dest: '{{playbook_dir}}/roles/ne-ldap/templates/ldap_istio_operator.json'
+#    dest: "{{ lookup( 'template', 'ldap_istio_operator.yaml' ) | from_yaml }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    -  { regexp: '^\s{2,}"name":(.*)', line: '      "name": "{{ ne_ldap.name }}",' }
+    -  { regexp: '^\s{2,}"port":(.*)', line: '      "port": {{ ne_ldap.port }},' }    
+    -  { regexp: '^\s{2,}"targetPort":(.*)"', line: '      "targetPort": {{ ne_ldap.targetPort }},' }    
+
+
+- name: Patch Istiooperator With Ldap Information
+  shell: kubectl patch istiooperators.install.istio.io -n test istiocontrolplane-test --type='json' --patch-file '{{playbook_dir}}/roles/ne-ldap/templates/ldap_istio_operator.json'
+
+
+- name: Get a istio_operator information
+  community.kubernetes.k8s_info:
     api_version: install.istio.io/v1alpha1
     kind: IstioOperator
-    name: istiocontrolplane-test
     namespace: test
-    merge_type:
-    - json
-    definition: 
-    - op: add
-      path: /spec/components/ingressGateways/k8s/service/ports/-
-      value: { "name": "nexr-test", "port": 9400, "targetPort": 9400, "protocol": "TCP" }
-  register: cmm
-  
-- name: debug
+    name: istiocontrolplane-test
+  register: info_istiocontrolplane_test
+
+- name: Display istiocontrolplane-test
   debug:
-    var: cmm
+    var: info_istiocontrolplane_test.resources.0.spec.components.ingressGateways.0.k8s.service.ports[-1]
 
 
-##  kubectl patch istiooperators.install.istio.io -n istio-system istiocontrolplane --type='json' -p '[{"op": "add", "path": "/spec/components/ingressGateways/0/k8s/service/ports/-", "value": {"name": "nexr-ldap", "port": 9389, "targetPort": 9389, "protocol": "TCP"} }]'
+- name: Change Parameter for Setting Gateway 
+  lineinfile:
+    dest: '{{playbook_dir}}/roles/ne-ldap/templates/ldap_gateway.json'
+#    dest: "{{ lookup( 'template', 'ldap_istio_operator.yaml' ) | from_yaml }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    -  { regexp: '^\s{2,}(.*).datalake.cloud.kt.com(.*)', line: '        "{{ ne_ldap.name }}.datalake.cloud.kt.com"' }
+    -  { regexp: '^\s{2,}"name":(.*)', line: '        "name": "{{ ne_ldap.name }}",'}       
+    -  { regexp: '^\s{2,}"number":(.*)', line: '        "number": {{ ne_ldap.port }},'}    
+
+
+- name: Patch Istiooperator With Ldap Information
+  shell: kubectl patch gateways.networking.istio.io -n test datalake-gateway-test --type='json' --patch-file '{{playbook_dir}}/roles/ne-ldap/templates/ldap_gateway.json'
+
+
+
+- name: Get a Gateway information
+  community.kubernetes.k8s_info:
+    api_version: networking.istio.io/v1beta1
+    kind: Gateway
+    namespace: test
+    name: datalake-gateway-test
+  register: info_gateway
+
+- name: Display istiocontrolplane-test
+  debug:
+    var: info_gateway.resources.0.spec.servers[-1]
+

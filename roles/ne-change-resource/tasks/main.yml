@@ -1,6 +1,6 @@
 ---
 - name: Get k8s Namespace of Client
-  community.kubernetes.k8s_info:
+  .k8s_info:
     api_version: v1
     kind: Namespace
     name: "{{ k8s_namespace }}"

@@ -1,0 +1,16 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/servers/-",
+    "value": {
+      "hosts": [
+        "nexr-test.datalake.cloud.kt.com"
+      ],
+      "port": {
+        "name": "nexr-test",
+        "number": 9400,
+        "protocol": "TCP"
+      }
+    }
+  }
+]
