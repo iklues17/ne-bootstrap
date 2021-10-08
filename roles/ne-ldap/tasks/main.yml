@@ -39,10 +39,8 @@
     -  { regexp: '^\s{2,}"name":(.*)', line: '        "name": "{{ ne_ldap.name }}",'}       
     -  { regexp: '^\s{2,}"number":(.*)', line: '        "number": {{ ne_ldap.port }},'}    
 
-
 - name: Patch Istiooperator With Ldap Information
   shell: kubectl patch gateways.networking.istio.io -n test datalake-gateway-test --type='json' --patch-file '{{playbook_dir}}/roles/ne-ldap/templates/ldap_gateway.json'
-
 
 
 - name: Get a Gateway information

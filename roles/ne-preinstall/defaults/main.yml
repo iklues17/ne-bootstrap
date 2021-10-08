@@ -42,7 +42,7 @@ ccs:
       tag: "{{ ne_version }}{{ '-' ~ ne_app.image_build_num if ne_app.image_build_num is defined and ne_app.image_build_num|length else '' }}"
     ne:
       pinpoint:
-        enabled: true
+        enabled: true    
 
 cui:
   values:
@@ -65,6 +65,7 @@ cgw:
       - "{{ ingress_gateway }}"
       hosts:
         - "{{ datalake_name }}.{{ ingress_vhost }}"
+
 
 openldap:
   values:
