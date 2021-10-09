@@ -147,8 +147,17 @@
     - name: Stop Elasticsearch-Master
       community.kubernetes.k8s_scale:
         api_version: v1
-        kind: Deployment
+        kind: StatefulSet
         name: elasticsearch-master
+        namespace: "{{ datalake_name }}"
+        replicas: 0
+        wait_timeout: 60
+
+    - name: Stop Elasticsearch-Data
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: elasticsearch-data
         namespace: "{{ datalake_name }}"
         replicas: 0
         wait_timeout: 60
@@ -261,24 +270,6 @@
         replicas: 0
         wait_timeout: 60
 
-    - name: Stop pxc-database-proxysql
-      community.kubernetes.k8s_scale:
-        api_version: v1
-        kind: StatefulSet
-        name: pxc-database-proxysql
-        namespace: "{{ datalake_name }}"
-        replicas: 0
-        wait_timeout: 60
-
-    - name: Stop pxc-database-pxc
-      community.kubernetes.k8s_scale:
-        api_version: v1
-        kind: StatefulSet
-        name: pxc-database-pxc
-        namespace: "{{ datalake_name }}"
-        replicas: 0
-        wait_timeout: 60
-
     - name: Stop pmm-server
       community.kubernetes.k8s_scale:
         api_version: v1
@@ -296,3 +287,40 @@
         namespace: "{{ datalake_name }}"
         replicas: 0
         wait_timeout: 60
+
+    - name: Stop pxc-database-proxysql
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pxc-database-proxysql
+        namespace: "{{ datalake_name }}"
+        replicas: 0
+        wait_timeout: 90
+
+    - name: Sleep for 90 seconds for Checkiing All Pods Running Status
+      wait_for:
+        timeout: 90
+
+    - name: Stop pxc-database-pxc
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pxc-database-pxc
+        namespace: "{{ datalake_name }}"
+        replicas: 0
+        wait_timeout: 90
+
+
+    - name: Sleep for 90 seconds for Checkiing All Pods Running Status
+      wait_for:
+        timeout: 90
+
+    - name: Checkiing All Pods Running Status
+      community.kubernetes.k8s_info:
+        kind: Pod
+        namespace: nexr
+        field_selectors:
+          - status.phase=Running
+      register: runningpodstatus
+      failed_when:   (runningpodstatus.resources | length) > 0
+        

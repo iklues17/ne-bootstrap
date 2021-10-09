@@ -1,0 +1,450 @@
+---
+- hosts: ne-bootstrap
+  gather_facts: False
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
+  tasks:
+    - name: Start pxc-operator
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: pxc-operator
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start pmm-server
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pmm-server
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+
+    - name: Start pxc-database-pxc
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pxc-database-pxc
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+
+    - name: Start pxc-database-proxysql
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pxc-database-proxysql
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+
+    - name: Start pinpoint-hbase
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: pinpoint-hbase
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+
+    - name: Start pinpoint-web
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: pinpoint-web
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start pinpoint-collector
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: pinpoint-collector
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start CCS
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: ccs
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start CUI
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: cui
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start CGW
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: cgw
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start openldap
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: openldap
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start ranger-admin
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: ranger-admin
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start ranger-usersync
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: ranger-usersync
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start A3S
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: a3s
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Zookeeper
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: zookeeper
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+
+    - name: Start Kafka
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: kafka
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+
+    - name: Start Elasticsearch-Master
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: elasticsearch-master
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+
+    - name: Start Elasticsearch-Data
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: elasticsearch-data
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+
+    - name: Start Elasticsearch-Ingest
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: elasticsearch-ingest
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Elasticsearch-Client
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: elasticsearch-client
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Hive-metastore
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: hivemetastore
+        namespace: "{{ datalake_name }}"
+        replicas: 2
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Spark-historyserver
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: spark-historyserver
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Spark-thriftserver
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: spark-thriftserver
+        namespace: "{{ datalake_name }}"
+        replicas: 3
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Conductor-Server
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: conductor-server
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Conductor-UI
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: conductor-ui
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start EDS
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: eds
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+ 
+
+    - name: Start CMS
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: cms
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start DES
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: des
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start DSS
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: dss
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start DVS
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: dvs
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Logstash
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: StatefulSet
+        name: logstash
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+
+    - name: Start Selenium-Hub
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: selenium-hub
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+    - name: Start Selenium-Chrome
+      community.kubernetes.k8s_scale:
+        api_version: v1
+        kind: Deployment
+        name: selenium-chrome
+        namespace: "{{ datalake_name }}"
+        replicas: 1
+        wait_timeout: 60
+      register: command_result
+      failed_when: 
+        - "'Deployment does not have minimum availability.'!= command_result.result.status.conditions[-1].message"
+        - " command_result.failed  == true "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
