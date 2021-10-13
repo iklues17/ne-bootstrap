@@ -51,6 +51,7 @@ spark_thriftserver:
     replicaCount: 3
   spark-default.conf:
     spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
+    
 zeppelin:
   values:
     sparkImage.repository: harbor.nexr.kr/{{ oss.image_project }}/spark

@@ -8,7 +8,7 @@
 
 - name: Debug When namespace is not installed
   debug:
-    var: check_apprepository_result
+    var: check_namespace_result
   failed_when: "check_namespace_result.resources == []"
 
 
@@ -23,7 +23,7 @@
         namespace: "{{ k8s_namespace }}"
       spec:
         hard:
-          requests.cpu: "{{ total_cpu }}"
-          requests.memory: "{{ total_memory }}Gi"
-          limits.cpu: "{{ total_cpu }}"
-          limits.memory: "{{ total_memory }}Gi"
+          requests.cpu: "{{ totalCpu }}"
+          requests.memory: "{{ totalMemory }}Gi"
+          limits.cpu: "{{ totalCpu }}"
+          limits.memory: "{{ totalMemory }}Gi"
