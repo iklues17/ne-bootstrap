@@ -1,0 +1,38 @@
+---
+- name: Register for Istio Operators Index.
+  shell: kubectl get istiooperators istiocontrolplane -n istio-system -o json  | jq '.spec.components.ingressGateways[].k8s.service.ports | map(.name == "{{ datalake_name }}") | index(true)'
+  register: istio_operator_index
+
+- name: Sleep for 90 seconds for Checkiing All Pods Running Status
+  wait_for:
+    timeout: 180
+
+
+- name: Change Parameter for Delete istio_operator ne-ldap port
+  lineinfile:
+    dest: '/home/centos/ne-ldap-templates/ldap_istio_operator_delete.json'
+    regexp: '^\s{2,}"path":(.*)'
+    line: '    "path": "/spec/components/ingressGateways/0/k8s/service/ports/{{ istio_operator_index.stdout }}"'
+
+
+- name: Delete Datalake Ne-ldap Port
+  shell: kubectl patch istiooperators -n istio-system istiocontrolplane --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_istio_operator_delete.json'
+  when: istio_operator_index.stdout != "null"
+
+- name: Register for Gateway Index.
+  shell: kubectl get gateway datalake-gateway -n istio-system -o json  | jq '.spec.servers | map(.port.name=="{{ datalake_name }}") | index(true)'
+  register: gateway_index
+
+
+- name: Change Parameter for Setting Gateway 
+  lineinfile:
+    dest: '/home/centos/ne-ldap-templates/ldap_gateway_delete.json'
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    -  { regexp: '^\s{2,}"path":(.*)', line: '    "path": "/spec/servers/{{ gateway_index.stdout }}"'}       
+
+- name: Patch Istiooperator With Ldap Information
+  shell: kubectl patch gateways -n istio-system datalake-gateway --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_gateway_delete.json'
+  when: gateway_index.stdout != "null"
+

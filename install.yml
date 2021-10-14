@@ -3,6 +3,7 @@
   gather_facts: False
   roles:
     - { role: "set-helm-repo" }
+    - { role: "ne-ldap"}
     - { role: "ne-storageclass" }
     - { role: "ne-initialize" }
     - { role: "ne-preinstall" }
@@ -13,4 +14,4 @@
     - { role: "ne-install-service" }
     - { role: "ne-finalize" }
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/local/bin/python3

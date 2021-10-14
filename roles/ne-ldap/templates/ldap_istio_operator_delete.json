@@ -1,0 +1,6 @@
+[
+  {
+    "op":"remove",
+    "path": "/spec/components/ingressGateways/0/k8s/service/ports/8"
+  }
+]

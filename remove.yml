@@ -3,6 +3,9 @@
   gather_facts: False
   tasks:
     - include_role:
+        name: ne-ldap
+        tasks_from: reset
+    - include_role:
         name: ne-preinstall
         tasks_from: reset
     - include_role:
@@ -15,4 +18,4 @@
         name: set-helm-repo
         tasks_from: reset
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/local/bin/python3

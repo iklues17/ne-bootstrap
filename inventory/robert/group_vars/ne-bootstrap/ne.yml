@@ -65,7 +65,7 @@ oss:
   zeppelin_build_num: ""
 
 ne_ldap:
-  name: nexr-test
-  port: 9400
-  targetPort: 9400
+  name: "{{ datalake_name }}"
+  port: "{{ ldap_port_inner }}"
+  targetPort: "{{ ldap_port_inner }}"
   protocol: TCP

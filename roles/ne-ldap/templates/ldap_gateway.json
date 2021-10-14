@@ -4,10 +4,10 @@
     "path": "/spec/servers/-",
     "value": {
       "hosts": [
-        "nexr-test.datalake.cloud.kt.com"
+ "nexr.datalake.cloud.kt.com"
       ],
       "port": {
-        "name": "nexr-test",
+        "name": "nexr",
         "number": 9400,
         "protocol": "TCP"
       }

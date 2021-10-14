@@ -1,57 +1,64 @@
 ---
+
+- name: Register for Istio Operators Index.
+  shell:
+    cmd: kubectl get istiooperators.install.istio.io istiocontrolplane-test -n test -o json  | jq '.spec.components.ingressGateways[].k8s.service.ports | map(.name == "{{ datalake_name }}") | index(true)'
+  register: istio_operator_index
+
 - name: Change Parameter for Setting istio_operator 
   lineinfile:
-    dest: '{{playbook_dir}}/roles/ne-ldap/templates/ldap_istio_operator.json'
-#    dest: "{{ lookup( 'template', 'ldap_istio_operator.yaml' ) | from_yaml }}"
+    dest: '/home/centos/ne-ldap-templates/ldap_istio_operator.json'
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
-    -  { regexp: '^\s{2,}"name":(.*)', line: '      "name": "{{ ne_ldap.name }}",' }
-    -  { regexp: '^\s{2,}"port":(.*)', line: '      "port": {{ ne_ldap.port }},' }    
-    -  { regexp: '^\s{2,}"targetPort":(.*)"', line: '      "targetPort": {{ ne_ldap.targetPort }},' }    
-
+    -  { regexp: '^\s{2,}"name":(.*)', line: '      "name": "{{ datalake_name }}",' }
+    -  { regexp: '^\s{2,}"port":(.*)', line: '      "port": {{ ldap_inner_port }},' }    
+    -  { regexp: '^\s{2,}"targetPort":(.*)', line: '      "targetPort": {{ ldap_inner_port }},' }    
 
 - name: Patch Istiooperator With Ldap Information
-  shell: kubectl patch istiooperators.install.istio.io -n test istiocontrolplane-test --type='json' --patch-file '{{playbook_dir}}/roles/ne-ldap/templates/ldap_istio_operator.json'
-
+  shell: kubectl patch istiooperators -n istio-system istiocontrolplane --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_istio_operator.json'
+  when: istio_operator_index.stdout == "null"
 
 - name: Get a istio_operator information
   community.kubernetes.k8s_info:
     api_version: install.istio.io/v1alpha1
     kind: IstioOperator
-    namespace: test
-    name: istiocontrolplane-test
-  register: info_istiocontrolplane_test
+    namespace: istio-system
+    name: istiocontrolplane
+  register: info_istiocontrolplane
 
-- name: Display istiocontrolplane-test
+- name: Display istiocontrolplane
   debug:
-    var: info_istiocontrolplane_test.resources.0.spec.components.ingressGateways.0.k8s.service.ports[-1]
+    var: "info_istiocontrolplane.resources.0.spec.components.ingressGateways.0.k8s.service.ports"
 
+- name: Register for Gateway Index.
+  shell: kubectl get gateway datalake-gateway -n istio-system -o json  | jq '.spec.servers | map(.port.name=="{{ datalake_name }}") | index(true)'
+  register: gateway_index
 
 - name: Change Parameter for Setting Gateway 
   lineinfile:
-    dest: '{{playbook_dir}}/roles/ne-ldap/templates/ldap_gateway.json'
-#    dest: "{{ lookup( 'template', 'ldap_istio_operator.yaml' ) | from_yaml }}"
+    dest: '/home/centos/ne-ldap-templates/ldap_gateway.json'
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
-    -  { regexp: '^\s{2,}(.*).datalake.cloud.kt.com(.*)', line: '        "{{ ne_ldap.name }}.datalake.cloud.kt.com"' }
-    -  { regexp: '^\s{2,}"name":(.*)', line: '        "name": "{{ ne_ldap.name }}",'}       
-    -  { regexp: '^\s{2,}"number":(.*)', line: '        "number": {{ ne_ldap.port }},'}    
+    -  { regexp: '^\s{2,}(.*).datalake.cloud.kt.com(.*)', line: ' "{{ datalake_name }}.datalake.cloud.kt.com"' }
+    -  { regexp: '^\s{2,}"name":(.*)', line: '        "name": "{{ datalake_name }}",'}       
+    -  { regexp: '^\s{2,}"number":(.*)', line: '        "number": {{ ldap_inner_port }},'}    
 
 - name: Patch Istiooperator With Ldap Information
-  shell: kubectl patch gateways.networking.istio.io -n test datalake-gateway-test --type='json' --patch-file '{{playbook_dir}}/roles/ne-ldap/templates/ldap_gateway.json'
+  shell: kubectl patch gateways -n istio-system datalake-gateway --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_gateway.json'
+  when: gateway_index.stdout == "null"
 
 
 - name: Get a Gateway information
   community.kubernetes.k8s_info:
     api_version: networking.istio.io/v1beta1
     kind: Gateway
-    namespace: test
-    name: datalake-gateway-test
+    namespace: istio-system
+    name: datalake-gateway
   register: info_gateway
 
 - name: Display istiocontrolplane-test
   debug:
-    var: info_gateway.resources.0.spec.servers[-1]
+    var: "info_gateway.resources.0.spec.servers"
 
