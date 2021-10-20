@@ -2,7 +2,7 @@
 
 - name: Register for Istio Operators Index.
   shell:
-    cmd: kubectl get istiooperators.install.istio.io istiocontrolplane-test -n test -o json  | jq '.spec.components.ingressGateways[].k8s.service.ports | map(.name == "{{ datalake_name }}") | index(true)'
+    cmd: kubectl get istiooperators.install.istio.io istiocontrolplane -n istio-system -o json  | jq '.spec.components.ingressGateways[].k8s.service.ports | map(.name == "{{ datalake_name }}") | index(true)'
   register: istio_operator_index
 
 - name: Change Parameter for Setting istio_operator 
