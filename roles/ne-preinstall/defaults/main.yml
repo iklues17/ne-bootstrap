@@ -75,7 +75,7 @@ openldap:
       gateways:
       - "{{ ingress_gateway }}"
       hosts:
-        - "openldap.{{ ingress_vhost }}"
+        - "{{ datalake_name }}.datalake.cloud.kt.com"
       tcp:
         matchPort: "{{ ldap_port }}"
     persistence:
