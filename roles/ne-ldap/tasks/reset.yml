@@ -3,11 +3,6 @@
   shell: kubectl get istiooperators istiocontrolplane -n istio-system -o json  | jq '.spec.components.ingressGateways[].k8s.service.ports | map(.name == "{{ datalake_name }}") | index(true)'
   register: istio_operator_index
 
-- name: Sleep for 90 seconds for Checkiing All Pods Running Status
-  wait_for:
-    timeout: 180
-
-
 - name: Change Parameter for Delete istio_operator ne-ldap port
   lineinfile:
     dest: '/home/centos/ne-ldap-templates/ldap_istio_operator_delete.json'
