@@ -47,6 +47,18 @@
     atomic: yes
     values: "{{  cgw['values'] | from_yaml }}"
 
+- name: First Step for Patching Deployemnt ApiSpec for Collecting Metric (initContainer)
+  shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_initcontainer.json'
+
+- name: Second Step for Patching Deployemnt ApiSpec for Collecting Metric (nginx)
+  shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_nginx.json'
+
+- name: Thired Step for Patching Deployemnt ApiSpec for Collecting Metric (iptables_exporter)
+  shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_iptables_exporter.json'
+
+- name: Restart Deployment for New ApiSpec Pod
+  shell: kubectl rollout restart deployment/cgw -n {{ datalake_name }}
+
 - name: Deploy openldap chart
   community.kubernetes.helm:
     name: openldap
@@ -55,6 +67,7 @@
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  openldap['values'] | from_yaml }}"
+
 
 - name: Deploy ranger-admin chart
   community.kubernetes.helm:

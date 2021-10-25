@@ -1,0 +1,43 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/template/spec/containers/-",
+	  "value": 
+      {
+        "name": "iptables-exporter",
+        "image": "docker.io/madron/iptables-exporter:latest",
+        "command": [
+          "iptables-exporter",
+          "--port",
+          "9090",
+          "--ip-version",
+          "4",
+          "--tables",
+          "raw"
+        ],
+        "ports": [
+          {
+            "containerPort": 9090,
+            "protocol": "TCP"
+          }
+        ],
+        "resources": {},
+        "terminationMessagePath": "/dev/termination-log",
+        "terminationMessagePolicy": "File",
+        "imagePullPolicy": "IfNotPresent",
+        "securityContext": {
+          "capabilities": {
+            "add": [
+              "NET_ADMIN",
+              "NET_RAW"
+            ],
+            "drop": [
+              "ALL"
+            ]
+          },
+          "privileged": false,
+          "allowPrivilegeEscalation": false
+        }
+      }
+  }
+]

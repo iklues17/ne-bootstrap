@@ -1,0 +1,44 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/template/spec/initContainers",
+	  "value": 
+    [{
+      "name": "iptables-init",
+      "image": "docker.io/istio/proxyv2:1.8.4",
+      "imagePullPolicy": "IfNotPresent",
+      "command": [
+        "sh",
+        "-c",
+        "iptables -t raw -A PREROUTING -s ${INGRESS_GW_IP} -j ACCEPT -m comment --comment 'iptables-exporter ingress gateway in traffic';\niptables -t raw -A PREROUTING -s ${POD_IP_CIDR} -j ACCEPT -m comment --comment 'iptables-exporter internal (pod) in traffic';\niptables -t raw -A PREROUTING -s ${CLUSTER_IP_CIDR} -j ACCEPT -m comment --comment 'iptables-exporter internal (svc) in traffic';\niptables -t raw -A PREROUTING -j ACCEPT -m comment --comment 'iptables-exporter external in traffic';\n\niptables -t raw -A OUTPUT -d ${INGRESS_GW_IP} -j ACCEPT -m comment --comment 'iptables-exporter ingress gateway out traffic';\niptables -t raw -A OUTPUT -d ${POD_IP_CIDR} -j ACCEPT -m comment --comment 'iptables-exporter internal (pod) out traffic';\niptables -t raw -A OUTPUT -d ${CLUSTER_IP_CIDR} -j ACCEPT -m comment --comment 'iptables-exporter internal (svc) out traffic';\niptables -t raw -A OUTPUT -j ACCEPT -m comment --comment 'iptables-exporter external out traffic'\n"
+      ],
+      "env": [
+        {
+          "name": "POD_IP_CIDR",
+          "value": "172.31.0.0/16"
+        },
+        {
+          "name": "CLUSTER_IP_CIDR",
+          "value": "10.96.0.0/12"
+        },
+        {
+          "name": "INGRESS_GW_IP",
+          "value": "172.31.108.97"
+        }
+      ],
+      "securityContext": {
+        "allowPrivilegeEscalation": false,
+        "capabilities": {
+          "add": [
+            "NET_ADMIN",
+            "NET_RAW"
+          ],
+          "drop": [
+            "ALL"
+          ]
+        },
+        "privileged": false
+      }
+    }]
+  }
+]

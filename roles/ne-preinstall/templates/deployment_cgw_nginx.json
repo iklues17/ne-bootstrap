@@ -1,0 +1,19 @@
+[
+  {
+    "op": "add",
+    "path": "/spec/template/spec/containers/-",
+	  "value": 
+      {
+        "name": "nginx",
+        "image": "docker.io/nginx:latest",
+        "command": [
+          "sleep",
+          "12345678"
+        ],
+        "resources": {},
+        "terminationMessagePath": "/dev/termination-log",
+        "terminationMessagePolicy": "File",
+        "imagePullPolicy": "IfNotPresent"
+      }    
+  }
+]
