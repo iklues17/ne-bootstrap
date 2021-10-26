@@ -23,7 +23,7 @@
         namespace: "{{ k8s_namespace }}"
       spec:
         hard:
-          requests.cpu: "{{ totalCpu }}"
-          requests.memory: "{{ totalMemory }}Gi"
-          limits.cpu: "{{ totalCpu }}"
-          limits.memory: "{{ totalMemory }}Gi"
+          requests.cpu: "{{ total_cpu }}"
+          requests.memory: "{{ total_memory }}Gi"
+          limits.cpu: "{{ total_cpu }}"
+          limits.memory: "{{ total_memory }}Gi"
