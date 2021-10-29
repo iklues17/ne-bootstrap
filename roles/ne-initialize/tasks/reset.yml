@@ -36,6 +36,7 @@
     state: absent
     force: yes
     ceph: true
+  
 
 - name: Remove Bucket - ETCD Backup
   amazon.aws.s3_bucket:

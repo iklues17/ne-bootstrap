@@ -9,7 +9,6 @@
     regexp: '^\s{2,}"path":(.*)'
     line: '    "path": "/spec/components/ingressGateways/0/k8s/service/ports/{{ istio_operator_index.stdout }}"'
 
-
 - name: Delete Datalake Ne-ldap Port
   shell: kubectl patch istiooperators -n istio-system istiocontrolplane --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_istio_operator_delete.json'
   when: istio_operator_index.stdout != "null"

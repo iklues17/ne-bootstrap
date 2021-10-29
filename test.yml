@@ -1,0 +1,9 @@
+---
+- hosts: ne-bootstrap
+  gather_facts: False
+  tasks:
+    - include_role:
+        name: ne-ldap
+        tasks_from: reset
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
