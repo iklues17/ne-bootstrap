@@ -21,9 +21,11 @@
 
 - name: Read access to App Repositories
   shell: "{{ bin_dir }}/kubectl create -n kubeapps rolebinding {{ datalake_name }}-kubeapps-repositories-read --role=kubeapps-repositories-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Write access to App Repositories
   shell: "{{ bin_dir }}/kubectl create -n kubeapps rolebinding {{ datalake_name }}-kubeapps-repositories-write --role=kubeapps-repositories-write --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Create variable - k8s kubeapps token
   shell: "{{ bin_dir }}/kubectl describe -n {{ datalake_name }} secret $(kubectl get -n {{ datalake_name }} serviceaccount {{ datalake_name }} -o jsonpath='{.secrets[].name}') | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
