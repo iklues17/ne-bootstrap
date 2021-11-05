@@ -6,7 +6,7 @@
       "initContainers": [
         {
           "name": "iptables-init",
-          "image": "docker.io/istio/proxyv2:1.8.4",
+          "image": "harbor.nexr.kr/istio/proxyv2:1.8.4",
           "command": [
             "sh",
             "-c",
@@ -130,7 +130,7 @@
         },
         {
           "name": "nginx",
-          "image": "docker.io/nginx:latest",
+          "image": "harbor.nexr.kr/library/nginx:1.19",
           "command": [
             "sleep",
             "12345678"
@@ -142,7 +142,7 @@
         },
         {
           "name": "iptables-exporter",
-          "image": "docker.io/madron/iptables-exporter:latest",
+          "image": "harbor.nexr.kr/madron/iptables-exporter:latest",
           "command": [
             "iptables-exporter",
             "--port",

@@ -5,7 +5,7 @@
 	  "value": 
     [{
       "name": "iptables-init",
-      "image": "docker.io/istio/proxyv2:1.8.4",
+      "image": "harbor.nexr.kr/istio/proxyv2:1.8.4",
       "imagePullPolicy": "IfNotPresent",
       "command": [
         "sh",

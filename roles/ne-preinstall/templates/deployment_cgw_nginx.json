@@ -5,7 +5,7 @@
 	  "value": 
       {
         "name": "nginx",
-        "image": "docker.io/nginx:latest",
+        "image": "harbor.nexr.kr/library/nginx:1.19",
         "command": [
           "sleep",
           "12345678"

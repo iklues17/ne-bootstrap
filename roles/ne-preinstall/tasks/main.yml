@@ -1,13 +1,6 @@
 ---
-- name: Check that the ldap directory file
-  stat:
-    path: "/home/centos/ne-outboundnetwork-traffic"
-  register: trafficdir
-
 - name: Create Directory ne-outboundnetwork-traffic
   file: path=/home/centos/ne-outboundnetwork-traffic state=directory mode=0755 recurse=yes
-  when: not trafficdir.stat.exists
-
 
 - name: Copy File to ne-ldap-templates
   template: src=roles/ne-preinstall/templates/{{ item }} dest=/home/centos/ne-outboundnetwork-traffic
@@ -16,7 +9,7 @@
   - deployment_cgw_iptables_exporter.json
   - deployment_cgw.json
   - deployment_cgw_nginx.json
-  when: not trafficdir.stat.exists
+
 
 - name: Deploy pinpoint chart
   community.kubernetes.helm:

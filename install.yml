@@ -6,7 +6,6 @@
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
-    - { role: "ne-infra" }
     - { role: "set-helm-repo" }
     - { role: "ne-ldap"}
     - { role: "ne-storageclass" }

@@ -5,7 +5,7 @@
 	  "value": 
       {
         "name": "iptables-exporter",
-        "image": "docker.io/madron/iptables-exporter:latest",
+        "image": "harbor.nexr.kr/madron/iptables-exporter:latest",
         "command": [
           "iptables-exporter",
           "--port",
