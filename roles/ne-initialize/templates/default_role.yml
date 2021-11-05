@@ -12,4 +12,17 @@ rules:
   - apiGroups: ["rbac.authorization.k8s.io"]
     resources: ["roles", "rolebindings"]
     verbs: ["bind", "create", "get", "update", "patch", "list", "delete", "watch"]
+# for zeppelin
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["nodes/proxy"]
+    verbs: ["create", "update", "patch", "delete"]
 
