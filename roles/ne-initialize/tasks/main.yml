@@ -58,6 +58,11 @@
     namespace: "{{ k8s_namespace }}"
     definition: "{{ lookup('template', 'default_rolebinding.yml') | from_yaml }}"
 
+- name: Create Datalake SA
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} serviceaccount {{ datalake_name }}"
+
+- name: Admin access to Datalake Namespace
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-default --role=default --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
 
 ## bootstrap relay에서 요청하는 api 파라미터값 name,accesskey랑 secretrey를 넣는지 안넣는지 확인.
 - name: Create Bucket - NE User

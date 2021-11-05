@@ -1,7 +1,4 @@
 ---
-- name: Create Datalake SA
-  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} serviceaccount {{ datalake_name }}"
-
 - name: Read access to Applications within a namespace
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-view --clusterrole=kubeapps-applications-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
 
