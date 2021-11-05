@@ -1,6 +1,33 @@
 ---
+- name: Create Datalake SA
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} serviceaccount {{ datalake_name }}"
+
+- name: Read access to Applications within a namespace
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-view --clusterrole=kubeapps-applications-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Write access to Applications within a namespace
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-edit --clusterrole=edit --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Read access to Service Instances and ClusterRole Bindings within a namespaces
+  shell: "{{ bin_dir }}/kubectl create clusterrolebinding {{ datalake_name }}-kubeapps-service-catalog-browse --clusterrole=kubeapps-service-catalog-browse --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Read access to Service Instances and Role Bindings within a namespaces
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-service-catalog-read --clusterrole=kubeapps-service-catalog-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Write access to Service Instances and Bindings within a namespace
+  shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-service-catalog-write --clusterrole=kubeapps-service-catalog-write --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Admin access to configure Service Brokers
+  shell: "{{ bin_dir }}/kubectl create clusterrolebinding {{ datalake_name }}-kubeapps-service-catalog-admin --clusterrole=kubeapps-service-catalog-admin --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Read access to App Repositories
+  shell: "{{ bin_dir }}/kubectl create -n kubeapps rolebinding {{ datalake_name }}-kubeapps-repositories-read --role=kubeapps-repositories-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
+- name: Write access to App Repositories
+  shell: "{{ bin_dir }}/kubectl create -n kubeapps rolebinding {{ datalake_name }}-kubeapps-repositories-write --role=kubeapps-repositories-write --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+
 - name: Create variable - k8s kubeapps token
-  shell: "{{ bin_dir }}/kubectl describe secret $(kubectl get secrets -n default | grep ^kubeapps-operator | cut -f1 -d ' ') -n default | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
+  shell: "{{ bin_dir }}/kubectl describe -n {{ datalake_name }} secret $(kubectl get -n {{ datalake_name }} serviceaccount {{ datalake_name }} -o jsonpath='{.secrets[].name}') | grep -E '^token' | cut -f2 -d':' | tr -d ' '"
   environment:
     - KUBECONFIG: "{{ ansible_env.HOME | default('/home/centos') }}/.kube/config"
   register: kubeapps_token_result
