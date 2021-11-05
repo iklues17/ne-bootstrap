@@ -1,0 +1,8 @@
+- name: Gather facts
+  hosts: ne-bootstrap
+  gather_facts: False
+  tasks:
+  - name: Collect only facts returned by facter
+    ansible.builtin.setup:
+      gather_subset:
+        - '!all'

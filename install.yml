@@ -1,4 +1,8 @@
 ---
+- name: Gather facts
+  tags: always
+  import_playbook: facts.yml
+
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
