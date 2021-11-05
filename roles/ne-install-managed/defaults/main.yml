@@ -62,7 +62,8 @@ zeppelin:
 conductor:
   values:
     server.jvmOpts: -Xms1024M -Xmx8192M -XX:-HeapDumpOnOutOfMemoryError
-    server.resources.limits.memory: 10000Mi
+    server.resources.requests.memory: 5Gi
+    server.resources.limits.memory: 5Gi
     server.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor
     server.image.tag: "{{ oss.conductor_veresion }}{{ '-' ~ oss.conductor_build_num if oss.conductor_build_num is defined and oss.conductor_build_num|length else '' }}"
     ui.image.repository: harbor.nexr.kr/{{ oss.image_project }}/conductor-ui
@@ -73,4 +74,5 @@ conductor:
 selenium:
   values:
     hub.javaOpts: -Xms1024M -Xmx4096M -XX:-HeapDumpOnOutOfMemoryError
-    hub.resources.limits.memory: 5000Mi
+    hub.resources.requests.memory: 3Gi
+    hub.resources.limits.memory: 3Gi
