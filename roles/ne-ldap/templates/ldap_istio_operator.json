@@ -3,9 +3,9 @@
     "op": "add",
     "path": "/spec/components/ingressGateways/0/k8s/service/ports/-",
     "value": {
-      "name": "nexr",
-      "port": 9400,
-      "targetPort": 9400,
+      "name": "tonny-netest14",
+      "port": 40019,
+      "targetPort": 40019,
       "protocol": "TCP"
     }
   }

@@ -1,5 +1,5 @@
 bin_dir: /usr/local/bin
-datalake_name: "nexr"
+datalake_name: "test"
 
 user_id: "official.@nexr.com"
 
@@ -21,10 +21,10 @@ ldap_port: 9389
 
 s3:
   endpoint: 172.24.0.246:1000
-  bucket: dl-demo
+  bucket: dl-nexr
   accesskey: FJU76L0JIZHONQ2IR0JG
   secretkey: 1JsQdNt9Iw6u4hAcaDMrUdziWSjvSpr6ILuMiTIl
-  backup_bucket: dl-demo
+  backup_bucket: dl-nexr
   ## add ceph-block-pool
 
 user_subdomain: "{{ datalake_name }}"

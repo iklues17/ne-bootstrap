@@ -1,6 +1,6 @@
 [
   {
     "op":"remove",
-    "path": "/spec/servers/4"
+    "path": "/spec/servers/null"
   }
 ]

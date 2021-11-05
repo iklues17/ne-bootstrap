@@ -1,9 +1,11 @@
 ---
 - hosts: ne-bootstrap
   gather_facts: False
-  tasks:
-    - include_role:
-        name: ne-ldap
-        tasks_from: reset
   vars:
     ansible_python_interpreter: /usr/local/bin/python3
+  tasks:
+    - name: test1
+      file: path=/home/centos/test state=directory mode=0755 recurse=yes
+
+    - name: test2
+      template: src={{ lookup('template', 'ldap_gateway_delete.json') }} dest=/home/centos/test

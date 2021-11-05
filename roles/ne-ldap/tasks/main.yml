@@ -1,4 +1,22 @@
 ---
+- name: Check that the ldap directory file
+  stat:
+    path: "/home/centos/ne-ldap-templates"
+  register: ldapdir
+
+- name: Create Directory ne-ldap-templates
+  file: path=/home/centos/ne-ldap-templates state=directory mode=0755 recurse=yes
+  when: not ldapdir.stat.exists
+
+
+- name: Copy File to ne-ldap-templates
+  template: src=roles/ne-ldap/templates/{{ item }} dest=/home/centos/ne-ldap-templates
+  with_items:
+  - ldap_gateway_delete.json
+  - ldap_gateway.json
+  - ldap_istio_operator_delete.json
+  - ldap_istio_operator.json
+  when: not ldapdir.stat.exists
 
 - name: Register for Istio Operators Index.
   shell:

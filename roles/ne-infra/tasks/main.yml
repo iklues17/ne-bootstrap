@@ -1,0 +1,13 @@
+---
+- name: Check that the ldap directory file
+  stat:
+    path: "/home/centos/.kube/"
+  register: kubeconfig
+
+- name: Create Directory kubeconfig
+  file: path=/home/centos/.kube state=directory mode=0755 recurse=yes
+  when: not kubeconfig.stat.exists
+
+- name: Create Kube Config File
+  template: src=roles/ne-infra/templates/config dest=/home/centos/.kube/
+  when: not kubeconfig.stat.exists

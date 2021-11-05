@@ -7,8 +7,8 @@
  "nexr.datalake.cloud.kt.com"
       ],
       "port": {
-        "name": "nexr",
-        "number": 9400,
+        "name": "tonny-netest14",
+        "number": 40019,
         "protocol": "TCP"
       }
     }
