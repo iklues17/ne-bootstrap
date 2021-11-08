@@ -1,5 +1,5 @@
 bin_dir: /usr/local/bin
-datalake_name: "test"
+datalake_name: "portalapitest"
 
 user_id: "official.@nexr.com"
 
