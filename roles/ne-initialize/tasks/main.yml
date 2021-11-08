@@ -64,6 +64,7 @@
 
 - name: Admin access to Datalake Namespace
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-default --role=default --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Manage access to Istio service proxy config
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-istio-service-proxy-manage --clusterrole=istio-service-proxy-manage --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
