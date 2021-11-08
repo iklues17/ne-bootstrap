@@ -1,9 +1,11 @@
 ---
 - name: Read access to Applications within a namespace
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-view --clusterrole=kubeapps-applications-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Write access to Applications within a namespace
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-edit --clusterrole=edit --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Read access to Service Instances and ClusterRole Bindings within a namespaces
   shell: "{{ bin_dir }}/kubectl create clusterrolebinding {{ datalake_name }}-kubeapps-service-catalog-browse --clusterrole=kubeapps-service-catalog-browse --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
@@ -11,9 +13,11 @@
 
 - name: Read access to Service Instances and Role Bindings within a namespaces
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-service-catalog-read --clusterrole=kubeapps-service-catalog-read --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Write access to Service Instances and Bindings within a namespace
   shell: "{{ bin_dir }}/kubectl create -n {{ datalake_name }} rolebinding {{ datalake_name }}-kubeapps-service-catalog-write --clusterrole=kubeapps-service-catalog-write --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
+  ignore_errors: yes
 
 - name: Admin access to configure Service Brokers
   shell: "{{ bin_dir }}/kubectl create clusterrolebinding {{ datalake_name }}-kubeapps-service-catalog-admin --clusterrole=kubeapps-service-catalog-admin --serviceaccount {{ datalake_name }}:{{ datalake_name }}"
