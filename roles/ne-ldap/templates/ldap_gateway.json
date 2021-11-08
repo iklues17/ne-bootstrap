@@ -4,11 +4,11 @@
     "path": "/spec/servers/-",
     "value": {
       "hosts": [
- "nexr.datalake.cloud.kt.com"
+ "dummy.datalake.cloud.kt.com"
       ],
       "port": {
-        "name": "tonny-netest14",
-        "number": 40019,
+        "name": "dummy",
+        "number": 0,
         "protocol": "TCP"
       }
     }
