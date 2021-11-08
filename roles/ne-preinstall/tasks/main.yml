@@ -64,9 +64,11 @@
 
 - name: Second Step for Patching Deployemnt ApiSpec for Collecting Metric (nginx)
   shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_nginx.json'
+  ignore_errors: yes
 
 - name: Thired Step for Patching Deployemnt ApiSpec for Collecting Metric (iptables_exporter)
   shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_iptables_exporter.json'
+  ignore_errors: yes
 
 - name: Restart Deployment for New ApiSpec Pod
   shell: kubectl rollout restart deployment/cgw -n {{ datalake_name }}
