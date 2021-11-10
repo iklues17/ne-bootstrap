@@ -236,7 +236,7 @@
       community.kubernetes.k8s_scale:
         api_version: v1
         kind: Deployment
-        name: hivemetastore
+        name: hive-metastore
         namespace: "{{ datalake_name }}"
         replicas: 2
         wait_timeout: 60

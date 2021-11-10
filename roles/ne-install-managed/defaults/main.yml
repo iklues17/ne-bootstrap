@@ -32,7 +32,7 @@ elasticsearch:
 
 hive_metastore:
   values:
-    image.repository: harbor.nexr.kr/{{ oss.image_project }}/hivemetastore
+    image.repository: harbor.nexr.kr/{{ oss.image_project }}/hive-metastore
     image.tag: "{{ oss.hive_metastore_version }}{{ '-' ~ oss.hive_metastore_build_num if oss.hive_metastore_build_num is defined and oss.hive_metastore_build_num|length else '' }}"
 
 spark_historyserver:
