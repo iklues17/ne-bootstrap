@@ -15,7 +15,7 @@ ingress_vhost: nexr.kr
 ingress_gateway: datalake-gateway
 #ingress_gateway: nexr-gateway
 pxc_port: 63306
-ldap_port: 9389
+ldap_inner_port: 39999
 
 s3:
   endpoint: 10.0.3.5:80 

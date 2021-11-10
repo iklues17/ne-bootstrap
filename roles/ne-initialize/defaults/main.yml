@@ -6,7 +6,7 @@ k8s_namespace: "ne"
 
 ingress_vhost: nexr.kr
 pxc_port: 33306
-ldap_port: 389
+ldap_inner_port: 39999
 
 s3:
   endpoint: 10.0.3.5:80
