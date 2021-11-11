@@ -19,6 +19,7 @@ user_subdomain: nexrtest
 
 ne_version: "1.3.2"
 ne_schema_version: "1.3.2"
+pxc_chart_version: "1.0.0"
 
 ne_context:
   image_build_num: ""

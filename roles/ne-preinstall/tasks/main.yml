@@ -15,7 +15,7 @@
   community.kubernetes.helm:
     name: pinpoint
     chart_ref: "{{ chart_repo_name }}/pinpoint"
-    chart_version: "{{ ne_version }}"
+    chart_version: "{{ pinpoint_chart_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -77,7 +77,7 @@
   community.kubernetes.helm:
     name: openldap
     chart_ref: "{{ chart_repo_name }}/openldap"
-    chart_version: "{{ ne_version }}"
+    chart_version: "{{ openldap_chart_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  openldap['values'] | from_yaml }}"
@@ -87,7 +87,7 @@
   community.kubernetes.helm:
     name: ranger-admin
     chart_ref: "{{ chart_repo_name }}/ranger-admin"
-    chart_version: "{{ ne_version }}"
+    chart_version: "{{ ranger_chart_version }}"
     release_namespace: "{{ k8s_namespace }}"
     wait: yes
     atomic: yes
@@ -97,7 +97,7 @@
   community.kubernetes.helm:
     name: ranger-usersync
     chart_ref: "{{ chart_repo_name }}/ranger-usersync"
-    chart_version: "{{ ne_version }}"
+    chart_version: "{{ ranger_chart_version }}"
     release_namespace: "{{ k8s_namespace }}"
     atomic: yes
     values: "{{  ranger_usersync['values'] | from_yaml }}"

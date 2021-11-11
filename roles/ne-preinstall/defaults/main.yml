@@ -7,6 +7,9 @@ ldap_inner_port: 39999
 
 ne_version: 1.3.2
 ne_schema_version: 1.3.2
+pinpoint_chart_version: "1.0.0"
+openldap_chart_version: "1.0.0"
+ranger_chart_version: "1.0.0"
 
 ne_app:
   image_build_num: ""
