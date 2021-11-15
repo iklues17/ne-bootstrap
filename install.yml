@@ -3,10 +3,16 @@
   tags: always
   import_playbook: facts.yml
 
+- hosts: bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-etcd"}
+
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
     - { role: "set-helm-repo" }
+    - { role: "ne-etcd"}
     - { role: "ne-ldap"}
     - { role: "ne-storageclass" }
     - { role: "ne-initialize" }
@@ -17,5 +23,4 @@
     - { role: "ne-install-managed" }
     - { role: "ne-install-service" }
     - { role: "ne-finalize" }
-  vars:
-    ansible_python_interpreter: /usr/local/bin/python3
+

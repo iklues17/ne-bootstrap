@@ -1,0 +1,8 @@
+---
+- hosts: bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-etcd" }
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  

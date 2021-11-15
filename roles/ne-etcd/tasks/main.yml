@@ -1,0 +1,32 @@
+---
+- name: Copy File to /home/runner/etcdctl/
+  copy: src="{{ item }}" dest=/home/runner/etcdctl/
+  with_items:
+    - rootca.crt
+    - com.kt.cloud.datalake.crt
+    - etcd-client.key
+  
+- name: Register Traffik LoadBalancer Datalake-Mgmt1
+  shell: "etcdctl put traefik/tcp/services/{{ datalake_ndap_name }}/loadBalancer/servers/0/address 172.24.9.151:30952 --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt' --key='/home/runner/etcdctl/etcd-client.key' --user 'root' --password '{{ etcd_root_password }}'"
+
+- name: Register Traffik LoadBalancer Datalake-Mgmt2
+  shell: "etcdctl put traefik/tcp/services/{{ datalake_ndap_name }}/loadBalancer/servers/1/address 172.24.9.152:30952 --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+- name: Register Traffik LoadBalancer Datalake-Mgmt3
+  shell: "etcdctl put traefik/tcp/services/{{ datalake_ndap_name }}/loadBalancer/servers/2/address 172.24.9.153:30952 --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer rule HostSNI
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_ndap_name }}/rule 'HostSNI(`{{ datalake_ndap_name }}.datalake.cloud.kt.com`)' --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer EntryPoints
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_ndap_name }}/entryPoints/0 websecure --cacert='/home/runner/etcdctl/rootca.crt' --endpoints=datalake.cloud.kt.com:2379 --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer Service
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_ndap_name }}/service {{ datalake_ndap_name }} --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer TLS
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_ndap_name }}/tls/passthrough true --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"

@@ -69,3 +69,7 @@ ne_ldap:
   port: "{{ ldap_port_inner }}"
   targetPort: "{{ ldap_port_inner }}"
   protocol: TCP
+
+etcd_root_password: myhz@a^%p8a&7=?k
+datalake_ndap_name: ndap-demo
+etcdctl_execute_path: /usr/local/bin
