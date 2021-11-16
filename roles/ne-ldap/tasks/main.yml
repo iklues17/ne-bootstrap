@@ -23,7 +23,8 @@
   loop:
     -  { regexp: '^\s{2,}"name":(.*)', line: '      "name": "{{ datalake_name }}",' }
     -  { regexp: '^\s{2,}"port":(.*)', line: '      "port": {{ ldap_inner_port }},' }    
-    -  { regexp: '^\s{2,}"targetPort":(.*)', line: '      "targetPort": {{ ldap_inner_port }},' }    
+    -  { regexp: '^\s{2,}"targetPort":(.*)', line: '      "targetPort": {{ ldap_inner_port }},' }
+    -  { regexp: '^\s{2,}"nodePort":(.*)', line: '      "nodePort": {{ ldap_inner_port }},' }
 
 - name: Patch Istiooperator With Ldap Information
   shell: kubectl patch istiooperators -n istio-system istiocontrolplane --type='json' --patch-file '/home/centos/ne-ldap-templates/ldap_istio_operator.json'

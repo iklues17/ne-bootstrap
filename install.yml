@@ -12,7 +12,6 @@
   gather_facts: False
   roles:
     - { role: "set-helm-repo" }
-    - { role: "ne-etcd"}
     - { role: "ne-ldap"}
     - { role: "ne-storageclass" }
     - { role: "ne-initialize" }
