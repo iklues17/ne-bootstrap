@@ -86,7 +86,7 @@ ne_init:
       NE_SCHEMA_VERSION: "{{ ne_schema_version }}"
       NE_NAMESPACE: "{{ k8s_namespace }}"
       CHART_REPO_NAME: "{{ chart_repo_name }}"
-      DATALAKE_USER_HOST: "https://{{ datalake_name }}.datalake.cloud.kt.com"
+      DATALAKE_USER_HOST: "https://{{ datalake_name }}.{{ ingress_vhost }}"
       ISTIO_SIDECAR_ENABLE: "false"
 
 nexus:
