@@ -52,7 +52,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   loop:
-    -  { regexp: '^\s{1,}"(.*).datalake.cloud.kt.com"', line: '       "{{ datalake_name }}.datalake.cloud.kt.com"' }
+    -  { regexp: '^\s{1,}"(.*).{{ ingress_vhost }}"', line: '       "{{ datalake_name }}.{{ ingress_vhost }}"' }
     -  { regexp: '^\s{2,}"name":(.*)', line: '        "name": "{{ datalake_name }}",'}       
     -  { regexp: '^\s{2,}"number":(.*)', line: '        "number": {{ ldap_inner_port }},'}    
 

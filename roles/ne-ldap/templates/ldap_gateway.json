@@ -4,7 +4,7 @@
     "path": "/spec/servers/-",
     "value": {
       "hosts": [
- "dummy.datalake.cloud.kt.com"
+ "dummy.v2.datalake.cloud.kt.com"
       ],
       "port": {
         "name": "dummy",
