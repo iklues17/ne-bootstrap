@@ -12,7 +12,7 @@
   loop: "{{ datalake_mgmt_dict | dict2items }}" 
 
 - name: Register Traffik LoadBalancer rule HostSNI
-  shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/rule 'HostSNI(`{{ datalake_name }}.datalake.cloud.kt.com`)' --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/rule 'HostSNI(`{{ datalake_name }}.{{ ingress_vhost }})' --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
 
 - name: Register Traffik LoadBalancer EntryPoints
   shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/entryPoints/0 websecure --cacert='/home/runner/etcdctl/rootca.crt' --endpoints=datalake.cloud.kt.com:2379 --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"

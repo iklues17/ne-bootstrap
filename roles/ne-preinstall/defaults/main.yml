@@ -27,6 +27,8 @@ pinpoint:
       istio:
         gateways:
         - "{{ ingress_gateway }}"
+        hosts:
+          - "hbase.pinpoint.{{ ingress_vhost }}"
       persistence:
         enabled: true
         storageClass: "{{ datalake_name }}-rook-ceph-block"
@@ -78,7 +80,7 @@ openldap:
       gateways:
       - "{{ ingress_gateway }}"
       hosts:
-        - "{{ datalake_name }}.datalake.cloud.kt.com"
+        - "{{ datalake_name }}.{{ ingress_vhost }}"
       tcp:
         matchPort: "{{ ldap_inner_port }}"
     persistence:
