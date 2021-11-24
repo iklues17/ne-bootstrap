@@ -3,11 +3,6 @@
   tags: always
   import_playbook: facts.yml
 
-- hosts: bootstrap
-  gather_facts: False
-  roles:
-    - { role: "ne-etcd"}
-
 - hosts: ne-bootstrap
   gather_facts: False
   roles:
@@ -23,3 +18,7 @@
     - { role: "ne-install-service" }
     - { role: "ne-finalize" }
 
+- hosts: bootstrap
+  gather_facts: False
+  roles:
+    - { role: "ne-etcd"}
