@@ -1,4 +1,12 @@
 ---
+
+- hosts: bootstrap
+  gather_facts: False
+  tasks:
+    - include_role:
+        name: ne-etcd
+        tasks_from: reset
+
 - hosts: ne-bootstrap
   gather_facts: False
   tasks:
