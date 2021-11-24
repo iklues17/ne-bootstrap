@@ -1,0 +1,25 @@
+---
+- name: Copy File to /home/runner/etcdctl/
+  copy: src="{{ item }}" dest=/home/runner/etcdctl/
+  with_items:
+    - rootca.crt
+    - com.kt.cloud.datalake.crt
+    - etcd-client.key
+  
+- name: Register Traffik LoadBalancer Datalake-Mgmts
+  shell: "etcdctl del traefik/tcp/services/{{ datalake_name }}/loadBalancer/servers/{{ item.key }}/address --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt' --key='/home/runner/etcdctl/etcd-client.key' --user 'root' --password '{{ etcd_root_password }}'"
+  loop: "{{ datalake_mgmt_dict | dict2items }}" 
+
+- name: Register Traffik LoadBalancer rule HostSNI
+  shell: "etcdctl del traefik/tcp/routers/{{ datalake_name }}/rule --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+- name: Register Traffik LoadBalancer EntryPoints
+  shell: "etcdctl del traefik/tcp/routers/{{ datalake_name }}/entryPoints/0  --cacert='/home/runner/etcdctl/rootca.crt' --endpoints=datalake.cloud.kt.com:2379 --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer Service
+  shell: "etcdctl del traefik/tcp/routers/{{ datalake_name }}/service --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+
+
+- name: Register Traffik LoadBalancer TLS
+  shell: "etcdctl del traefik/tcp/routers/{{ datalake_name }}/tls/passthrough --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"

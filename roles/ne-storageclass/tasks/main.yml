@@ -1,5 +1,5 @@
 ---
-- name: cephblockpool
+- name: Delete to CephBlockPool
   community.kubernetes.k8s:
     state: present
     definition:
@@ -16,7 +16,7 @@
           size: 3
           targetSizeRatio: 0
 
-- name: storageclass
+- name: Delete to StorageClass
   community.kubernetes.k8s:
     state: present
     definition: 
