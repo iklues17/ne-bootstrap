@@ -28,7 +28,7 @@ pinpoint:
         gateways:
         - "{{ ingress_gateway }}"
         hosts:
-          - "hbase.pinpoint.{{ ingress_vhost }}"
+          - "pinpoint-hbase-{{ datalake_name }}.{{ ingress_vhost }}"
       persistence:
         enabled: true
         storageClass: "{{ datalake_name }}-rook-ceph-block"
@@ -37,7 +37,7 @@ pinpoint:
         gateways:
         - "{{ ingress_gateway }}"
         hosts:
-          - "apm.{{ ingress_vhost }}"
+          - "pinpoint-{{ datalake_name }}.{{ ingress_vhost }}"
 
 ccs:
   values:
