@@ -34,7 +34,7 @@
 
 
 - name: Register Pinpoint-UI Traffik LoadBalancer Service
-  shell: "etcdctl put traefik/tcp/routers/pinpoint-{{ datalake_name }}/service {{ datalake_name }} --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+  shell: "etcdctl put traefik/tcp/routers/pinpoint-{{ datalake_name }}/service pinpoint-{{ datalake_name }} --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
 
 
 - name: Register Pinpoint-UI Traffik LoadBalancer TLS
