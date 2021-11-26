@@ -17,7 +17,7 @@
   shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/entryPoints/0 websecure --cacert='/home/runner/etcdctl/rootca.crt' --endpoints=datalake.cloud.kt.com:2379 --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
 
 - name: Register NE-UI Traffik LoadBalancer Service
-  shell: "etcdctl put traefik/tcp/routers/ne-demo/service ne-demo --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
+  shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/service {{ datalake_name }} --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
 
 - name: Register NE-UI Traffik LoadBalancer TLS
   shell: "etcdctl put traefik/tcp/routers/{{ datalake_name }}/tls/passthrough true --endpoints=datalake.cloud.kt.com:2379 --cacert='/home/runner/etcdctl/rootca.crt' --cert='/home/runner/etcdctl/com.kt.cloud.datalake.crt'  --key='/home/runner/etcdctl/etcd-client.key'  --user 'root'  --password '{{ etcd_root_password }}'"
