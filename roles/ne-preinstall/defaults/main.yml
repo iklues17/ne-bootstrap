@@ -24,6 +24,13 @@ ne_ui:
 pinpoint:
   values:
     hbase:
+      resources:
+        limits:
+          cpu: 1300m
+          memory: 5120Mi
+        requests:
+          cpu: 1300m
+          memory: 5120Mi
       istio:
         gateways:
         - "{{ ingress_gateway }}"
