@@ -48,7 +48,7 @@ spark_thriftserver:
   values:
     image.repository: harbor.nexr.kr/{{ oss.image_project }}/spark
     image.tag: "{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}"
-    replicaCount: 3
+    replicaCount: 2
   spark-default.conf:
     spark.kubernetes.container.image: harbor.nexr.kr/{{ oss.image_project }}/spark:{{ oss.spark_version }}{{ '-' ~ oss.spark_build_num if oss.spark_build_num is defined and oss.spark_build_num|length else '' }}
     
