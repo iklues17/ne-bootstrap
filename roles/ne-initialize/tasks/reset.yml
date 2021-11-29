@@ -48,6 +48,16 @@
     force: yes
     ceph: true
 
+- name: Get a list of all Termination Pod Objects
+  shell: kubectl get pods -n {{ datalake_name }} | grep Terminating | awk '{print $1}' | sed '1d'
+  register: termination_list
+
+- name:  Delete a list of all Termination Pod Objects
+  shell: kubectl delete pods {{ item }} -n {{ datalake_name }} --grace-period=0 --force
+  with_items:
+    - "{{ termination_list.stdout_lines | list }}"
+  when: termination_list.stdout_lines != ""
+
 - name: Remove a k8s namespace for Nexr Enterprise
   community.kubernetes.k8s:
     state: absent
