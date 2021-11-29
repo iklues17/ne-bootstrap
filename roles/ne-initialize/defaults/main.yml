@@ -15,7 +15,8 @@ s3:
   secretkey: BMaqeU1XjbkaKW99F1ucMeEVFRIYHHMPsOf7RvZs
   backup_bucket: bk-official
 
-user_subdomain: nexrtest
+ktcloud_client_id: a3e8fef2-aa63-4b67-b229-33c66adee6ee
+ktcloud_jwt_secret: DhxQ8-4SyBs-E6igc-3avJy-9d96b
 
 ne_version: "1.3.2"
 ne_schema_version: "1.3.2"
@@ -88,6 +89,9 @@ ne_init:
       CHART_REPO_NAME: "{{ chart_repo_name }}"
       DATALAKE_USER_HOST: "https://{{ datalake_name }}.{{ ingress_vhost }}"
       ISTIO_SIDECAR_ENABLE: "false"
+      KT_CLOUD_CLIENT_ID: "{{ ktcloud_client_id }}"
+      KT_CLOUD_HOST: "https://{{ datalake_name }}.{{ ingress_vhost }}"
+      KT_CLOUD_JWT_SECRET: "{{ ktcloud_jwt_secret }}"
 
 nexus:
   values:
