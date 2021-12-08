@@ -7,8 +7,6 @@
   with_items:
   - deployment_cgw_initcontainer.json
   - deployment_cgw_iptables_exporter.json
-  - deployment_cgw.json
-  - deployment_cgw_nginx.json
 
 
 - name: Deploy pinpoint chart
@@ -62,11 +60,7 @@
 - name: First Step for Patching Deployemnt ApiSpec for Collecting Metric (initContainer)
   shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_initcontainer.json'
 
-- name: Second Step for Patching Deployemnt ApiSpec for Collecting Metric (nginx)
-  shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_nginx.json'
-  ignore_errors: yes
-
-- name: Thired Step for Patching Deployemnt ApiSpec for Collecting Metric (iptables_exporter)
+- name: Second Step for Patching Deployemnt ApiSpec for Collecting Metric (iptables_exporter)
   shell: kubectl patch deployments.apps -n {{ datalake_name }} cgw --type='json' --patch-file '/home/centos/ne-outboundnetwork-traffic/deployment_cgw_iptables_exporter.json'
   ignore_errors: yes
 
